@@ -22,8 +22,7 @@ This application uses ant for configuration stuff.
 # Areas of Development
 
 ## Main GUI
-.fxml files -> src/main/ui/test.fxml
-.java files -> com.forj.fwm.gui
+See workingDocumentation/front-end-standards.txt
 
 ## Webservice
 .jsp / .css / .png -> src/main/webapp/web-inf
@@ -31,7 +30,7 @@ This application uses ant for configuration stuff.
 
 ## Backend 
 The backend methods should be relatively easy to write. 
-//TODO Place actual DAO classes in backend, make them static, wire them into one class
+We were wrong about above assumption, however everything gets generated in Backend.init() for the database stuff, and it should remain static. 
 
 ## Communication between front and back-end
 The primary communication between front and back-end should occur through static properties files
