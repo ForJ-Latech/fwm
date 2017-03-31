@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="446.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.ShowPlayersController">
+   <children>
+      <Label fx:id="name" alignment="CENTER" layoutX="27.0" layoutY="15.0" prefHeight="50.0" prefWidth="541.0" text="Name">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="description" alignment="TOP_LEFT" layoutX="27.0" layoutY="74.0" prefHeight="348.0" prefWidth="322.0" text="description" wrapText="true" />
+      <HBox alignment="CENTER" layoutX="29.0" layoutY="19.0" prefHeight="42.0" prefWidth="69.0">
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="◀">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Button>
+            <Button fx:id="forwardButton" alignment="CENTER" mnemonicParsing="false" onAction="#forward" text="▶">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <Pane layoutX="362.0" layoutY="74.0" prefHeight="225.0" prefWidth="219.0">
+         <children>
+            <ImageView fx:id="image" fitHeight="225.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

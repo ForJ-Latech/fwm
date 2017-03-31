@@ -1,0 +1,14 @@
+Approx working areas. 
+
+Jay - PROPERTIES/STARTUP/INTEGRATION (ME)
+Jack - HTML
+James - BACKEND
+Joey - GUI
+Matt - BACKEND
+Ryan - GUI / Jetty Controller
+Diwakar - HTML
+Stephan - GUI
+
+
+
+file -> start jetty service! 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="interactionListContainer" alignment="TOP_CENTER" prefHeight="437.0" prefWidth="597.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.InteractionList.ListController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="27.0" prefWidth="597.0" VBox.vgrow="SOMETIMES">
+         <children>
+            <Button fx:id="newInteraction" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#addNewInteraction" text="New Interaction" textAlignment="CENTER" />
+         </children>
+      </HBox>
+      <ScrollPane prefHeight="403.0" prefWidth="597.0">
+         <content>
+            <VBox fx:id="list" onMouseClicked="#addNewInteraction" prefHeight="378.0" prefWidth="593.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

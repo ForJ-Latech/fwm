@@ -1,0 +1,14 @@
+body { 
+    background-color: black;
+    margin: auto;
+    width: 70%;
+    padding: 10px; 
+}
+        
+div {
+    background-color: lightgrey;
+    width: 70%;
+    border: 5px solid red;
+    padding: 25px;
+    margin: 25px;
+}

@@ -1,0 +1,186 @@
+<project name="fwm" default="dist" basedir=".">
+	<description>
+	    configure first with either:
+			configure.eclipse
+			configure.prod
+		mvn goals = process-sources profile = copy-jars
+		needs to be run so that lib folder exists with libraries.
+		
+		dist will package this for distribution
+	</description>
+
+
+	<property name="src" location="src"/>
+	<property name="resources" location="src/main/resources"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="dist"/>
+	<property name="lib" location="lib"/>
+	<property name="propdir" location="FWM-properties"/>
+
+	<path id="master-classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar"/>
+		</fileset>
+		<pathelement path="${build}"/>
+	</path>
+
+	<target name="deleteResources">
+		<delete failonerror="false" quiet="false" includeemptydirs="true">
+			<fileset dir="${resources}">
+				<include name="**"/>
+			</fileset>
+			<fileset dir="${propdir}">
+				<include name="**"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="configure.eclipse" depends="deleteResources">
+		<copy todir="${resources}">
+			<fileset dir="configure/eclipse"/>
+		</copy>
+		<copy todir="${resources}">
+			<fileset dir="configure/both"/>
+		</copy>
+	</target>
+
+	<target name="configure.prod" depends="deleteResources">
+		<copy todir="${resources}">
+			<fileset dir="configure/prod"/>
+		</copy>
+		<copy todir="${resources}">
+			<fileset dir="configure/both"/>
+		</copy>
+	</target>
+
+
+	<target name="configure.start_test" depends="deleteResources">
+		<copy todir="${resources}">
+			<fileset dir="configure/start_test"/>
+		</copy>
+		<copy todir="${resources}">
+			<fileset dir="configure/both"/>
+		</copy>
+	</target>
+
+	<target name="init" depends="clean">
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${build}">
+			<classpath refid="master-classpath"/>
+		</javac>
+		<copy todir="${build}">
+			<fileset dir="${src}/main/java" excludes="**/*.java">
+			</fileset>
+		</copy>
+		<copy todir="${build}/src">
+			<fileset dir="${src}" excludes="main/java/**"/>
+		</copy>
+	</target>
+
+	<path id="build-classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<manifestclasspath property="buildLib" jarfile="${dist}/FWM-${DSTAMP}.jar">
+		<classpath refid="build-classpath"/>
+	</manifestclasspath>
+
+	<target name="dist" depends="compile">
+
+		<!-- This will cause our lib to be packaged in WEB-INF/lib -->
+
+		<mkdir dir="${build}/src/main/webapp/WEB-INF/lib"/>
+		<copy todir="${build}/src/main/webapp/WEB-INF/lib">
+			<fileset dir="${lib}"/>
+		</copy>
+		
+		<jar jarfile="${dist}/FWM-${DSTAMP}.jar" 
+					basedir="${build}">
+			<!-- need to get all the classes onto base path. for app to run -->
+			<restrict>
+				<name name="**/*.class"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+
+			<!-- some of these classes require properties files -->
+
+			<restrict>
+				<name name="**/*.properties"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+
+			<!-- some require xml files. -->
+			<restrict>
+				<name name="**/*.xml"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+
+ 
+			<restrict>
+				<name name="**/*.xsd"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+			
+
+			<!-- javax.servlet has some dtd files? -->
+			<restrict>
+				<name name="**/*.dtd"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+			
+			<!-- Spring has gifs... -->
+			<restrict>
+				<name name="**/*.gif"/>
+				<archives>
+					<zips>
+						<fileset dir="${lib}" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+			
+			<manifest>
+				<attribute name="Main-Class" value="com.forj.fwm.startup.App"/>
+				<attribute name="Application-Name" value="ForJ FWM" />
+			</manifest>
+			
+		</jar>
+		<!-- <antcall target="clean"/> -->
+		<echo>Your file should be available in "${dist}/FWM-${DSTAMP}.jar"!
+		</echo>
+	</target>
+
+	<target name="clean"
+	        description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}"/>
+	</target>
+
+</project>

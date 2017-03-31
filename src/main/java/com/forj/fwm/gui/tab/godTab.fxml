@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<Tab fx:id="tabHead" text="God Tab" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.GodTabController">
+   <content>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="367.0" prefWidth="615.0">
+         <content>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <TextField fx:id="name" promptText="Name">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="race" promptText="Race" />
+                                    <Label text="Attributes" textAlignment="CENTER" />
+                                    <TextArea fx:id="attributes" prefHeight="200.0" prefWidth="178.0" promptText="This text will not be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <TextField fx:id="pantheon" promptText="Pantheon">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="godClass" promptText="Class" />
+                                    <Label text="Description" />
+                                    <TextArea fx:id="description" prefHeight="200.0" prefWidth="178.0" promptText="This text will be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <TextField fx:id="gender" promptText="Gender">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <TextField visible="false" />
+                                    <Label text="History" />
+                                    <TextArea fx:id="history" prefHeight="200.0" prefWidth="178.0" promptText="This text will not be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="3.0" right="3.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" />
+                     </children>
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="rhsVbox" prefHeight="200.0" prefWidth="90.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Button fx:id="statBlockButton" alignment="CENTER" mnemonicParsing="false" onAction="#showStatBlock" text="Statblock" />
+                        <Label alignment="CENTER" text="future relation" textAlignment="CENTER" textOverrun="CLIP" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
+   </content>
+</Tab>
