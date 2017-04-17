@@ -1,0 +1,15 @@
+A BASIC DAO should contain 
+1. A search by name in order of last edited, and ignoring case.
+	e.g NPCDao.findByName("Matt Sw"); // returns list containing Matt Swart
+2. A search by id
+	e.g NPCDao.getById(Long l);
+3. A way to retrieve all relational connections when passed an object and the associated sub methods, 
+	e.g NPCDao.getAllInteractions(NPC);
+	or InteractionDao.getAllInteractions(NPC);
+	NPCDao.getStatblock(NPC);
+If contains:
+	4. A search by last name / pantheon
+5. A way to see all previously edited in order of last edited 
+	e.g NPCDao.getAllNpcs(); // but ordered. 
+6. A way to save the object and it's interactions. 
+	e.g NPCDao.saveNpc(NPC n);

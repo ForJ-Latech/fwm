@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.MainController">
+   <children>
+      <MenuBar fx:id="MenuBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="27.0" prefWidth="533.0">
+         <menus>
+            <Menu fx:id="FileMenu" mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Change World" />
+                  <MenuItem mnemonicParsing="false" onAction="#startWebservice" text="Start Webservice" />
+               </items>
+            </Menu>
+            <Menu fx:id="GlobalSettingsMenu" mnemonicParsing="false" text="Global Settings">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Set Max Number of Tabs" />
+                  <MenuItem mnemonicParsing="false" onAction="#showHotkeySettings" text="Edit Hotkeys" />
+               </items>
+            </Menu>
+            <Menu fx:id="WorldSettingsMenu" mnemonicParsing="false" text="World Settings">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showWorldSettings" text="Open World Settings" />
+                  <MenuItem mnemonicParsing="false" text="Edit World God Statblock" />
+                  <MenuItem mnemonicParsing="false" text="Edit World NPC Statblock" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Search">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="List Previously Edited" />
+                  <MenuItem mnemonicParsing="false" text="List Interactions" />
+                  <MenuItem mnemonicParsing="false" text="&quot;I Forgot&quot; Search" />
+               </items>
+            </Menu>
+            <Menu fx:id="HelpMenu" mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Open Forj Website" />
+                  <MenuItem mnemonicParsing="false" onAction="#showAbout" text="View About" />
+                  <MenuItem mnemonicParsing="false" text="View Crash Course" />
+                  <MenuItem mnemonicParsing="false" onAction="#showReadme" text="View Readme" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="375.0" prefWidth="176.0">
+               <children>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="372.0" prefWidth="176.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox fx:id="searchPane" minHeight="-Infinity" prefHeight="150.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                        <VBox prefHeight="96.0" prefWidth="176.0" VBox.vgrow="NEVER">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Create" textAlignment="CENTER" VBox.vgrow="NEVER" />
+                              <GridPane VBox.vgrow="ALWAYS">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button fx:id="CreateRegionButton" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#CreateRegion" text="Region" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="CreateNPCButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#CreateNPC" text="NPC" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="CreateGodButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#CreateGod" text="God" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                                    <Button fx:id="CreateEventButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#CreateEvent" text="Group" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="1.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <StackPane fx:id="statusStackPane" VBox.vgrow="ALWAYS">
+                     <children>
+                        <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="408.0" />
+                     </children>
+                  </StackPane>
+                  <HBox alignment="TOP_CENTER" prefWidth="200.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <VBox fx:id="statusVBoxmc" prefHeight="31.0" prefWidth="413.0" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="showPlayersButton" mnemonicParsing="false" onAction="#showPlayers" prefHeight="26.0" prefWidth="58.0" text="Show" HBox.hgrow="NEVER" />
+                     </children>
+                     <padding>
+                        <Insets bottom="3.0" right="3.0" top="3.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

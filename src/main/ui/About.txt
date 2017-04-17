@@ -1,0 +1,14 @@
+Application Version: Alpha 0.165
+Liscensed under GPLv3
+
+Fantasy World Manager is an application designed for Dungeon Masters to keep track of the information they are using in their RPG. It also features functionality for displaying the information they want to their players.
+
+Created by:
+	Jay Ehlmann
+	Joseph Hardy
+	Stephan Hibbard
+	James Ortis
+	Diwakar Simkhada
+	Jack Strickland
+	Matthew Swart
+	Ryan Walters

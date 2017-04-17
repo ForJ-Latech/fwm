@@ -1,0 +1,10 @@
+
+Points		Time			Technical Complexity
+.5 		- 30 	minutes		Changing the font color, adding a value to an array.
+1 		- 1 	hour		Making a simple html page.
+2 		- 2 	hours		Making an html page look alright.
+3 		- 3 	hours		Making an html page look alright and a controller method.
+5 		- 5 	hours		Expanding an existing feature with difficulty
+8 		- 8 	hours		Adding a small system
+13 		- 13	hours		Creating a project
+21		- 21	hours		Reinventing the wheel

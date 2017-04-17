@@ -1,0 +1,32 @@
+java - no PascalCase only camelCase
+classnames -> PascalCase
+
+no System.out.println -> log.debug | log.info | log.error
+
+filenames -> camelCase
+
+.fxml -> in src/main/java/com.*.*.*.*... camelCase (next to used java file)
+
+accidental files e.g. Readme.txt & other. -> src/main/ui or src/main/webapp... also camelCase pls.
+
+never use underscores, anywhere.
+
+no using single line ifs or fors:
+
+// BAD.
+if(true)
+	doSomething();
+
+// GOOD
+if(true){
+	doSomething();
+}
+
+Pattern for controllers is:
+	public static Controller startController()
+	{
+		return controller with ui component initialized. 
+	}
+	
+e.printStackTrace() -> log.error(e.getStackTrace());
+	
