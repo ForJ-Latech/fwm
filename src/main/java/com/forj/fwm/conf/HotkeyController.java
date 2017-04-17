@@ -242,7 +242,7 @@ public class HotkeyController {
 
 	public static HotkeyController startHotkeyController() throws Exception {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(new URL("file:src/main/java/com/forj/fwm/conf/hotkeySettings.fxml"));
+		loader.setLocation(HotkeyController.class.getResource("hotkeySettings.fxml"));
 		ScrollPane rootLayout = (ScrollPane) loader.load();
 		hotkeyController = (HotkeyController) loader.getController();
 		hotkeyController.start(new Stage(), rootLayout);
