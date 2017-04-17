@@ -1,0 +1,8 @@
+ignore/**
+lib/**
+target/**
+.svn/**
+FWM-Properties/**
+/FWM-properties/
+src/main/resources/**
+/src/main/resources/**
