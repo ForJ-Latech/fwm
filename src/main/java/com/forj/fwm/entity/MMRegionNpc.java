@@ -16,6 +16,11 @@ public class MMRegionNpc {
 		
 	}
 	
+	public MMRegionNpc(Region region, Npc npc) {
+		this.region = region;
+		this.npc = npc;
+	}
+	
 	public Npc getNpc() {
 		return npc;
 	}

@@ -42,6 +42,7 @@ public class AppConfig {
 	public static final String PROD = "prod";
 	public static final String PORT = "port";
 	public static final String WORLD_LOCATION = "worldlocation";
+	public static final String WORLDS_LOCATION = "worldsLocation";
 	public static final String START_TEST="start-test";
 	
 	public static void saveDefaultWorldLocation(String worldloc) throws ConfigurationException{
@@ -62,6 +63,10 @@ public class AppConfig {
 
 	public static boolean getProd(){
 		return config.getBoolean(PROD);
+	}
+	
+	public static String getWorldsLocation(){
+		return config.getString(WORLDS_LOCATION);
 	}
 	
 	private static String defaultFileName = "src/main/resources/app.properties";

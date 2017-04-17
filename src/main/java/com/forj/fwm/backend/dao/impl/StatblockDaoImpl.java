@@ -9,13 +9,18 @@ import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.support.ConnectionSource;
 
-public class StatblockDaoImpl  extends BaseDaoImpl<Statblock,String> implements StatblockDao{
-	public StatblockDaoImpl(ConnectionSource connectionSource) throws SQLException{
+public class StatblockDaoImpl  extends BaseDaoImpl<Statblock,String> implements StatblockDao {
+	public StatblockDaoImpl(ConnectionSource connectionSource) throws SQLException {
 		super(connectionSource, Statblock.class);
 	}
 	
 	public List<Statblock> queryForLike(String arg0, Object arg1) throws SQLException {
-		PreparedQuery<Statblock> preparedQuery = this.queryBuilder().where().like(arg0, "%" + arg1 + "%").prepare();
+		PreparedQuery<Statblock> preparedQuery;
+		if (arg1 instanceof Integer){
+			preparedQuery = this.queryBuilder().where().like(arg0, arg1).prepare();
+		} else {
+			preparedQuery = this.queryBuilder().where().like(arg0, "%" + arg1 + "%").prepare();
+		}
 		return this.query(preparedQuery);
 	}
 }

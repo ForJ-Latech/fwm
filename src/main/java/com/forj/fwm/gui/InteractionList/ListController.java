@@ -1,6 +1,5 @@
 package com.forj.fwm.gui.InteractionList;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.gui.InteractionList.InteractionController;
-import com.forj.fwm.startup.ComponentSelectorController;
+import com.forj.fwm.gui.tab.Saveable;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -21,22 +20,25 @@ import javafx.stage.Stage;
 public class ListController extends Application{
 	private static Logger log = Logger.getLogger(ListController.class);
 
-	public void start(VBox rootLayout, List<Interaction> listA) throws Exception {
+	public void start(VBox rootLayout , List<Interaction> listA, Saveable s) throws Exception {
 		log.debug("start interaction list controller called");
 		started = true;
+		this.s = s;
 		
 		//For loop that passes the list of existing interactions into the interaction list
 		for (int i = 0; i < listA.size(); i++){
-			InteractionController currentInteraction = InteractionController.startInteraction(listA.get(i));
+			InteractionController currentInteraction = InteractionController.startInteraction(listA.get(i), s);
+			currentInteraction.getSingleInteraction().setManaged(true);
 			list.getChildren().add(0,currentInteraction.getSingleInteraction());
+			interactionControllers.add(currentInteraction);
+			
 		}
 		
 	}
 	
-//	public static void main(String[] args) throws Exception {
-//		ComponentSelectorController.noUiStart();
-//		launch(args);
-//	}
+	private Saveable s;
+	
+	private List<InteractionController> interactionControllers = new ArrayList<InteractionController>();
 	
 	private static boolean started = false;
 
@@ -58,14 +60,29 @@ public class ListController extends Application{
 	private Button newInteraction;
 	
 	@FXML
-	private void addNewInteraction() throws Exception{
+	public void addNewInteraction() throws Exception{
 		
 		log.debug("add new interaction called");
 		Interaction i = new Interaction();
 		i.setPlayerCharacter("Party");
-		InteractionController currentInteraction = InteractionController.startInteraction(i);
+		InteractionController currentInteraction = InteractionController.startInteraction(i, s);
+		currentInteraction.getSingleInteraction().setManaged(true);
+		list.setManaged(true);
+		list.setFillWidth(true);
 		list.getChildren().add(0,currentInteraction.getSingleInteraction());
-		
+		interactionControllers.add(currentInteraction);
+		currentInteraction.getPartyMember().requestFocus();
+	}
+	
+	public static ListController startInteractionList(List<Interaction> listA , Saveable s) throws Exception {
+		log.debug("static startInteractionList called.");
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(ListController.class.getResource("interactionList.fxml"));
+		VBox rootLayout = (VBox)loader.load();
+		ListController cr = (ListController)loader.getController();
+		cr.start(rootLayout, listA, s);
+		started = true;
+		return cr;
 	}
 	
 	
@@ -73,30 +90,15 @@ public class ListController extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(ListController.class.getResource("interactionList.fxml"));
-		VBox rootLayout = (VBox)loader.load();
-		ListController cr = (ListController)loader.getController();
 		
-		Scene myScene = new Scene(rootLayout);
-		primaryStage.setScene(myScene);		
-		primaryStage.show();
-		
-		Interaction i1 = new Interaction();
-		i1.setPlayerCharacter("Bob");
-		i1.setDescription("prayed to Satan");
-		Interaction i2 = new Interaction();
-		i2.setPlayerCharacter("Bob");
-		i2.setDescription("talked to Joe");
-		Interaction i3 = new Interaction();
-		i3.setPlayerCharacter("Dan");
-		i3.setDescription("bought some food from Joe");
-		
-		List<Interaction> listA = new ArrayList<Interaction>();
-		listA.add(i1);
-		listA.add(i2);
-		listA.add(i3);
-		
-		cr.start(rootLayout, listA);
-			
-		
+	}
+	
+	public List<Interaction> getAllInteractions()
+	{
+		List<Interaction> interactions = new ArrayList<Interaction>();
+		for (int i = 0; i < interactionControllers.size(); i++){
+					interactions.add(interactionControllers.get(i).getInteraction());	
+		}
+		return interactions;
 	}
 }

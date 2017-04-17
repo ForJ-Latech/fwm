@@ -126,11 +126,7 @@
                   </TabPane>
                   <HBox alignment="TOP_CENTER" prefWidth="200.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Status bar will go here" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
+                        <VBox fx:id="statusVBoxmc" HBox.hgrow="ALWAYS" />
                         <Button fx:id="showPlayersButton" mnemonicParsing="false" onAction="#showPlayers" prefHeight="26.0" prefWidth="58.0" text="Show" HBox.hgrow="NEVER" />
                      </children>
                      <padding>

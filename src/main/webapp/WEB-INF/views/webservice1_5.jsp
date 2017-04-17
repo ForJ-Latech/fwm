@@ -1,82 +1,54 @@
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 <html>
 	<head>
-		<script>
-		
-			function redirectIndex() 
-			{
+  		<link rel="stylesheet" type="text/css" href="/c/webservice1_5.css">	
+			
+		<script type="text/javascript">
+			// javascript for redirecting to index while clicking Home
+			function redirectIndex() { 
 				window.location.assign("/");
-	    		};
-		</script>
-		<style> 
-			ul {
-    			list-style-type: none;
-    			margin: 0;
-    			padding: 0;
-    			overflow: hidden;
-    			background-color: dimgrey;    			
-				}
-
-			li {
-    			float: left;
-    			border-right:1px solid #bbb;
-				}
-
-			
-
-			li a {
-					display: block;
-					color: white;
-    				text-align: center;
-   					padding: 14px 16px;
-    				text-decoration: none;
-					}
-
-			.active {
-    					background-color: limegreen;
-    				}
-
-			.div2 	{
-    				width: 1150px;
-    				height: 500px;    
-    				padding: 50px;
-   					border: 3px solid blue;
-   				
-   					position: absolute;
-    				left: 1%;
-   					top : 10%
-				}
-				
-		 img 	{
-		 		display :block;
-		 		margin: auto;
-		 		position: auto;	
-		 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-		 		 		
-		 	}
-			
-		body 	{
-				background-color: lightgrey;
+			};
+			function searchvalue(){				
+				window.location.assign(window.location + "/" + searchvalue ):
 			}
-		</style>
+		</script>	
+		
+				
 	</head>
 	<body>
-		<ul>
-  			<li><a class="active" href="redirectIndex();" >Home</a></li>
-   			<li><a>Co-Dungeon Master</a></li>
-			</ul>
-		
-		
-		</div>
-		
-		<div class="div2">
-			
+	    	<ul>
 				
-		
-		<p>
-			
-		</p>
-	</div>
+       			<li><a class="active" id="home" onclick="redirectIndex();" href="#" >Home</a></li>
+				<li><a>Co-Dungeon Master</a></li>
+				<li><a>NPCs</a></li>
+							
+     	
+    		</ul>
+    		
+    		<div class="outerbox">		    			
+     			<div class="box1" align="center">
+     			<br>
+     			
+    				<input type="text" id="myInput" onkeyup="searchvalue()" placeholder="Search Npc.." title="Npc">
+    				<div>
+     				<!-- -------------------C:out and C:foreach for JSTL --> 
+     				   <c:forEach items="${found}" var = "thing">	
+     				    <br/>
+						<a href="/loadNpc/${thing.getID()}"> ${thing.getfName()} </a>
+					  </c:forEach> 	    					
+					<!-- ------------------------------------------------- -->
+     				</div>
+     			</div>
+     			<div class="box2">     			
+     			<p style="text-align:center;"> <strong>${npc.getfName()} </strong> </p> <br>
+     			<img id="img" src="/multimedia/${npc.getImageFileName()}"><br>
+     			${npc.getDescription()}
+     			</div>
+    		</div>
 	</body>
 </html>
 

@@ -15,6 +15,11 @@ public class OMRegionInteraction {
 	public OMRegionInteraction(){
 		
 	}
+	
+	public OMRegionInteraction(Region region, Interaction interaction) {
+		this.region = region;
+		this.interaction = interaction;
+	}
 
 	public Region getRegion() {
 		return region;

@@ -12,8 +12,13 @@ public class MMEventNpc {
 	@DatabaseField(foreign = true, canBeNull = false, uniqueCombo = true)
 	private Event event;
 	
-	public MMEventNpc(){
+	public MMEventNpc() {
 		
+	}
+	
+	public MMEventNpc(Event event, Npc npc) {
+		this.event = event;
+		this.npc = npc;
 	}
 
 	public Npc getNpc() {

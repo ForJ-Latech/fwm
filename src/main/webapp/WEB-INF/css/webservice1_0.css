@@ -1,51 +1,69 @@
-body	{
-    	margin: 0;
-    	padding: 0;
-    	text-align: center; /* !!! */
-    	}
+body {
+	margin: 0;
+    padding: 0;
+    text-align: center; /* !!! */
+}
 
-.centered	{
-    		margin: 0 auto;
-    		text-align: left;
-		}
+html, body, {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 
-ul	{ 
+.centered {
+	margin: 0 auto;
+    text-align: left;
+}
+
+ul { 
 	list-style-type: none; 
-	margin: 0; 
+	margin: 0 auto; 
 	padding: 0; 
 	overflow: hidden; 
 	background-color: dimgrey; 
-	}
+}
 
-li	{
+li {
 	float: left; 
 	border-right:1px solid #bbb;
-	}
+}
 
-li a	{ 
+a { 
 	display: block; 
 	color: white; 
 	text-align: center; 
-	padding: 14px 16px; 
-	text-decoration: none; 
-	} 
-li a:hover:not(.active)	{
-    			background-color: blue;
-			}
-.active	{ 
+	padding: 16px; 
+}
+
+:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+}
+
+#home	{ 
 	background-color: limegreen;
-	}
+}
 	
 
-.outerbox	{ 
-		padding: 20px; 
-		border: 5px solid limegreen; 
-    		margin: 0 auto;
-    		text-align: center;	
-   		background-color: silver grey; 
-			/*width:95%; 
-			height: 95%; */
-		}    
+.outerbox { 
+	padding: 20px; 
+    margin: 0 auto;
+	text-align: center;	
+   	background-color: silver grey; 
+}    
 
 .inner1	{ 
 	padding: 20px; 
@@ -54,25 +72,35 @@ li a:hover:not(.active)	{
 	border: 5px solid limegreen; 
 	background-color:lightgrey; 
 	width:80%; 
-	height:0%;
+	/* height:0%; */
 	font-size:x-large; 
 	text-align:center;
-	}	
+}	
 
-.description	{ 
-		padding:20px; 
-		left:2%; 
-		top:75%; 
-		border: 5px solid limegreen; 
-		background-color: silver grey; 
-		width:80%; 
-		height: 20%;
-		text-align: center;
-		}	
+.description { 
+	padding:20px; 
+	/* left:2%; */ 
+	top:75%; 
+	border: 5px solid limegreen; 
+	background-color: silver grey; 
+	width:80%; 
+	height: 20%;
+	text-align: center;
+}	
 
-img	{ 
-	width:350px; 
-	height:500px; 
+img	{
+	height: auto; 
+    width: auto; 
+    max-width: 300px; 
+    max-height: 300px;
 	margin:30px; 
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	}
+}
+
+.audioplayer {
+	display: table;
+    margin: 0 auto;
+}
+
+
+

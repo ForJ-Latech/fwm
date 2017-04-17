@@ -42,7 +42,7 @@ The Main Window (The one with "Fantasy World Manager" as the title) is the prima
 
 [Bottom-left buttons]
 	Create NPC - Creates new NPC object. 
-	Create Event - Creates new Event object. 
+	Create Group - Creates new Group object. 
 	Create Region - Creates new Region object.
 	Create God - Creates new God object.
 

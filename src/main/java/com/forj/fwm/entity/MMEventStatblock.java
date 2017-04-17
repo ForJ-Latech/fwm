@@ -15,6 +15,11 @@ public class MMEventStatblock {
 	public MMEventStatblock() {
 
 	}
+	
+	public MMEventStatblock(Event event, Statblock statblock) {
+		this.event = event;
+		this.statblock = statblock;
+	}
 
 	public Statblock getStatblock() {
 		return statblock;

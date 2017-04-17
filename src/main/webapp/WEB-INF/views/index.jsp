@@ -1,27 +1,59 @@
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<html>
-<head>
-	<link rel="stylesheet" type="text/css" href="/c/index.css">
-	<title> Webservice Selection </title>
-	<script>
-		function redirectWS1_0() {
-			window.location.assign("/startwebservice1_0");
-	    };
-	    function redirectWS1_5() {	    	
-	    	windows.location.assign("/startwebservice1_5");
-	    };
-	</script>
-</head>
-<body>
-	<div align="center"><br>
-	<h2> Select a webservice </h2>
-	<hr>
-	<form>
-		<input type="button" value="Web Service 1.0" id="ws1.0" onclick="redirectWS1_0()" /> </br>
-		<input type="button" value="Web Service 1.5" id="ws1.5" onclick="redirectWS1_5()" /> </br>
-		<input type="button" value="Web Service 2.0" id="ws2.0" onclick="Page not found" /> </br>
-	</form> 
-	</div>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>FWM Homepage</title>
 
+    <!-- Bootstrap core CSS -->
+    <link href="/c/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="/c/index.css" rel="stylesheet">
+    
+  </head>
+
+  <body>
+  	<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+  		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    		<span class="navbar-toggler-icon"></span>
+ 		</button>
+  		<div class="navbar navbar-default" id="navbars">
+      		<ul class="nav navbar-nav">
+        		<li class="nav-item active">
+           			<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+	          	</li>
+	        </ul>
+      	</div>
+    </nav>
+    <header></header>
+    <div id="main" class="container">
+    	<div class="row">
+    		<div class="col-sm-12 text-center">
+    			<h3>
+					Fantasy World Manager
+				</h3>
+			<hr>
+    		</div>
+    	</div>
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				  <a id="webservicebutton" href="/webservice1_0bs" class="btn btn-primary" role="button">Start Web Service</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   	<!-- This is the link for jQuery -->
+	<script type="text/javascript" src="/s/jquery-3.2.1.min.js"></script>
+    <script src="/s/bootstrap.min.js"></script>
+    <script type="text/javascript">
+	    $(document).ready(function(){
+	        $("#webservicebutton").click();
+	    });
+    </script>
+  </body>
+</html>

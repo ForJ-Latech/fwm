@@ -17,10 +17,10 @@ public class HelloController{
 	
 	/**
 	 * This is the way that the majority of our web pages should work.
+	 * This returns the index page.
 	 * @param modelMap
 	 * @return
 	 */
-	
 	// All views should be created with "HttpServletRequest request" as a second parameter for getting client IP
 	@RequestMapping("/")
     public ModelAndView home(ModelMap modelMap, HttpServletRequest request)
@@ -32,7 +32,7 @@ public class HelloController{
 	public ModelAndView startWS1_0(ModelMap modelMap, HttpServletRequest request)
 	{
 		promptPassword(request);
-		return new ModelAndView("redirect:/webservice1_0");
+		return new ModelAndView("redirect:/webservice1_0bs");
 	}
 	
 	@RequestMapping("/startwebservice1_5")

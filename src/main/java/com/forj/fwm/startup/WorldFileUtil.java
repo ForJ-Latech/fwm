@@ -101,7 +101,7 @@ public class WorldFileUtil {
 	}
 	
 	private static void copyDefaultWorldProperties(File outputLocation) throws IOException{
-		copyFile(new File("src/main/resources/world.properties"), outputLocation);
+		AppFileUtil.copyFile(App.retGlobalResource("/src/main/resources/world.properties").openStream(), outputLocation);
 	}
 	
 	private static File copyFile(File input, File outputLocation) throws IOException{
@@ -128,24 +128,17 @@ public class WorldFileUtil {
 				}
 			}
 			// sort our list so that we can put it back. 
-			files.sort(new Comparator<Integer>(){
-				public int compare(Integer o1, Integer o2) {
-					return o1.compareTo(o2);
+			int max=0;
+			for(Integer i: files){
+				if(i > max){
+					max = i;
 				}
-			});
-			Integer lastThing = null;
-			if(!files.isEmpty()){
-				lastThing = files.get(files.size() - 1);
-				lastThing += 1;
 			}
-			else
-			{
-				lastThing = 0;
-			}
+			
 			log.debug("Incomin file name on add multimedia: " + incoming.getName());
 			String incomingFileEnd = incoming.getName().substring(incoming.getName().lastIndexOf("."));
 			File saved = null;
-			saved = copyFile(incoming, new File(multimediaLocation + lastThing.toString() + incomingFileEnd));
+			saved = copyFile(incoming, new File(multimediaLocation + String.valueOf(max + 1) + incomingFileEnd));
 			return saved;
 		}catch(IOException ex){
 			log.error(ex);
@@ -169,7 +162,7 @@ public class WorldFileUtil {
 		return dbLocation;
 	}
 
-	public String getMultimediaLocation() {
+	public String getMultimediaLocation(){		
 		return multimediaLocation;
 	}
 }

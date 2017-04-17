@@ -93,7 +93,7 @@
                         <Insets bottom="2.0" left="10.0" />
                      </padding>
                   </RadioButton>
-                  <RadioButton fx:id="radio20" mnemonicParsing="false" onAction="#toggleRadios" text="Allow Co-DM to edit">
+                  <RadioButton fx:id="radio20" mnemonicParsing="false" onAction="#toggleRadios" text="Allow Co-DM to connect">
                      <padding>
                         <Insets left="10.0" />
                      </padding>

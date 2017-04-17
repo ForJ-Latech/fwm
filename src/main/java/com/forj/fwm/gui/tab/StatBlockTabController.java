@@ -6,9 +6,14 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
+import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
+import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.gui.MainController;
+import com.forj.fwm.gui.InteractionList.ListController;
+import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.startup.App;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,7 +39,9 @@ public class StatBlockTabController implements Saveable {
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
-			save();
+			if(!WorldConfig.getManualSaveOnly()){
+				fullSave();
+			}
 		}
 	};
 	
@@ -63,7 +70,7 @@ public class StatBlockTabController implements Saveable {
 		log.debug("statBlockText.get: " +statBlockText.getText());
 	}
 	
-	public void save(){
+	public void fullSave(){
 		getAllTexts();
 		try{
 			Backend.getStatblockDao().createIfNotExists(stat);
@@ -72,7 +79,8 @@ public class StatBlockTabController implements Saveable {
 			log.debug("Save successfull!");
 			log.debug("stat id: " + stat.getID());
 			log.debug("truth: " + stat.getDescription());
-			beSaved.save();
+			App.getMainController().addStatus("Successfully saved Statblock " + stat.getName() + " ID: " + stat.getID());
+			beSaved.simpleSave();
 		}catch(SQLException e){
 			log.error(e.getStackTrace());
 		}
@@ -87,12 +95,13 @@ public class StatBlockTabController implements Saveable {
 		log.debug("statBlockTab.start called");
 		stat = s;
 		this.beSaved = beSaved ;
+		this.tabHead.setText(((Searchable)beSaved.getThing()).getName());
 		setAllTexts(stat);
 		
 		thingsThatCanChange = new TextInputControl[] {nameText, statBlockText};
 		nameText.textProperty().addListener(nameListener);
 		for(TextInputControl c: thingsThatCanChange){
-			c.setOnKeyTyped(saveEvent);
+			c.setOnKeyReleased(saveEvent);
 		}
 		
 	}
@@ -129,7 +138,7 @@ public class StatBlockTabController implements Saveable {
 		return cr;
 	}
 
-	public Object getThing() {
+	public Searchable getThing() {
 		return stat;
 	}
 
@@ -137,4 +146,20 @@ public class StatBlockTabController implements Saveable {
 		return tabHead;
 	}
 	
+	public AddableImage getAddableImage() {
+		return null;
+	}
+	
+	public ListController getListController(){
+		return null;
+	}
+
+	public void simpleSave() {
+		fullSave();
+		
+	}
+
+	public void relationalSave() {
+		fullSave();
+	}
 }

@@ -15,6 +15,11 @@ public class OMNpcInteraction {
 	public OMNpcInteraction(){
 		
 	}
+	
+	public OMNpcInteraction(Npc npc, Interaction interaction) {
+		this.npc = npc;
+		this.interaction = interaction;
+	}
 
 	public Npc getNpc() {
 		return npc;

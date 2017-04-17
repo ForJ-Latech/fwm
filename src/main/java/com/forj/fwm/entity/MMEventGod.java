@@ -12,8 +12,13 @@ public class MMEventGod {
 	@DatabaseField(foreign = true, canBeNull = false, uniqueCombo = true)
 	private Event event;
 
-	public MMEventGod(){
+	public MMEventGod() {
 		
+	}
+	
+	public MMEventGod(Event event, God god) {
+		this.event = event;
+		this.god = god;
 	}
 	
 	public God getGod() {

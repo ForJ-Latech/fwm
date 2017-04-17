@@ -4,26 +4,35 @@ import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.ShowPlayersDataModel;
+import com.forj.fwm.conf.HotkeyController;
+import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
+import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.gui.component.Openable;
+import com.forj.fwm.gui.component.TabControlled;
+import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.tab.WelcomeTabController;
 import com.forj.fwm.startup.App;
+import com.forj.fwm.startup.WorldFileUtil;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -37,12 +46,17 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 /**
@@ -55,262 +69,219 @@ import javafx.util.Callback;
  * @author jehlmann, shibbard, rwalters
  *
  */
-public class MainController {
-	
-	//TODO fix the tab controller jay...
-	//TODO fix the tab controllers so that they dispose of themselves.
-	private ArrayList<Saveable> tabControllers = new ArrayList<Saveable>();
+public class MainController extends TabControlled implements Openable {
+
 	private ShowPlayersController spController;
 
-    @FXML
-    private MenuBar MenuBar;
+	@FXML
+	private MenuBar MenuBar;
 
-    @FXML
-    private Menu FileMenu;
+	@FXML
+	private Menu FileMenu, GlobalSettingsMenu, WorldSettingsMenu, HelpMenu;
 
+	@FXML
+	private Button CreateNPCButton, CreateGodButton, CreateEventButton, CreateRegionButton, showPlayersButton;
+    
     @FXML
-    private Menu GlobalSettingsMenu;
-
+    private VBox randy, statusVBoxmc;
+    
     @FXML
-    private Menu WorldSettingsMenu;
-
-    @FXML
-    private Menu HelpMenu;
-
-    @FXML
-    private TextField SearchArea;
-
-    @FXML
-    private ListView<Searchable> listView;
-
-    @FXML
-    private Button CreateNPCButton;
-
-    @FXML
-    private Button CreateGodButton;
-
-    @FXML
-    private Button CreateEventButton;
-
-    @FXML
-    private Button CreateRegionButton;
-
-    @FXML
-    private TabPane TabPane;
-
-    @FXML
-    private Button showPlayersButton;
+    private StackPane statusStackPane;
+   
+    private StatusBarController statusBarController;
 
 	private static Logger log = Logger.getLogger(MainController.class);
-
 	private static boolean started = false;
-
 	private Stage ourStage;
-	
+
 	public static boolean getStarted() {
 		return started;
 	}
 
-	private EventHandler<Event> searchEvent = new EventHandler<Event>(){
-		public void handle(Event event){
-			log.debug("Search event firing!");
-			SearchDB();
-		}
-	};
+	@FXML
+	private VBox searchPane;
 
-	static class SearchCell extends ListCell<Searchable> {
-		@Override
-		public void updateItem(Searchable item, boolean empty) {
-			super.updateItem(item, empty);
-			if (empty || item == null) {
-				setText(null);
-			}
-			else
-			{
-				setText(item.getName());
-			}
-		}
+	private SearchList sl;
+	public SearchList getSearchList(){
+		return sl;
+	}
+
+	
+	public void startSearchList() throws Exception {
+		searchPane.getChildren().clear();
+		sl = SearchList.createSearchList(SearchList.EntitiesToSearch.ALL, this);
+		sl.getOurRoot().minHeightProperty().bind((searchPane.heightProperty().subtract(10)));
+		searchPane.getChildren().add(sl.getOurRoot());
 	}
 
 	public void start(Stage primaryStage, Pane rootLayout) throws Exception {
-		listView.setCellFactory(new Callback<ListView<Searchable>, 
-				ListCell<Searchable>>() {
-			public ListCell<Searchable> call(ListView<Searchable> arg0) {				
-				return new SearchCell();
-			}
-		});
 		primaryStage.setTitle("Fantasy World Manager");
-		primaryStage.getIcons().add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/FWM-icon.png").openStream()));
+		primaryStage.getIcons()
+				.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/application/64.png").openStream()));
 		Scene myScene = new Scene(rootLayout);
 		primaryStage.setScene(myScene);
+		primaryStage.setMinWidth(640);
+		primaryStage.setMinHeight(520);
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			   public void handle(WindowEvent we) {
+			       log.debug("Main Controller is closing");
+			       started = false;
+			   }
+		   });
+		
 		primaryStage.show();
-		TextInputControl[] thingsThatCanChange = new TextInputControl[] {SearchArea};
-		for(TextInputControl c: thingsThatCanChange){
-			c.setOnKeyTyped(searchEvent);
-		}
+		statusBarController = new StatusBarController(statusStackPane);
+		statusVBoxmc.getChildren().add(statusBarController.getSmallStatus());
 
-		listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			public void handle(MouseEvent event) {
-				System.out.println("clicked on " + listView.getSelectionModel().getSelectedItem());
-				try {
-					OpenTab(listView.getSelectionModel().getSelectedItem());
-				} catch (Exception e) {
-					log.error(e);
-					e.printStackTrace();
-				}
-			}
-		});
 		ourStage = primaryStage;
+		HotkeyController.giveGlobalHotkeys(myScene);
+		HotkeyController.giveMainControllerHotkeys(myScene);
+		startSearchList();
+		WelcomeTabController cr = WelcomeTabController.startWelcomeTab();
+		HotkeyController.giveSearchBarHotkey(sl.getSearchField());
+		tabPane.getTabs().add(cr.getTab());
+		tabPane.getSelectionModel().select(cr.getTab());
+		tabControllers.add(cr);
 		started = true;
+		MenuBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent key) {
+			
+			}
+		}); 
 	}
 
 	public static MainController startMainUi() throws Exception {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(MainController.class.getResource("mainView.fxml"));
-		VBox rootLayout = (VBox)loader.load();
-		MainController cr = (MainController)loader.getController();
+		VBox rootLayout = (VBox) loader.load();
+		MainController cr = (MainController) loader.getController();
 		cr.start(new Stage(), rootLayout);
 		started = true;
 		return cr;
 	}
 
 	@FXML
-	void SearchDB(){
-		listView.getItems().clear();
-		try {
-			for (Npc npc : Backend.getNpcDao().queryForLike("fName",SearchArea.getText())) {
-				listView.getItems().add(npc);
-			}
-			for (God god : Backend.getGodDao().queryForLike("name",SearchArea.getText())) {
-				listView.getItems().add(god);
-			}
-			for (Region region : Backend.getRegionDao().queryForLike("name",SearchArea.getText())) {
-				listView.getItems().add(region);
-			}
-			/*
-			for (Event event : Backend.getEventDao().queryForLike("Name",SearchArea.getText())) {
-				listView.getItems().add(event);
-			}
-			 */
-		} catch (SQLException e) {
-			log.error(e.getStackTrace());
-		}
-	}
-
-	@FXML
-	void CreateGod() throws Exception {
-		// pray to god that this works. 
+	public void CreateGod() throws Exception {
 		log.debug("Create God called.");
-		God g = new God();
-		g.setName("Satan");
-		GodTabController cr = GodTabController.startGodTab(g);
+		GodTabController cr = GodTabController.startGodTab(null);
 		addTabController(cr);
 	}
 
 	@FXML
-	void CreateNPC() throws Exception {
+	public void CreateNPC() throws Exception {
 		log.debug("Create NPC called.");
-		Npc n = new Npc();
-		n.setfName("Joe");
-		NpcTabController cr = NpcTabController.startNpcTab(n);
+		NpcTabController cr = NpcTabController.startNpcTab(null);
 		addTabController(cr);
+		tabPane.getSelectionModel().select(cr.getTab());
 	}
 
 	@FXML
-	private void CreateRegion() throws Exception {
+	public void CreateRegion() throws Exception {
 		log.debug("Create Region called.");
-		Region r = new Region();
-		r.setName("Hyrule");
-		RegionTabController cr = RegionTabController.startRegionTab(r);
+		RegionTabController cr = RegionTabController.startRegionTab(null);
 		addTabController(cr);
+		tabPane.getSelectionModel().select(cr.getTab());
 	}
 
 	@FXML
-	void CreateEvent() {
-		System.out.println("Event");
+	public void CreateEvent() throws Exception {
+		log.debug("Create Event called.");
+		EventTabController cr = EventTabController.startEventTab(null);
+		addTabController(cr);
+		tabPane.getSelectionModel().select(cr.getTab());
 	}
 
 	@FXML
-	void OpenTab(Object o) throws Exception{
-		log.debug("opening tab from search");
-		if (o instanceof God)
+	public void showPlayers() throws Exception {
+		log.debug("attempting to show players.");
+		spController = App.getShowPlayersController();
+    	if (!spController.isShowing() && WorldConfig.getShowPlayersPopup()){
+    		spController.showController();
+    	}
+		App.spdc.setUpdated(true);
+    	Tab curSelected = tabPane.getSelectionModel().getSelectedItem();
+    	for(Saveable s: tabControllers){		
+    		if(s.getTab().equals(curSelected)){
+    			App.spdc.addOne(s.getThing());
+    			s.getThing().setShown(true);
+    			Backend.SaveSimpleSearchable(s.getThing());
+    			if (WorldConfig.getShowPlayersPopup())
+    	    	{
+	    			spController.playSound(s);
+	    	    	spController.setObject(App.spdc.getDefault());
+    	    	}
+    		}
+    	}
+    }
+
+	@FXML
+	public void showReadme() throws Exception {
+		log.debug("Readme Called");
+		GenericTextController cr = GenericTextController.startGenericTextController("Readme");
+		cr.setTextFromFile(App.retGlobalResource("/src/main/ui/Readme.txt").openStream());
+	}
+
+	@FXML
+	public void showAbout() throws Exception {
+		log.debug("About Called");
+		GenericTextController cr = GenericTextController.startGenericTextController("About");
+		cr.setTextFromFile(App.retGlobalResource("/src/main/ui/About.txt").openStream());
+	}
+
+	@FXML
+	public void showWorldSettings() throws Exception{
+		log.debug("World Settings called");
+		WorldSettingsController.startWorldSettingsController();
+	}
+	
+	@FXML
+	public void showHotkeySettings() throws Exception{
+		log.debug("Hotkey Settings called");
+		App.getHotkeyController().showController();
+	}
+	
+	@FXML
+	public void startWebservice(){
+		
+		if(!JettyController.getStarted())
 		{
-			GodTabController tab = GodTabController.startGodTab((God) o);
-			addTabController(tab);
+			try {
+				log.debug("starting web service. lol");
+				JettyController.startJettyWindow();
+			} catch (Exception e) {
+				log.debug(e);
+			}
 		}
-		else if (o instanceof Npc)
-		{
+	}
+	
+	public Window getStage() {
+		return ourStage;
+	}
+
+	public void addStatus(String text) {
+		statusBarController.addStatus(text);
+	}
+	
+	public void open(Searchable o) throws Exception {
+		log.debug("opening tab from search");
+		if (o instanceof God) {
+			GodTabController tab = GodTabController.startGodTab(Backend.getGodDao().getFullGod(o.getID()));
+			addTabController(tab);
+		} else if (o instanceof Npc) {
 			NpcTabController tab = NpcTabController.startNpcTab((Npc) o);
 			addTabController(tab);
-		}
-		else if (o instanceof Region)
-		{
+		} else if (o instanceof Region) {
 			RegionTabController tab = RegionTabController.startRegionTab((Region) o);
 			addTabController(tab);
 		}
-		/*
-    	else if (o instanceof Event)
-    	{
-    		EventTabController tab = EventTabController.startEventTab((Event) o, this);
-    	}
-		 */
-
-	}
-	
-	@FXML
-    public void showPlayers() throws Exception{
-		log.debug("attempting to show players.");
-    	if (!ShowPlayersController.getOpen()){
-    		spController = ShowPlayersController.startShowPlayersWindow();
-    	}
-    	Tab curSelected = TabPane.getSelectionModel().getSelectedItem();
-    	for(Saveable s: tabControllers){
-    		if(s.getTab().equals(curSelected)){
-    			ShowPlayersDataModel.addOne(s.getThing());
-    		}
-    	}
-    	spController.setObject(ShowPlayersDataModel.getDefault());
-    }
-	
-	
-	public void addTabController(Saveable s){
-		boolean existed = false;
-		for(Saveable x: tabControllers){
-			if(x.getThing().equals(s.getThing())){
-				existed = true;
-				TabPane.getSelectionModel().select(x.getTab());
-			}
-		}
-		
-		if(!existed){
-			TabPane.getTabs().add(s.getTab());
-			TabPane.getSelectionModel().select(s.getTab());
-			tabControllers.add(s);
-		}
-		else
-		{
-			// clean up our item, wish it was like c# where i can .dispose(); 
-			s = null; 
+		else if (o instanceof Event) { 
+			EventTabController tab = EventTabController.startEventTab((Event) o);
+	      addTabController(tab); 
 		}
 	}
 	
-	public void disposeTabController(Saveable s){
-		for(int i = 0; i < tabControllers.size(); i++){
-			if(s.getTab().equals(tabControllers.get(i).getTab())){
-				tabControllers.remove(i);
-			}
-		}
-	}
-
-	@FXML
-	public void showReadme() throws Exception{
-		log.debug("Readme Called");
-		GenericTextController cr = GenericTextController.startGenericTextController("Readme");
-		cr.setTextFromFile(new File(getClass().getResource("/src/main/ui/Readme.txt").toString()));
-	}
-
-	public Window getStage() {
-		return ourStage;
+	public ListView getListView(){
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

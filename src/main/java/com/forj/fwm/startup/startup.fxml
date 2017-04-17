@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-
-<AnchorPane prefHeight="75.0" prefWidth="342.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.startup.ComponentSelectorController">
+<AnchorPane prefHeight="90.0" prefWidth="192.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.startup.ComponentSelectorController">
    <children>
-      <ButtonBar layoutY="7.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="61.0" prefWidth="342.0">
-        <buttons>
-            <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#startGUI" text="Start GUI" />
-            <Button mnemonicParsing="false" onMouseClicked="#startBoth" prefHeight="26.0" prefWidth="97.0" text="Start Both" />
-          <Button minWidth="0.0" mnemonicParsing="false" onMouseClicked="#startWebService" prefHeight="26.0" prefWidth="179.0" text="Start Website" />
-        </buttons>
-      </ButtonBar>
+      <HBox alignment="CENTER" prefHeight="105.0" prefWidth="413.0" spacing="40.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#startGUI" text="Start GUI" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#startBoth" text="Start Both" />
+          <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" onMouseClicked="#startWebService" text="Start Website" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

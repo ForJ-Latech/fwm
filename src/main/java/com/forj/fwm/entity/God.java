@@ -1,58 +1,88 @@
 package com.forj.fwm.entity;
-import com.j256.ormlite.table.*;
-
+import java.util.ArrayList;
 import java.util.Date;
-
-import org.eclipse.jetty.util.log.Log;
+import java.util.List;
 
 import com.forj.fwm.backend.dao.impl.GodDaoImpl;
-import com.j256.ormlite.field.*;
+import com.forj.fwm.web.JsonHelper;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName="GOD", daoClass = GodDaoImpl.class)
 public class God  implements Searchable{
 	@DatabaseField(generatedId = true)
 	private int ID = -1;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String name;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String pantheon;
 	
-	@DatabaseField
+	@DatabaseField(width=2000)
 	private String history;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String imageFileName;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String soundFileName;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String gender;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String race;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String class_;
 	
 	@DatabaseField(foreign=true)
 	private Statblock statblock;
 	
-	@DatabaseField
+	@DatabaseField(width=2000)
 	private String attributes;
 	
 	@DatabaseField
 	private Date lastEdited;
 	
-	@DatabaseField
+	@DatabaseField(width=2000)
 	private String description;
 	
+	@DatabaseField
+	private boolean shown;
+	
+	
+	private List<Interaction> interactions;
+	
+	private List<Region> regions;
+	
+	private List<Npc> npcs;
+	
+	private List<Event> events;
+	
+	private boolean full;
+	
+	
 	public God() {
-		
+		interactions = new ArrayList<Interaction>();
+		regions = new ArrayList<Region>();
+		npcs = new ArrayList<Npc>();
+		events = new ArrayList<Event>();
+		full = false;
+		shown = false;
 	}
-
+	
+	public String toOneFiveJsonString(){
+		JsonHelper j = new JsonHelper();
+		j.addAttribute("id", getID());
+		j.addAttribute("name", getName());
+		j.addAttribute("description", getDescription());
+		j.addAttribute("imageFileName", getImageFileName());
+		j.addAttribute("name", getName());
+		return j.getString();
+	}
+	
 	public int getID() {
 		return ID;
 	}
@@ -126,7 +156,6 @@ public class God  implements Searchable{
 	}
 
 	public void setStatblock(Statblock statblock) {
-		System.out.println("setStatBlock Called " + statblock.getID());
 		this.statblock = statblock;
 	}
 
@@ -152,5 +181,85 @@ public class God  implements Searchable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public List<Interaction> getInteractions() {
+		return interactions;
+	}
+
+	public void setInteractions(List<Interaction> interactions) {
+		this.interactions = interactions;
+	}
+	
+	public void addInteraction(Interaction interaction) {
+		this.interactions.add(interaction);
+	}
+
+	public void removeInteraction(Interaction interaction) {
+		this.interactions.remove(interaction);
+	}
+	
+	public List<Region> getRegions() {
+		return regions;
+	}
+
+	public void setRegions(List<Region> regions) {
+		this.regions = regions;
+	}
+	
+	public void addRegion(Region region) {
+		this.regions.add(region);
+	}
+
+	public void removeRegion(Region region) {
+		this.regions.remove(region);
+	}
+	
+	public List<Npc> getNpcs() {
+		return npcs;
+	}
+
+	public void setNpcs(List<Npc> npcs) {
+		this.npcs = npcs;
+	}
+	
+	public void addNpc(Npc npc) {
+		this.npcs.add(npc);
+	}
+
+	public void removeNpc(Npc npc) {
+		this.npcs.remove(npc);
+	}
+	
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+	
+	public void addEvent(Event event) {
+		this.events.add(event);
+	}
+
+	public void removeEvent(Event event) {
+		this.events.remove(event);
+	}
+
+	public boolean isFull() {
+		return full;
+	}
+
+	public void setFull(boolean isFull) {
+		this.full = isFull;
+	}
+
+	public boolean isShown() {
+		return shown;
+	}
+
+	public void setShown(boolean shown) {
+		this.shown = shown;
 	}
 }

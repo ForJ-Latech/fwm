@@ -2,6 +2,7 @@ package com.forj.fwm.gui;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
@@ -47,6 +48,7 @@ public class GenericTextController { // NEEDS to be a space after class name or 
            }
        });
        textArea.setWrapText(true);
+       textArea.setEditable(false);
     }
 
 	
@@ -68,10 +70,9 @@ public class GenericTextController { // NEEDS to be a space after class name or 
 		textArea.setText(text);
 	}
 	
-	public void setTextFromFile(File f){
+	public void setTextFromFile(InputStream f){
 		try{
-			FileInputStream fi = new FileInputStream(f);
-		    java.util.Scanner s = new java.util.Scanner(fi).useDelimiter("\\A");
+		    java.util.Scanner s = new java.util.Scanner(f).useDelimiter("\\A");
 		    textArea.setText(s.hasNext() ? s.next() : "");
 		} catch (Exception e){
 			log.error(e);

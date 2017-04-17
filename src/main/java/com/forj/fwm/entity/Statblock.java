@@ -1,23 +1,38 @@
 package com.forj.fwm.entity;
 
-import com.j256.ormlite.table.*;
 import com.forj.fwm.backend.dao.impl.StatblockDaoImpl;
-import com.forj.fwm.gui.tab.Saveable;
-import com.j256.ormlite.field.*;
+import com.forj.fwm.web.JsonHelper;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName="STATBLOCK", daoClass = StatblockDaoImpl.class)
 public class Statblock implements Searchable{ 
 	@DatabaseField(generatedId = true)
 	private int ID = -1;
 	
-	@DatabaseField
+	@DatabaseField(width=100)
 	private String name;
 	
-	@DatabaseField
+	@DatabaseField(width=5000)
 	private String description;
 	
 	public Statblock() {
 		
+	}
+	
+	public String toOneFiveJsonString(){
+		JsonHelper j = new JsonHelper();
+		j.addAttribute("id", getID());
+		j.addAttribute("name", getName());
+		j.addAttribute("description", getDescription());
+		j.addAttribute("imageFileName", getImageFileName());
+		j.addAttribute("name", getName());
+		return j.getString();
+	}
+	
+	public Statblock(String name, String description) {
+		this.name = name;
+		this.description = description;
 	}
 	
 	public int getID() {
@@ -38,5 +53,18 @@ public class Statblock implements Searchable{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImageFileName() {
+		return "";
+	}
+	
+
+	public boolean isShown() {
+		return false;
+	}
+
+	public void setShown(boolean shown) {
+		return;
 	}
 }

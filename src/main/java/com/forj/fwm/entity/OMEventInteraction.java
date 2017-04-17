@@ -15,6 +15,11 @@ public class OMEventInteraction {
 	public OMEventInteraction() {
 		
 	}
+	
+	public OMEventInteraction(Event event, Interaction interaction) {
+		this.event = event;
+		this.interaction = interaction;
+	}
 
 	public Event getEvent() {
 		return event;

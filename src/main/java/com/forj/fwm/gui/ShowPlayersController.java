@@ -3,6 +3,7 @@ package com.forj.fwm.gui;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -18,11 +19,13 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.ShowPlayersDataModel;
 import com.forj.fwm.conf.AppConfig;
+import com.forj.fwm.conf.HotkeyController;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
+import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 import com.forj.fwm.startup.ComponentSelectorController;
 
@@ -38,13 +41,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -77,42 +83,45 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	private Button test1, backButton, forwardButton;
 	@FXML
 	private ImageView image;
+	@FXML
+	private HBox imageViewHBox;
 	
 	private Object currObject;
 	
 	private Integer curIndex = 0;
 
+	private Stage ourStage;
+	
 	// Method called on wrong thread for servers to be started
 	// started on GUI thread.
-    public void start(Stage primaryStage, Pane rootLayout) throws Exception {
+    public void start(Stage primaryStage, ScrollPane rootLayout) throws Exception {
        primaryStage.setTitle("Show Players Controller");
        Scene myScene = new Scene(rootLayout);
+       primaryStage.getIcons()
+		.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/player/64.png").openStream()));
+
        primaryStage.setScene(myScene);
-       primaryStage.show();
+       image.fitWidthProperty().bind(imageViewHBox.widthProperty().subtract(20));
+
+       image.fitHeightProperty().bind(imageViewHBox.heightProperty().subtract(20));
        
-       primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-           public void handle(WindowEvent we) {
-               isOpen = false;
-           }
-       }); 
-       
+       ourStage = primaryStage;
+       HotkeyController.giveGlobalHotkeys(myScene);
     }
 
 	
 	public static ShowPlayersController startShowPlayersWindow() throws Exception{
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(ShowPlayersController.class.getResource("showPlayersGUI.fxml"));
-		AnchorPane rootLayout = (AnchorPane)loader.load();
+		ScrollPane rootLayout = (ScrollPane)loader.load();
 		ShowPlayersController cr = (ShowPlayersController)loader.getController();
 		cr.start(new Stage(), rootLayout);
-		ShowPlayersDataModel.startConnector();
 		Npc n = new Npc();
 		n.setfName("Jack");
 		n.setlName("Strickland");
-		n.setDecription("This will be the decription.");
+		n.setDescription("This will be the description.");
 		n.setImageFileName("/i/fat_halfling.jpg");
-		ShowPlayersDataModel.addOne(n);
-		isOpen = true;
+		App.spdc.addOne(n);
 		return cr;
 	}
 	
@@ -153,8 +162,15 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 			newDescription = ((Region) currObject).getDescription();
 			newImage = ((Region) currObject).getImageFileName();
 		} else if (currObject instanceof Npc){
-			newName = ((Npc) currObject).getfName() + " " + ((Npc) currObject).getlName();
-			newDescription = ((Npc) currObject).getDecription();
+			if(((Npc) currObject).getlName() != null)
+			{
+				newName = ((Npc) currObject).getfName() + " " + ((Npc) currObject).getlName();
+			}	
+			else
+			{
+				newName = ((Npc) currObject).getfName();
+			}
+			newDescription = ((Npc) currObject).getDescription();
 			newImage = ((Npc) currObject).getImageFileName();
 		} else if (currObject instanceof Event){
 			newName = ((Event) currObject).getName();
@@ -166,20 +182,85 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 		setImage(newImage);
 	}
 
+	public void showController(){
+		if (!ourStage.isShowing()){
+			ourStage.show();
+		}
+		ourStage.requestFocus();
+	}
+	
+	public boolean isShowing(){
+		return ourStage.isShowing();
+	}
+
+	
 	@FXML
-	private void back() {
+	public void back() {
 		log.debug("back");
 		log.debug("curIndex before: " + curIndex);
-		setObject(ShowPlayersDataModel.getPrevious(curIndex));
+		setObject(App.spdc.getPrevious(curIndex));
 		log.debug("curIndex after: " + curIndex);
 	}
 	
 	@FXML
-	private void forward() {
+	public void forward() {
 		log.debug("forward");
 		log.debug("curIndex before: " + curIndex);
-		setObject(ShowPlayersDataModel.getNext(curIndex));
+		setObject(App.spdc.getNext(curIndex));
 		log.debug("curIndex after: " + curIndex);
 	}
 	
-}
+	AudioClip sound = null;
+	
+	public void playSound(Saveable s)
+	{
+		if(sound != null)
+		{
+			sound.stop();
+		}
+		if(s.getThing().getClass().equals(Region.class) && s.getThing().getID() != -1)
+		{
+			try {
+				if(Backend.getRegionDao().getRegion(s.getThing().getID()).getSoundFileName() != null)
+				{
+					sound = new AudioClip(App.worldFileUtil.findMultimedia(Backend.getRegionDao().getRegion(s.getThing().getID()).getSoundFileName()).toURI().toURL().toString());
+					sound.play();
+				}
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}   				
+		}
+		
+		else if(s.getThing().getClass().equals(Npc.class) && s.getThing().getID() != -1)
+		{
+			try {
+				if(Backend.getNpcDao().getNpc(s.getThing().getID()).getSoundFileName() != null)
+				{
+					sound = new AudioClip(App.worldFileUtil.findMultimedia(Backend.getNpcDao().getNpc(s.getThing().getID()).getSoundFileName()).toURI().toURL().toString());
+					sound.play();
+				}
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}   				
+		}
+		
+		else if(s.getThing().getClass().equals(God.class) && s.getThing().getID() != -1)
+		{
+			try {
+				if(Backend.getGodDao().getGod(s.getThing().getID()).getSoundFileName() != null)
+				{
+					sound = new AudioClip(App.worldFileUtil.findMultimedia(Backend.getGodDao().getGod(s.getThing().getID()).getSoundFileName()).toURI().toURL().toString());
+					sound.play();
+				}
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}   				
+		}
+	}
+	}

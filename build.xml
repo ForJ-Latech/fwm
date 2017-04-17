@@ -3,10 +3,12 @@
 	    configure first with either:
 			configure.eclipse
 			configure.prod
+		
+		
 		mvn goals = process-sources profile = copy-jars
 		needs to be run so that lib folder exists with libraries.
 		
-		dist will package this for distribution
+		That will enable the running of dist. 
 	</description>
 
 
@@ -68,12 +70,21 @@
 		<tstamp/>
 		<!-- Create the build directory structure used by compile -->
 		<mkdir dir="${build}"/>
+		<!-- This will cause our lib to be packaged in WEB-INF/lib -->
+		<mkdir dir="${build}/src/main/webapp/WEB-INF/lib"/>
+		
+		<mkdir dir="${build}/src/main/webapp/WEB-INF/classes"/>
 	</target>
 
 	<target name="compile" depends="init">
 		<javac srcdir="${src}" destdir="${build}">
 			<classpath refid="master-classpath"/>
 		</javac>
+
+		<!-- <copy todir="${build}/src/main/webapp/WEB-INF/classes">
+			<fileset dir="${build}"></fileset>
+		</copy> -->
+		
 		<copy todir="${build}">
 			<fileset dir="${src}/main/java" excludes="**/*.java">
 			</fileset>
@@ -81,96 +92,28 @@
 		<copy todir="${build}/src">
 			<fileset dir="${src}" excludes="main/java/**"/>
 		</copy>
-	</target>
-
-	<path id="build-classpath">
-		<fileset dir="${lib}">
-			<include name="*.jar"/>
-		</fileset>
-	</path>
-
-	<manifestclasspath property="buildLib" jarfile="${dist}/FWM-${DSTAMP}.jar">
-		<classpath refid="build-classpath"/>
-	</manifestclasspath>
-
-	<target name="dist" depends="compile">
-
-		<!-- This will cause our lib to be packaged in WEB-INF/lib -->
-
-		<mkdir dir="${build}/src/main/webapp/WEB-INF/lib"/>
+		
+		<!--
 		<copy todir="${build}/src/main/webapp/WEB-INF/lib">
 			<fileset dir="${lib}"/>
+		</copy> -->
+	</target>
+
+
+	<target name="dist" depends="compile">
+		<mkdir dir="${dist}/lib"/>
+		<copy todir="${dist}/lib">
+			<fileset dir="${lib}"></fileset>
 		</copy>
-		
 		<jar jarfile="${dist}/FWM-${DSTAMP}.jar" 
 					basedir="${build}">
-			<!-- need to get all the classes onto base path. for app to run -->
-			<restrict>
-				<name name="**/*.class"/>
-				<archives>
-					<zips>
-						<fileset dir="${lib}" includes="**/*.jar"/>
-					</zips>
-				</archives>
-			</restrict>
-
-			<!-- some of these classes require properties files -->
-
-			<restrict>
-				<name name="**/*.properties"/>
-				<archives>
-					<zips>
-						<fileset dir="${lib}" includes="**/*.jar"/>
-					</zips>
-				</archives>
-			</restrict>
-
-			<!-- some require xml files. -->
-			<restrict>
-				<name name="**/*.xml"/>
-				<archives>
-					<zips>
-						<fileset dir="${lib}" includes="**/*.jar"/>
-					</zips>
-				</archives>
-			</restrict>
-
- 
-			<restrict>
-				<name name="**/*.xsd"/>
-				<archives>
-					<zips>
-						<fileset dir="${lib}" includes="**/*.jar"/>
-					</zips>
-				</archives>
-			</restrict>
-			
-
-			<!-- javax.servlet has some dtd files? -->
-			<restrict>
-				<name name="**/*.dtd"/>
-				<archives>
-					<zips>
-						<fileset dir="${lib}" includes="**/*.jar"/>
-					</zips>
-				</archives>
-			</restrict>
-			
-			<!-- Spring has gifs... -->
-			<restrict>
-				<name name="**/*.gif"/>
-				<archives>
-					<zips>
-						<fileset dir="${lib}" includes="**/*.jar"/>
-					</zips>
-				</archives>
-			</restrict>
-			
 			<manifest>
 				<attribute name="Main-Class" value="com.forj.fwm.startup.App"/>
 				<attribute name="Application-Name" value="ForJ FWM" />
+				<attribute name="Class-Path" value="
+					. FWM-${DSTAMP} lib/log4j-1.2.17.jar lib/ormlite-core-5.0.jar lib/ormlite-jdbc-5.0.jar lib/h2-1.4.192.jar lib/commons-configuration2-2.0.jar lib/commons-lang3-3.3.2.jar lib/commons-logging-1.2.jar lib/commons-beanutils-1.9.2.jar lib/commons-collections-3.2.1.jar lib/spring-context-3.1.2.RELEASE.jar lib/spring-aop-3.1.2.RELEASE.jar lib/aopalliance-1.0.jar lib/spring-beans-3.1.2.RELEASE.jar lib/spring-core-3.1.2.RELEASE.jar lib/spring-expression-3.1.2.RELEASE.jar lib/spring-asm-3.1.2.RELEASE.jar lib/spring-webmvc-3.1.2.RELEASE.jar lib/spring-context-support-3.1.2.RELEASE.jar lib/spring-web-3.1.2.RELEASE.jar lib/jetty-server-8.1.5.v20120716.jar lib/javax.servlet-3.0.0.v201112011016.jar lib/jetty-continuation-8.1.5.v20120716.jar lib/jetty-http-8.1.5.v20120716.jar lib/jetty-io-8.1.5.v20120716.jar lib/jetty-servlet-8.1.5.v20120716.jar lib/jetty-security-8.1.5.v20120716.jar lib/jetty-webapp-8.1.5.v20120716.jar lib/jetty-xml-8.1.5.v20120716.jar lib/jetty-servlets-8.1.5.v20120716.jar lib/jetty-client-8.1.5.v20120716.jar lib/jetty-util-8.1.5.v20120716.jar lib/jetty-jsp-8.1.4.v20120524.jar lib/javax.servlet.jsp-2.2.0.v201112011158.jar lib/org.apache.jasper.glassfish-2.2.2.v201112011158.jar lib/javax.servlet.jsp.jstl-1.2.0.v201105211821.jar lib/org.apache.taglibs.standard.glassfish-1.2.0.v201112081803.jar lib/javax.el-2.2.0.v201108011116.jar lib/com.sun.el-2.2.0.v201108011116.jar lib/org.eclipse.jdt.core-3.7.1.jar lib/jstl-1.2.jar
+					"/>
 			</manifest>
-			
 		</jar>
 		<!-- <antcall target="clean"/> -->
 		<echo>Your file should be available in "${dist}/FWM-${DSTAMP}.jar"!

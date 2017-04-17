@@ -7,28 +7,33 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName="OM_REGION_REGION", daoClass = OMRegionRegionDaoImpl.class)
 public class OMRegionRegion {
 	@DatabaseField(foreign = true, canBeNull = false)
-	private Region region;
+	private Region superRegion;
 	
 	@DatabaseField(foreign = true, canBeNull = false, unique = true)
-	private Region SubRegion;
+	private Region subRegion;
 	
 	public OMRegionRegion() {
 		
 	}
-
-	public Region getRegion() {
-		return region;
+	
+	public OMRegionRegion(Region superRegion, Region subRegion) {
+		this.superRegion = superRegion;
+		this.subRegion = subRegion;
 	}
 
-	public void setRegion(Region region) {
-		this.region = region;
+	public Region getSuperRegion() {
+		return superRegion;
+	}
+
+	public void setSuperRegion(Region superRegion) {
+		this.superRegion = superRegion;
 	}
 
 	public Region getSubRegion() {
-		return SubRegion;
+		return subRegion;
 	}
 
 	public void setSubRegion(Region subRegion) {
-		SubRegion = subRegion;
+		this.subRegion = subRegion;
 	}
 }

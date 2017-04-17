@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.management.ManagementFactory;
+import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,7 +16,9 @@ import java.util.List;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 
 /**
@@ -27,8 +31,6 @@ import com.forj.fwm.conf.WorldConfig;
  *
  */
 public class AppFileUtil {
-
-	private static Logger log = Logger.getLogger(AppFileUtil.class);
 	
 	private static final String log4jFileName = "log4j.properties";
 	private static final String hotkeyFileName = "hotkeys.properties";
@@ -36,9 +38,11 @@ public class AppFileUtil {
 	// private static final String loggingFileName = "FWM.log";
 	private static final String propertiesLocation = "./FWM-properties/";
 	private static final String copyLocations = "/src/main/resources/";
-	
+	private File idFile;
 	
 	private boolean appFileInitialized = false;
+	
+	private String errorMessage = "had somithng wrong with it. Please clear the directory";
 	
 	public AppFileUtil() throws Exception {
 		appFileInitialized = false;
@@ -48,6 +52,21 @@ public class AppFileUtil {
 		}
 		else if(!folder.exists()){
 			folder.mkdirs();
+		}
+		if (Boolean.parseBoolean(System.getenv("RUNNING_IN_ECLIPSE")) != true || AppConfig.getStartTest()) {
+			for(File f: folder.listFiles()){
+				if(f.getName().endsWith(".pid")){
+					errorMessage = "If another instance of the application is not already running,"
+							+ " go to the Properties Location and delete the file"
+							+ " ending with '.pid'.";
+					return;
+				}
+			}
+			String pid = ManagementFactory.getRuntimeMXBean().getName();
+			idFile = new File(folder.getAbsolutePath() + File.separator + pid + ".pid");
+			idFile.createNewFile();
+			idFile.deleteOnExit();
+			System.out.println("Created pid file :" + idFile.getAbsolutePath());
 		}
 		for(String filename: new String[]{log4jFileName, hotkeyFileName, propertiesFileName}){
 			String locationToCheck = folder.getAbsolutePath() + File.separator + filename;
@@ -68,7 +87,7 @@ public class AppFileUtil {
 		return appFileInitialized;
 	}
 	
-	private static File copyFile(InputStream input, File outputLocation) throws IOException{
+	public static File copyFile(InputStream input, File outputLocation) throws IOException{
 		if(!outputLocation.exists()){
 			outputLocation.createNewFile();
 		}
@@ -98,6 +117,10 @@ public class AppFileUtil {
 	}
 	
 	public String getErrorMessage(){
-		return propertiesLocation + " had somithng wrong with it. Please clear the directory";
+		return "Properties location: " + (new File(propertiesLocation)).getAbsolutePath().toString() + "\n\n" + errorMessage;
+	}
+	
+	public File getIdFile(){
+		return idFile;
 	}
 }

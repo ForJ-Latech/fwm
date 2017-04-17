@@ -1,8 +1,10 @@
 package com.forj.fwm.startup;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.ShowPlayersDataModel;
@@ -26,59 +28,52 @@ public class ComponentSelectorController{
 
 	private static Logger log = Logger.getLogger(ComponentSelectorController.class);
 	private Stage primaryStage;
-
+	private Pane myPane;
+	
 	public void start(Stage primaryStage, Pane myPane) throws Exception {
+		this.myPane = myPane;
 		this.primaryStage = primaryStage;
 		log.debug("Is the primaryStage null?" + (primaryStage == null));
 		primaryStage.setTitle("FWM Component Selector");
 		Scene myScene = new Scene(myPane);
 		primaryStage.setScene(myScene);
 
-		String defaultLocationString = AppConfig.config.getString(AppConfig.WORLD_LOCATION);
+		String defaultLocationString = AppConfig.getWorldsLocation() + AppConfig.getWorldLocation();
 		File defaultLocation = new File(defaultLocationString);
 		File chosenLocation = null;
-		log.debug("Default world location: " + defaultLocation.getAbsolutePath());
+		log.debug("Default world locations: " + defaultLocation.getAbsolutePath());
 		// if we're in production, we need to start the app correctly. 
 		if (App.getProd() || AppConfig.getStartTest()) {
 			App.worldFileUtil = new WorldFileUtil(chosenLocation);
-			while(App.worldFileUtil.success() == false){
-				DirectoryChooser dirChooser = new DirectoryChooser();
-				if (defaultLocation.isDirectory() && defaultLocation.exists()) {
-					dirChooser.setInitialDirectory(defaultLocation);
-				} else {
-					log.debug("Default location from settings invalid, resorting to .");
-					dirChooser.setInitialDirectory(new File("."));
-				}
-				dirChooser.setTitle("Select a world folder to load into FWM");
-	
-				File selectedDirectory = dirChooser.showDialog(primaryStage);
-				if (selectedDirectory == null) {
-					log.info("User decided not to select a directory.");
-					System.exit(0);
-				}
-	
-				String relativePath = new File(".").toURI().relativize(selectedDirectory.toURI()).getPath();
-				AppConfig.saveDefaultWorldLocation("./" + relativePath);
-				App.worldFileUtil = new WorldFileUtil(selectedDirectory);
-			}
-			// open us up a
-			// Do nothing, wait for button presses.
-			primaryStage.show();
+			WorldSelector s = WorldSelector.startWorldSelector(new Stage(), this);
+			File selectedDirectory = null ;
 		} else {
 			// otherwise assume that we want to start both things. 
 			primaryStage.show();
 			
 			// make certain that what we want exists!
 			defaultLocation.mkdirs();
-			String relativePath = new File(".").toURI().relativize(defaultLocation.toURI()).getPath();
-			AppConfig.saveDefaultWorldLocation("./" + relativePath);
 			
-			App.worldFileUtil = new WorldFileUtil(new File(AppConfig.config.getString(AppConfig.WORLD_LOCATION)));
+			App.worldFileUtil = new WorldFileUtil(new File(AppConfig.getWorldsLocation() + AppConfig.getWorldLocation()));
 			
 			startBoth();
 		}
 	}
 
+	public void finish(File selectedFile) throws Exception{
+		String relativePath = new File(".").toURI().relativize(selectedFile.toURI()).getPath();
+		AppConfig.saveDefaultWorldLocation("./" + relativePath);
+		App.worldFileUtil = new WorldFileUtil(selectedFile);
+		if(App.worldFileUtil.success()){
+			// pass
+			primaryStage.show();
+		}
+		else
+		{
+			WorldSelector s = WorldSelector.startWorldSelector(primaryStage, this);
+		}
+	}
+	
 	@FXML
 	public void startGUI() throws Exception {
 		Backend.start();
@@ -89,8 +84,8 @@ public class ComponentSelectorController{
 	@FXML
 	public void startBoth() throws Exception {
 		Backend.start();
-		JettyController.startJettyWindow();
 		App.setMainController(MainController.startMainUi());
+		JettyController.startJettyWindow();
 		primaryStage.close();
 	}
 
@@ -106,23 +101,6 @@ public class ComponentSelectorController{
 		Backend.start();
 		JettyController.startJettyWindow();
 		primaryStage.close();
-	}
-
-	public static void noUiStart() throws Exception{
-		AppConfig.init();
-		ShowPlayersDataModel.startConnector();
-		
-		String defaultLocationString = AppConfig.config.getString(AppConfig.WORLD_LOCATION);
-		File defaultLocation = new File(defaultLocationString);
-		
-		
-		defaultLocation.mkdirs();
-		String relativePath = new File(".").toURI().relativize(defaultLocation.toURI()).getPath();
-		AppConfig.saveDefaultWorldLocation("./" + relativePath);
-		
-		App.worldFileUtil = new WorldFileUtil(new File(AppConfig.config.getString(AppConfig.WORLD_LOCATION)));
-		
-		Backend.start();
 	}
 
 }

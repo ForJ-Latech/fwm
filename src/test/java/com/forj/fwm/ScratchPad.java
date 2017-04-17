@@ -15,6 +15,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
  */
 public class ScratchPad {
 
+	
 	public static void startServer(String[] args) throws Exception {
 		Server server = new Server(8080);
 		

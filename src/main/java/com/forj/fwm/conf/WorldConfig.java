@@ -48,8 +48,8 @@ public class WorldConfig {
 	public static final String RADIO10 = "radio10";
 	public static final String RADIO15 = "radio15";
 	public static final String RADIO20 = "radio20";
-
-
+	public static final String SHOWPLAYERSPOPUP = "showPlayersPopup";
+	public static final String MANUAL_SAVE_ONLY = "manualSavingOnly";
 	
 	
 	public static String getPassword(){
@@ -77,6 +77,22 @@ public class WorldConfig {
 		
 	}
 
+	public static void setShowPlayersPopup(boolean popup) throws ConfigurationException {
+		log.debug("save showplayers");
+		config=builder.getConfiguration();
+		config.setProperty(SHOWPLAYERSPOPUP, popup);
+		builder.save();
+		log.debug("ShowPlayersPopup: " + config.getBoolean(SHOWPLAYERSPOPUP));
+	}
+	
+	public static void setManualSaveOnly(boolean popup) throws ConfigurationException {
+		log.debug("save manualSaveOnly");
+		config=builder.getConfiguration();
+		config.setProperty(MANUAL_SAVE_ONLY, popup);
+		builder.save();
+		log.debug("manualSaveOnly: " + config.getBoolean(SHOWPLAYERSPOPUP));
+	}
+	
 	public static boolean getRad10() {
 		return config.getBoolean(RADIO10);
 	}
@@ -85,5 +101,13 @@ public class WorldConfig {
 	}
 	public static boolean getRad20() {
 		return config.getBoolean(RADIO20);
+	}
+	
+	public static boolean getShowPlayersPopup(){
+		return config.getBoolean(SHOWPLAYERSPOPUP);
+	}
+	
+	public static boolean getManualSaveOnly(){
+		return config.getBoolean(MANUAL_SAVE_ONLY);
 	}
 }

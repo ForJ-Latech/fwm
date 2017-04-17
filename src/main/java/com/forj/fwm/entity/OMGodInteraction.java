@@ -12,10 +12,15 @@ public class OMGodInteraction {
 	@DatabaseField(foreign=true, canBeNull=false, unique = true)
 	private Interaction interaction;
 
-	public OMGodInteraction(){
+	public OMGodInteraction() {
 		
 	}
 
+	public OMGodInteraction(God god, Interaction interaction) {
+		this.god = god;
+		this.interaction = interaction;
+	}
+	
 	public God getGod() {
 		return god;
 	}

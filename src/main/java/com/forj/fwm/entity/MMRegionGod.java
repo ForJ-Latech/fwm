@@ -16,6 +16,11 @@ public class MMRegionGod {
 		
 	}
 	
+	public MMRegionGod(Region region, God god) {
+		this.region = region;
+		this.god = god;
+	}
+	
 	public God getGod() {
 		return god;
 	}

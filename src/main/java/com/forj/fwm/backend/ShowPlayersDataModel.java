@@ -11,7 +11,7 @@ import org.eclipse.jetty.util.log.Log;
  * Implements a LinkedList for traversal.
  * Will only hold the 10 most recent objects pushed.
  * 
- * @author jstrickland
+ * @author jstrickland jehlmann
  *
  */
 public class ShowPlayersDataModel {
@@ -35,27 +35,29 @@ public class ShowPlayersDataModel {
 	
 	private static Logger log = Logger.getLogger(ShowPlayersDataModel.class);
 	
-	private static LinkedList<Object> displayedObjects;
-	private static Boolean started = false;
+	private LinkedList<Object> displayedObjects;
+	private Boolean started = false;
+	private Boolean updated = false;
 	
-	public static void startConnector() {
+	public ShowPlayersDataModel() {
 		displayedObjects = new LinkedList<Object>();
 		started = true;
 	}
 	
-	public static void addOne(Object o) {
+	public void addOne(Object o) {
 		displayedObjects.add(0, o);
+		updated = true;
 //		 After 10 objects are shown, the most dated gets removed
 		if(displayedObjects.size() > 10) {
 			displayedObjects.removeLast();
 		}
 	}
 	
-	public static ShowData getDefault(){
+	public ShowData getDefault(){
 		return trySetZero(new Integer(0));
 	}
 	
-	public static Object peekFirst() {
+	public Object peekFirst() {
 		try {
 			return displayedObjects.getFirst();
 		} catch (Exception NoSuchElementException) {
@@ -65,7 +67,7 @@ public class ShowPlayersDataModel {
 		}
 	}
 	
-	public static void deleteLast() {
+	public void deleteLast() {
 		try {
 			displayedObjects.removeLast();
 		} catch (Exception NoSuchElementException) {
@@ -74,11 +76,11 @@ public class ShowPlayersDataModel {
 	}
 	
 	// This deletes everything in the list.
-	public static void wipe() {
+	public void wipe() {
 		displayedObjects.clear();
 	}
 	
-	public static ShowData getPrevious(Integer index) {
+	public ShowData getPrevious(Integer index) {
 		if(index + 1 >= 0 && index + 1 < displayedObjects.size()){
 			log.debug("Increment called.");
 			return new ShowData(displayedObjects.get(index + 1), index + 1); 
@@ -95,7 +97,7 @@ public class ShowPlayersDataModel {
 		}
 	}
 	
-	public static ShowData getNext(Integer index) {
+	public ShowData getNext(Integer index) {
 		if(index -1 >= 0 && index - 1 < displayedObjects.size()){
 			log.debug("Decrement called.");
 			return new ShowData(displayedObjects.get(index - 1), index - 1); 
@@ -112,7 +114,7 @@ public class ShowPlayersDataModel {
 		}
 	}
 	
-	public static ShowData trySetZero(Integer index){
+	public ShowData trySetZero(Integer index){
 		if(displayedObjects.size() > 0){
 			index = 0;
 			return  new ShowData(displayedObjects.get(0), 0);
@@ -123,16 +125,28 @@ public class ShowPlayersDataModel {
 		}
 	}
 	
-	public static Integer getIndex(Object o) {
+	public ShowData getByIndex(Integer index) {
+		return new ShowData(displayedObjects.get(index), index);
+	}
+	
+	public Integer getIndex(Object o) {
 		return displayedObjects.indexOf(o);
 	}
 	
-	public static Object getObject(Object o) {
+	public Object getObject(Object o) {
 		return displayedObjects.get(displayedObjects.indexOf(o));
 	}
 	
-	public static Boolean getStarted() {
+	public Boolean getStarted() {
 		return started;
+	}
+
+	public Boolean getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Boolean updated) {
+		this.updated = updated;
 	}
 	
 }
