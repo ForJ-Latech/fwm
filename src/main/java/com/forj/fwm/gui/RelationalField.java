@@ -284,9 +284,17 @@ public class RelationalField implements Openable{
 			((Npc) tabObject).setGod(null);
 		}
 		
+		if (item instanceof Region && tabObject instanceof Region) {
+			((Region) tabObject).setSuperRegion(null);
+		}
+		
 		
 		if(!WorldConfig.getManualSaveOnly()){
-			caller.fullSave();
+			if (tabObject instanceof Region){
+				caller.relationalSave();
+			} else {
+				caller.fullSave();
+			}
 		}
 		updateList();
 	}
