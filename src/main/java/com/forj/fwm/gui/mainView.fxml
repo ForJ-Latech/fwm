@@ -46,7 +46,7 @@
             </Menu>
             <Menu fx:id="HelpMenu" mnemonicParsing="false" text="Help">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Open Forj Website" />
+                  <MenuItem mnemonicParsing="false" onAction="#openWebsite" text="Open Forj Website" />
                   <MenuItem mnemonicParsing="false" onAction="#showAbout" text="View About" />
                   <MenuItem mnemonicParsing="false" text="View Crash Course" />
                   <MenuItem mnemonicParsing="false" onAction="#showReadme" text="View Readme" />

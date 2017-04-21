@@ -1,6 +1,8 @@
 package com.forj.fwm.gui;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -238,6 +240,16 @@ public class MainController extends TabControlled implements Openable {
 	public void showHotkeySettings() throws Exception{
 		log.debug("Hotkey Settings called");
 		App.getHotkeyController().showController();
+	}
+	
+	@FXML
+	public void openWebsite() throws Exception{
+		log.debug("Open ForJ Website called");
+		try {
+			Desktop.getDesktop().browse(new URL("http://138.47.200.245/jehlmann/fwm").toURI());
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
