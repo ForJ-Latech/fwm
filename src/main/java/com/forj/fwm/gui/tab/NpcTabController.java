@@ -13,6 +13,7 @@ import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
@@ -38,6 +39,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class NpcTabController implements Saveable {
@@ -60,7 +62,7 @@ public class NpcTabController implements Saveable {
 	};
 	private EventHandler<Event> lnameEvent = new EventHandler<Event>(){
 		public void handle(Event event){
-			updateFamily();
+			updateFamily(true);
 		}
 	};
 
@@ -71,6 +73,7 @@ public class NpcTabController implements Saveable {
     @FXML private TextArea description, history, attributes;
     @FXML private VBox interactionContainer, rhsVbox;
     @FXML private Accordion accordion;
+    @FXML private StackPane godPane;
 	
     
     private AddableImage image;
@@ -78,9 +81,11 @@ public class NpcTabController implements Saveable {
 	private TextInputControl[] thingsThatCanChange; 
 		
 	private List<Npc> fam = new ArrayList<Npc>();
+	private List<God> myGod = new ArrayList<God>();
 
 	
-	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
+	private RelationalList npcRelation, eventRelation, regionRelation;
+	private RelationalField godRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.NPC;
 
 	public void startRelationalList() throws Exception {
@@ -92,8 +97,7 @@ public class NpcTabController implements Saveable {
 				fam.add(n);
 			}
 		}
-		
-		
+
 		accordion.getPanes().clear();
 		npcRelation = RelationalList.createRelationalList(this, App.toListSearchable(fam), "Family", false, false, tabType, SearchList.EntitiesToSearch.NPC);
 		accordion.getPanes().add((TitledPane) npcRelation.getOurRoot());
@@ -103,14 +107,22 @@ public class NpcTabController implements Saveable {
 		
 		regionRelation = RelationalList.createRelationalList(this, App.toListSearchable(npc.getRegions()), "Regions", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		accordion.getPanes().add((TitledPane) regionRelation.getOurRoot());
+		
+		myGod.clear();
+		if (npc.getGod() != null){
+			npc.getGod().setName(Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).get(0).getName());
+			myGod.add(npc.getGod());
+		}
+		godRelation = RelationalField.createRelationalList(this, App.toListSearchable(myGod), "God", true, true, tabType, SearchList.EntitiesToSearch.GOD);
+		godPane.getChildren().add(godRelation.getOurRoot());
 
 	}
 	
-	private void updateFamily(){
-		if(tabHead.getText()!=null)
+	private void updateFamily(boolean save){
+		if(tabHead.getText()!=null && save)
 		{
 			if(!WorldConfig.getManualSaveOnly()){
-				fullSave();
+				simpleSave();
 			}
 		}
 		fam.clear();
@@ -158,6 +170,12 @@ public class NpcTabController implements Saveable {
 		npc.setInteractions(new ArrayList<Interaction>((List<Interaction>)(List<?>)interactionController.getAllInteractions()));
 		npc.setRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));
 		npc.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));	
+		
+		if (!godRelation.getList().isEmpty()){
+			God newGod = new ArrayList<God>((List<God>)(List<?>)godRelation.getList()).get(0);
+			npc.setGod(newGod);
+		}
+		
 	}
 	
 	@FXML
@@ -222,6 +240,8 @@ public class NpcTabController implements Saveable {
 			log.debug("Save successfull!");
 			log.debug("Npc id: " + npc.getID());
 			App.getMainController().addStatus("Successfully saved Npc relations" + npc.getName() + " ID: " + npc.getID());
+			
+		
 		}catch(SQLException e){
 			log.error(e);
 			e.printStackTrace();
@@ -301,7 +321,7 @@ public class NpcTabController implements Saveable {
 		startRelationalList();
 		
 		thingsThatCanChange[2].setOnKeyReleased(lnameEvent);
-		updateFamily();
+		updateFamily(false);
 		
 		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
