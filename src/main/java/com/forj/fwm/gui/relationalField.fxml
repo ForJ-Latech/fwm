@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="50.0" prefHeight="32.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.RelationalField">
+   <children>
+      <ListView fx:id="listView" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="26.0" prefHeight="32.0" HBox.hgrow="ALWAYS" />
+      <Button fx:id="addButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" maxHeight="2627.0" maxWidth="36.0" minHeight="32.0" minWidth="20.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="32.0" prefWidth="30.0" text="▼" textAlignment="CENTER" textOverrun="CLIP" HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets bottom="3.0" />
+         </padding>
+      </Button>
+   </children>
+</HBox>

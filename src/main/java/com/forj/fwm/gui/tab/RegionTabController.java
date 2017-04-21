@@ -14,6 +14,7 @@ import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
@@ -39,6 +40,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class RegionTabController implements Saveable {
@@ -75,14 +77,30 @@ public class RegionTabController implements Saveable {
 	@FXML private Tab tabHead;
 	@FXML private Accordion accordion;
 	@FXML private Button statBlockButton;
+	@FXML private StackPane superRegionPane;
 	
 	private TextInputControl[] thingsThatCanChange;
 	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.REGION;
+	private RelationalField superRelation;
+	
+	private List<Region> superList = new ArrayList<Region>();
 
 	public void startRelationalList() throws Exception {
 		
+		superList.clear();
+		if (region.getSuperRegion() != null){
+			region.getSuperRegion().setName(Backend.getRegionDao().queryForEq("ID", region.getSuperRegion().getID()).get(0).getName());
+			superList.add(region.getSuperRegion());
+		}
+		superRelation = RelationalField.createRelationalList(this, App.toListSearchable(superList), "Super Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
+		superRegionPane.getChildren().add(superRelation.getOurRoot());
+		
+		
 		accordion.getPanes().clear();
+		regionRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getSubRegions()), "Sub Regions", true, true, tabType, SearchList.EntitiesToSearch.REGION);
+		accordion.getPanes().add((TitledPane) regionRelation.getOurRoot());
+		
 		npcRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getNpcs()), "NPCs", true, true, tabType, SearchList.EntitiesToSearch.NPC);
 		accordion.getPanes().add((TitledPane) npcRelation.getOurRoot());
 		
@@ -92,8 +110,7 @@ public class RegionTabController implements Saveable {
 		eventRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getEvents()), com.forj.fwm.entity.Event.WHAT_IT_DO + "s", true, true, tabType, SearchList.EntitiesToSearch.EVENT);
 		accordion.getPanes().add((TitledPane) eventRelation.getOurRoot());
 		
-		regionRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getSubRegions()), "Sub Regions", true, true, tabType, SearchList.EntitiesToSearch.REGION);
-		accordion.getPanes().add((TitledPane) regionRelation.getOurRoot());
+		
 
 		
 	}
@@ -151,13 +168,19 @@ public class RegionTabController implements Saveable {
 		region.setGods(new ArrayList<God>((List<God>)(List<?>)godRelation.getList()));
 		region.setNpcs(new ArrayList<Npc>((List<Npc>)(List<?>)npcRelation.getList()));
 		region.setSubRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));
-		region.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));	
+		region.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));
+		
+		if (!superRelation.getList().isEmpty()){
+			Region newRegion = new ArrayList<Region>((List<Region>)(List<?>)superRelation.getList()).get(0);
+			region.setSuperRegion(newRegion);
+		}
 	}
 	
 	@FXML
 	public void fullSave(){
 		getAllTexts();
 		getAllRelations();
+		log.debug("\n\n\n" + superRegion + "\n\n\n");
 		if(tabHead.getText()!=null && !tabHead.getText().equals(""))
 		{
 			// pass

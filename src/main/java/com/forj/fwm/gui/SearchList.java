@@ -53,6 +53,8 @@ public class SearchList {
 	private TextField searchField;
 
 	private ArrayList<Searchable> searchResults = new ArrayList<Searchable>();
+	private ArrayList<Integer> tree =  new ArrayList<Integer>();
+	private boolean regionregion = false;
 
 	public TextField getSearchField() {
 		return searchField;
@@ -71,6 +73,15 @@ public class SearchList {
 		this.searchEntity = t;
 		this.ourOpen = ol;
 		this.ourRoot = n;
+		
+		if (ourOpen instanceof RelationalField){
+			if (((RelationalField) ourOpen).getTabObject() instanceof Region && searchEntity == EntitiesToSearch.REGION) {
+				regionregion = true;
+				this.tree = createTree();
+			}
+		}
+		
+		
 		updateList();
 
 	}
@@ -218,16 +229,74 @@ public class SearchList {
 				}
 			}
 		}
+		
 		return unique;
 	}
+	
+	
+private ArrayList<Integer> createTree() {
+		
+		ArrayList<Integer> tree =  new ArrayList<Integer>();
+		ArrayList<Region> regs = new ArrayList<Region>();
+
+		// Find highest super region in tree
+		Region r = (((Region) ((RelationalField) ourOpen).getTabObject()).getSuperRegion());
+		Region s = (((Region) ((RelationalField) ourOpen).getTabObject()));
+		while (r != null) {
+			r = r.getSuperRegion();
+			if (r != null) {
+				s = r;
+			}
+		}
+		// s is the topmost super region
+		regs.add(s);
+		while (!regs.isEmpty()) {
+			for (Region i : regs.get(0).getSubRegions()) {
+				regs.add(i);
+			}
+			tree.add(regs.get(0).getID());
+			regs.remove(0);
+				
+		}
+		
+		for (Integer i1 : tree){
+			System.out.println(i1);
+		}
+		
+		return tree;
+
+	}
+
+
+	private boolean checkInTree(Region r) {
+		for (Integer i : tree) {
+			if (r.getID() == i) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
+	
 
 	public void addItem(Searchable item, boolean update) {
 		if (checkUnique(item)) {
+			if (regionregion){
+				if (checkInTree((Region) item)){
+					return;
+				}
+			}
 			listView.getItems().add(item);
 			searchResults.add(item);
 			if (update) {
 				updateList();
 			}
+			if (regionregion){
+				createTree();
+			}
+			
 		}
 	}
 
