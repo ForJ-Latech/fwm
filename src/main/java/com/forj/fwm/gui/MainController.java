@@ -121,6 +121,7 @@ public class MainController extends TabControlled implements Openable {
 		primaryStage.getIcons()
 				.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/application/64.png").openStream()));
 		Scene myScene = new Scene(rootLayout);
+		myScene.getStylesheets().add(App.retGlobalResource("/src/main/java/com/forj/fwm/gui/mainStylesheet.css").toString());
 		primaryStage.setScene(myScene);
 		primaryStage.setMinWidth(640);
 		primaryStage.setMinHeight(520);

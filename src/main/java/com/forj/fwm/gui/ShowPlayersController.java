@@ -97,6 +97,8 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
     public void start(Stage primaryStage, ScrollPane rootLayout) throws Exception {
        primaryStage.setTitle("Show Players Controller");
        Scene myScene = new Scene(rootLayout);
+       myScene.getStylesheets().add(App.retGlobalResource("/src/main/java/com/forj/fwm/gui/showPlayersStylesheet.css").toString());
+
        primaryStage.getIcons()
 		.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/player/64.png").openStream()));
 

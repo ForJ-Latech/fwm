@@ -1,0 +1,43 @@
+.root{
+	-fx-background: rgb(180,180,188);
+}
+
+.text-field{
+	-fx-background-color: rgb(240,240,244);
+}
+
+.text-area .content{
+	-fx-background-color: rgb(240,240,244);
+}
+
+.button {
+	-fx-background-color:
+		linear-gradient(#ba68c8, #4a148c),
+		radial-gradient(center 50% -40%, radius 200%, #ba68c8 45%, #ad59bc 50%);
+	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    /*-fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);*/
+    -fx-text-fill: rgb(240,240,244);
+}
+
+.list-cell:even { 
+    -fx-background-color: rgb(240,240,244);
+}
+
+.list-cell:odd {
+	-fx-background-color: rgb(250,250,250);
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #039be5;
+    -fx-text-fill: rgb(240,240,244);
+}
+
+.search-list {
+	-fx-background-color: rgb(240,240,244)
+}
