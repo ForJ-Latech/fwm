@@ -1,22 +1,12 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
-<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
 <html>
 	<head>
   		<link rel="stylesheet" type="text/css" href="/c/webservice1_5.css">	
-			
-		<script type="text/javascript">
-			// javascript for redirecting to index while clicking Home
-			function redirectIndex() { 
-				window.location.assign("/");
-			};
-			function searchvalue(){				
-				window.location.assign(window.location + "/" + searchvalue ):
-			}
-		</script>	
 		
+		<script type="text/javascript" src="/s/jquery-3.2.1.min.js">
+		</script>
+		<script src="/s/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/s/webservice1_5.js" />
 				
 	</head>
 	<body>
@@ -33,20 +23,10 @@
      			<div class="box1" align="center">
      			<br>
      			
-    				<input type="text" id="myInput" onkeyup="searchvalue()" placeholder="Search Npc.." title="Npc">
-    				<div>
-     				<!-- -------------------C:out and C:foreach for JSTL --> 
-     				   <c:forEach items="${found}" var = "thing">	
-     				    <br/>
-						<a href="/loadNpc/${thing.getID()}"> ${thing.getfName()} </a>
-					  </c:forEach> 	    					
-					<!-- ------------------------------------------------- -->
-     				</div>
+    				<input type="text" id="myInput" onkeyup="searchvalue(this.value)" placeholder="Search Npc.." title="Npc">
      			</div>
-     			<div class="box2">     			
-     			<p style="text-align:center;"> <strong>${npc.getfName()} </strong> </p> <br>
-     			<img id="img" src="/multimedia/${npc.getImageFileName()}"><br>
-     			${npc.getDescription()}
+     			<div class="box2" id="listcontainer">     			
+					
      			</div>
     		</div>
 	</body>

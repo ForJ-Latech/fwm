@@ -90,31 +90,6 @@ public class Webservice1_5Controller {
 
 		return new ModelAndView("webservice1_5");
 	}
-	
-	/*
-	 * @RequestMapping("/webservice1_5/${name}") public ModelAndView NPCId
-	 * (ModelMap modelMap,String name, Object object) {
-	 * modelMap.addAttribute("ObjectId", name); String className
-	 * =object.getClass().getSimpleName(); switch(gameObject.valueOf(className))
-	 * {
-	 * 
-	 * case Npc: Npc npc=(Npc) object; modelMap.addAttribute("name" ,
-	 * npc.getfName()+" "+npc.getlName()); modelMap.addAttribute("Descrption",
-	 * npc.getDescription()); modelMap.addAttribute("ImageFilename",
-	 * npc.getImageFileName()); break;
-	 * 
-	 * case Event: break;
-	 * 
-	 * case God: break;
-	 * 
-	 * case Region: break;
-	 * 
-	 * };
-	 * 
-	 * return new ModelAndView("webservice1_5");
-	 * 
-	 * }
-	 */
 
 	@RequestMapping("jay_test_shit")
 	public ModelAndView jayTestShit(ModelMap modelMap, HttpServletRequest request) {
@@ -135,7 +110,12 @@ public class Webservice1_5Controller {
 			List<Searchable> curList = Backend.searchAllByLike(text);
 			List<JsonSearchable> results = new ArrayList<JsonSearchable>();
 			StringBuilder s = new StringBuilder();
-			json = "not yet implemented";
+			s.append("[");
+			for(Searchable cur : curList){
+				s.append(cur.toOneFiveJsonString() + ",");
+			}
+			s.append("]");
+			json = s.toString();
 //			json = g.toJson(results.toArray(new JsonSearchable[0]));
 		}
 		catch(Exception e){

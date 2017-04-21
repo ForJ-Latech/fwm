@@ -80,6 +80,7 @@ public class God  implements Searchable{
 		j.addAttribute("description", getDescription());
 		j.addAttribute("imageFileName", getImageFileName());
 		j.addAttribute("name", getName());
+		j.addAttribute("class", this.getClass().getSimpleName());
 		return j.getString();
 	}
 	

@@ -41,6 +41,12 @@
 				  <a id="webservicebutton" href="/webservice1_0bs" class="btn btn-primary" role="button">Start Web Service</a>
 			</div>
 		</div>
+		<br/>
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				  <a id="webservice15button" href="/webservice1_5" class="btn btn-primary" role="button">Explore</a>
+			</div>
+		</div>
 
     </div><!-- /.container -->
     
@@ -51,9 +57,7 @@
 	<script type="text/javascript" src="/s/jquery-3.2.1.min.js"></script>
     <script src="/s/bootstrap.min.js"></script>
     <script type="text/javascript">
-	    $(document).ready(function(){
-	        $("#webservicebutton").click();
-	    });
+		// TODO put something in here maybe?
     </script>
   </body>
 </html>
