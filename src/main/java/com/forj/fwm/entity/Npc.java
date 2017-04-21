@@ -79,7 +79,7 @@ public class Npc implements Searchable {
 	public String toOneFiveJsonString(){
 		JsonHelper j = new JsonHelper();
 		j.addAttribute("id", getID());
-		j.addAttribute("name", getName());
+		j.addAttribute("name", getFullName());
 		j.addAttribute("description", getDescription());
 		j.addAttribute("imageFileName", getImageFileName());
 		j.addAttribute("name", getName());

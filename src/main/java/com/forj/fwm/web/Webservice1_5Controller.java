@@ -111,12 +111,15 @@ public class Webservice1_5Controller {
 			List<JsonSearchable> results = new ArrayList<JsonSearchable>();
 			StringBuilder s = new StringBuilder();
 			s.append("[");
+			int cntr = 0;
 			for(Searchable cur : curList){
-				s.append(cur.toOneFiveJsonString() + ",");
+				if(cntr++ > 0){
+					s.append(",");
+				}
+				s.append(cur.toOneFiveJsonString());
 			}
 			s.append("]");
 			json = s.toString();
-//			json = g.toJson(results.toArray(new JsonSearchable[0]));
 		}
 		catch(Exception e){
 			json = "{\"Message\":\"" + e.getLocalizedMessage() + "\"}";

@@ -1,13 +1,16 @@
 var keynum = 0;
 
+var colors = [
+'#F7B9B9',
+'#BFBFBF'
+];
+
 function searchvalue(text){
 	keynum++;
 	var sdf = keynum;
 	$.ajax({
-		        contentType: "text/json",
-		        url: "http://localhost:51186/api/Entry/AddData",
-		        data: d,
-		        method: 'POST',
+		        url: "searchAll/" + text,
+		        method: 'GET',
 		        success: function(data){
 					changeList(data, sdf);
 				}
@@ -15,6 +18,8 @@ function searchvalue(text){
 }
 
 var changing = false;
+
+var that;
 
 function changeList(data, key_number){
 	if(changing){
@@ -26,10 +31,17 @@ function changeList(data, key_number){
 		}
 	}
 	try{
+		
 		changing = true;
 		var lcont = $('#listcontainer');
+		// clear out the things. 
+		$.each(lcont.children(), function(d, dval){
+			dval.remove();
+		});
+		
 		$.each(data, function(d, dval){
-			lcont.appendChild("<div> we found something </div>");
+			that = dval;
+			lcont.append('<div style="background-color:' + colors[d%2] + ' ;" class="row" onclick="open' + dval.class + '(' + dval.id + ');">&nbsp;' + dval.name + "&nbsp;</div>");
 		});
 	}
 	catch(err){
@@ -38,4 +50,20 @@ function changeList(data, key_number){
 	finally{
 		changing = false;
 	}
+}
+
+// it will call open + class name, needs to change this. 
+function openNpc(id){
+	$.ajax({
+		        url: "getNpc/" + id,
+		        method: 'GET',
+		        success: function(data){
+					$('#name').html(data.name);
+					$('#description').html(data.description);
+					$('#cname').html(data.class);
+					if(data.imageFileName != undefined){
+						document.getElementById('image').src = "/webservice1_0bs/multimediaImage/" + data.imageFileName;
+					}
+				}
+	});
 }
