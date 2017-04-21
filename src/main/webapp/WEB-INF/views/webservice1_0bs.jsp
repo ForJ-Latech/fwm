@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Webservice 1.0 bootstrap</title>
+    <title>Showing Players</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/c/bootstrap.min.css" rel="stylesheet">
@@ -15,9 +15,6 @@
 
   <body>
 	    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-	<!--       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="navbar-toggler-icon"></span>
-	      </button> -->
 	      <div class="navbar navbar-default" id="navbars">
 	        <ul class="nav navbar-nav">
 	          	<li class="nav-item active">
