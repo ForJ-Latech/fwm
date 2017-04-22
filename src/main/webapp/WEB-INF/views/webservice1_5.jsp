@@ -46,7 +46,7 @@
     				</div>
     			</span>
     			<span class="col-sm-8 text-center">
-					<div class="row">
+					<div class="row" style="width:100%;">
 					<span class="col-sm-8">
 						<div class="row"><div id="cname"></div></div>
 						<div class="row"><div id="name"></div></div>

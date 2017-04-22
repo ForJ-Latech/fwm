@@ -21,6 +21,45 @@ var that;
 
 var keynum = 0;
 
+$(document).ready(function(){
+	fixImageContainerWidthHeight();
+});
+
+window.addEventListener('resize', function(event){
+  fixImageContainerWidthHeight(event);
+});
+	
+function fixImageContainerWidthHeight(event){
+	that = event;
+	if(event == undefined)
+	{
+		var width = $(document).width() / 3;
+		var height = ($(document).height() - $('.navbar').height()) * 3 / 5;
+		$('#imagecontainer').attr('width', width); 
+		$('#imagecontainer').attr('height', height);
+		$('#imagecontainer').attr('max-width', width); 
+		$('#imagecontainer').attr('max-height', height);
+	} 
+	else
+	{
+		var width = $(document).width() / 3;
+		var height = ($(document).height() - $('.navbar').height()) * 3 / 5;
+		$('#imagecontainer').attr('width', width); 
+		$('#imagecontainer').attr('height', height);
+		$('#imagecontainer').attr('max-width', width); 
+		$('#imagecontainer').attr('max-height', height);
+		if($('#image')){
+			calculateWidthHeightImg(width, height, $('#image'));
+		}
+	}
+}
+
+function setMaxAttrs(obj, width, height){
+	obj.attr('max-width', width); 
+	obj.attr('max-height', height);
+}
+
+
 function changeList(data, key_number){
 	if(changing){
 		if(key_number = keynum){
@@ -66,41 +105,31 @@ function openNpc(id){
 					});
 					if(data.imageFileName != null){
 						var imgCont = $('#imagecontainer');
-						
+						// need to use .attr here because computed width will be zero if no elements inside div. 
+						var width=imgCont.attr('width');
+						var height = imgCont.attr('height');
+						alert('width: ' + width);
 						$('#imagecontainer').append('<img id="image" src="/webservice1_0bs/multimediaImage/' + data.imageFileName + '"/>');
-						
-							calculateWidthHeightImg($('#imagecontainer'), $('#image'));
-						
+						calculateWidthHeightImg(width, height, $('#image'));
 					}
 				}
 	});
 }
 
-function calculateWidthHeightImg(container, image){
-	var width = container.width();
-	var height = container.height();
-	that = image;
-	
+function calculateWidthHeightImg(width, height, image){
 	var imgWidth = image.width();
 	var imgHeight = image.height();
-	
 	var rel = width/height;
 	var imgRel = imgWidth/imgHeight;
-	alert(rel);
-	alert(imgRel);
-	alert('post rel');
 	if(imgRel > rel){
-		alert(width);
 		// set to max width.
 		image.attr('width', width);
 		image.attr('height', width / imgWidth * imgHeight);
-		alert(width / imgWidth * imgHeight);
 	}
 	else{
-		alert(height);
 		// set to max height. 
 		image.attr('height', height);
 		image.attr('width', height / imgHeight * imgWidth);
-		alert(height / imgHeight * imgWidth);
 	}
 }
+

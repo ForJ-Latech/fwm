@@ -57,9 +57,6 @@ public class Webservice1_5Controller {
 		}
 	}
 	
-	
-	// All views should be created with "HttpServletRequest request" as a second
-	// parameter for getting client IP
 	@RequestMapping("/webservice1_5")
 	public ModelAndView startWS1_5(ModelMap modelMap, HttpServletRequest request) throws Exception {
 		return new ModelAndView("webservice1_5");
@@ -76,31 +73,6 @@ public class Webservice1_5Controller {
 		}
 
 		return new ModelAndView("webservice1_5");
-	}
-	
-	@RequestMapping("/loadNpc/{id}")
-	public ModelAndView loadNpc(ModelMap modelMap, @PathVariable("id") int id, HttpServletRequest request) {
-		// colName, Object (search)
-		try {
-			Npc q = Backend.getNpcDao().getNpc(id);
-			modelMap.addAttribute("npc", q);
-		} catch (SQLException e) {
-			log.error(e);
-		}
-
-		return new ModelAndView("webservice1_5");
-	}
-
-	@RequestMapping("jay_test_shit")
-	public ModelAndView jayTestShit(ModelMap modelMap, HttpServletRequest request) {
-		List<Npc> st = new ArrayList<Npc>();
-		for (int i = 0; i < 10; i++) {
-			Npc cur = new Npc();
-			cur.setfName("NPC " + i);
-			st.add(cur);
-		}
-		modelMap.addAttribute("st", st);
-		return new ModelAndView("jays");
 	}
 	
 	@RequestMapping("searchAll/{text}")
