@@ -13,7 +13,7 @@ public class JsonHelper {
 	public void addAttribute(String key, Object attr) {
 		s.append("\"" + key + "\":");
 		if (attr == null) {
-			s.append("undefined");
+			s.append("null");
 		} else {
 			s.append(g.toJson(attr));
 		}

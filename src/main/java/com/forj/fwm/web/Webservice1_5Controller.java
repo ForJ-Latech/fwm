@@ -106,10 +106,12 @@ public class Webservice1_5Controller {
 	@RequestMapping("searchAll/{text}")
 	public @ResponseBody ResponseEntity<String> search(@PathVariable("text") String text, HttpServletRequest request, HttpServletResponse response){
 		String json;
+		log.debug("inside searchall/" + text);
 		try{
 			List<Searchable> curList = Backend.searchAllByLike(text);
 			List<JsonSearchable> results = new ArrayList<JsonSearchable>();
 			StringBuilder s = new StringBuilder();
+			log.debug("curList size: " + curList.size());
 			s.append("[");
 			int cntr = 0;
 			for(Searchable cur : curList){
@@ -120,8 +122,10 @@ public class Webservice1_5Controller {
 			}
 			s.append("]");
 			json = s.toString();
+			log.debug(json);
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			json = "{\"Message\":\"" + e.getLocalizedMessage() + "\"}";
 		}
 		HttpHeaders headers = new HttpHeaders();

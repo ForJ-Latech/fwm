@@ -4,7 +4,7 @@ body {
     text-align: center; /* !!! */
 }
 
-html, body, {
+html, body {
     position: fixed;
     top: 0;
     bottom: 0;

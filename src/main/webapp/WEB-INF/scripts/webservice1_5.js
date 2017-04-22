@@ -1,5 +1,3 @@
-var keynum = 0;
-
 var colors = [
 '#F7B9B9',
 '#BFBFBF'
@@ -21,6 +19,8 @@ var changing = false;
 
 var that;
 
+var keynum = 0;
+
 function changeList(data, key_number){
 	if(changing){
 		if(key_number = keynum){
@@ -31,7 +31,7 @@ function changeList(data, key_number){
 		}
 	}
 	try{
-		
+		that = data;
 		changing = true;
 		var lcont = $('#listcontainer');
 		// clear out the things. 
@@ -40,7 +40,6 @@ function changeList(data, key_number){
 		});
 		
 		$.each(data, function(d, dval){
-			that = dval;
 			lcont.append('<div style="background-color:' + colors[d%2] + ' ;" class="row" onclick="open' + dval.class + '(' + dval.id + ');">&nbsp;' + dval.name + "&nbsp;</div>");
 		});
 	}
@@ -52,7 +51,7 @@ function changeList(data, key_number){
 	}
 }
 
-// it will call open + class name, needs to change this. 
+// it will call open + class name, we need to make more of these. 
 function openNpc(id){
 	$.ajax({
 		        url: "getNpc/" + id,
@@ -61,9 +60,47 @@ function openNpc(id){
 					$('#name').html(data.name);
 					$('#description').html(data.description);
 					$('#cname').html(data.class);
-					if(data.imageFileName != undefined){
-						document.getElementById('image').src = "/webservice1_0bs/multimediaImage/" + data.imageFileName;
+					// clear out the container every time. 
+					$.each($('#imagecontainer').children(), function(d, dval){
+						dval.remove();
+					});
+					if(data.imageFileName != null){
+						var imgCont = $('#imagecontainer');
+						
+						$('#imagecontainer').append('<img id="image" src="/webservice1_0bs/multimediaImage/' + data.imageFileName + '"/>');
+						
+							calculateWidthHeightImg($('#imagecontainer'), $('#image'));
+						
 					}
 				}
 	});
+}
+
+function calculateWidthHeightImg(container, image){
+	var width = container.width();
+	var height = container.height();
+	that = image;
+	
+	var imgWidth = image.width();
+	var imgHeight = image.height();
+	
+	var rel = width/height;
+	var imgRel = imgWidth/imgHeight;
+	alert(rel);
+	alert(imgRel);
+	alert('post rel');
+	if(imgRel > rel){
+		alert(width);
+		// set to max width.
+		image.attr('width', width);
+		image.attr('height', width / imgWidth * imgHeight);
+		alert(width / imgWidth * imgHeight);
+	}
+	else{
+		alert(height);
+		// set to max height. 
+		image.attr('height', height);
+		image.attr('width', height / imgHeight * imgWidth);
+		alert(height / imgHeight * imgWidth);
+	}
 }

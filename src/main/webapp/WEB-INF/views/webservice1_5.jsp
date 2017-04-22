@@ -41,15 +41,28 @@
     				</div>
     				<div id="searchResults">Search&nbsp;Results</div>
     				<div>
-						<div id="listcontainer" style="overflow: auto">
+						<div id="listcontainer" >
 					    </div>
     				</div>
     			</span>
     			<span class="col-sm-8 text-center">
-					<div class="row"><div id="cname"></div></div>
-					<div class="row"><div id="name"></div></div>
-					<div class="row"><img id="image"/></div>
-					<div class="row"><div id="description"></div></div>
+					<div class="row">
+					<span class="col-sm-8">
+						<div class="row"><div id="cname"></div></div>
+						<div class="row"><div id="name"></div></div>
+						<div class="row" id="imagecontainer"></div>
+						<div class="row"><div id="description"></div></div>
+					</span>
+					<span class="col-sm-4">
+						<div id="rellistcontainer">
+							<div>1</div>
+							<div>2</div>
+							<div>3</div>
+							<div>4</div>
+							<div>5</div>
+						</div>
+					</span>
+					</div>
     			</span>
     		</div>
     	</div>
