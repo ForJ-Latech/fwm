@@ -36,27 +36,6 @@ public class Webservice1_5Controller {
 		Npc, Event, God, Region;
 	}
 	
-	public static class JsonSearchable{
-		private Searchable thing;
-		private String type;
-		public JsonSearchable(Searchable s){
-			this.type = s.getClass().getSimpleName();
-			this.thing = s;
-		}
-		public Searchable getS() {
-			return thing;
-		}
-		public String getType() {
-			return type;
-		}
-		public void setS(Searchable s) {
-			this.thing = s;
-		}
-		public void setType(String type) {
-			this.type = type;
-		}
-	}
-	
 	@RequestMapping("/webservice1_5")
 	public ModelAndView startWS1_5(ModelMap modelMap, HttpServletRequest request) throws Exception {
 		return new ModelAndView("webservice1_5");
@@ -81,16 +60,18 @@ public class Webservice1_5Controller {
 		log.debug("inside searchall/" + text);
 		try{
 			List<Searchable> curList = Backend.searchAllByLike(text);
-			List<JsonSearchable> results = new ArrayList<JsonSearchable>();
 			StringBuilder s = new StringBuilder();
 			log.debug("curList size: " + curList.size());
 			s.append("[");
 			int cntr = 0;
 			for(Searchable cur : curList){
-				if(cntr++ > 0){
-					s.append(",");
+				// they should only show up if tehy have been seen in the list. 
+				if(showLogic(cur)){
+					if(cntr++ > 0){
+						s.append(",");
+					}
+					s.append(cur.toOneFiveJsonString());
 				}
-				s.append(cur.toOneFiveJsonString());
 			}
 			s.append("]");
 			json = s.toString();
@@ -110,6 +91,7 @@ public class Webservice1_5Controller {
 	@RequestMapping("getGod/{id}")
 	public @ResponseBody ResponseEntity<String> getGod(@PathVariable("id") int id, HttpServletRequest request, HttpServletResponse response){
 		String json;
+		
 		try{
 			God g = Backend.getGodDao().getFullGod(id);
 			json = g.toOneFiveJsonString();
@@ -129,9 +111,27 @@ public class Webservice1_5Controller {
 		String json;
 		try{
 			Npc g = Backend.getNpcDao().getFullNpc(id);
-			json = g.toOneFiveJsonString();
+			if(showLogic(g) && g != null){
+				JsonHelper help = new JsonHelper(g.toOneFiveJsonString());
+				
+				// add our god
+				if(showLogic(g.getGod())){
+					help.addRawString("god", g.getGod().toOneFiveJsonString());
+				}else
+				{
+					help.addAttribute("god", null);
+				}
+				// should in theory work for every type of searchable list... 
+				addListToHelper("events", App.toListSearchable(g.getEvents()), help);
+				addListToHelper("regions", App.toListSearchable(g.getRegions()), help);
+				json = help.getString();
+			}else
+			{
+				throw new Exception("This npc is not showable.");
+			}
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			json = "{\"Message\":\"" + e.getLocalizedMessage() + "\"}";
 		}
 		HttpHeaders headers = new HttpHeaders();
@@ -170,5 +170,32 @@ public class Webservice1_5Controller {
 		headers.set("Content-Type", "application/json");
 		
     	return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+	}
+	
+	public static boolean showLogic(Searchable s){
+		// because null will always be fine to show, lmao. 
+		if(s == null){
+			return false;
+		}
+		return s.isShown();
+	}
+	
+	public static void addListToHelper(String key, List<Searchable> things, JsonHelper help){
+		
+		StringBuilder events = new StringBuilder("[");
+		if(things != null){
+			int cntr = 0;
+			for(Searchable e : things){
+				if(showLogic(e)){
+					if(cntr++ > 0){
+						events.append(",");
+					}
+					events.append(e.toOneFiveJsonString());
+				}
+			}
+		}
+		events.append("]");
+		help.addRawString(key, events.toString());
+		
 	}
 }

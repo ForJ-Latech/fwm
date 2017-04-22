@@ -177,17 +177,23 @@ public class Webservice1_0BSController{
 		
 		Gson gson = new Gson();
 		showdata = App.spdc.getByIndex(currentIndex);
-		//showdata = App.spdc.getDefault();
-		Object obj = showdata.getObject();
-		int newId = getObjectId(obj);
-		
-		
-		String className = obj.getClass().getSimpleName();
-		String[] info = {String.valueOf(newId), className}; 
-		String json = gson.toJson(info);
+		String json;
+		if(showdata != null){
+			Object obj = showdata.getObject();
+			int newId = getObjectId(obj);
+			
+			
+			String className = obj.getClass().getSimpleName();
+			String[] info = {String.valueOf(newId), className}; 
+			json = gson.toJson(info);
+		}
+		else
+		{
+			json = "[null, null]";
+		}
 		HttpHeaders headers = new HttpHeaders();
 	    headers.set("Content-Type", "application/json");
-	    
+	
 	    return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
     }
 	

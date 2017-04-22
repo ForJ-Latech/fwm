@@ -118,12 +118,6 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 		ScrollPane rootLayout = (ScrollPane)loader.load();
 		ShowPlayersController cr = (ShowPlayersController)loader.getController();
 		cr.start(new Stage(), rootLayout);
-		Npc n = new Npc();
-		n.setfName("Jack");
-		n.setlName("Strickland");
-		n.setDescription("This will be the description.");
-		n.setImageFileName("/i/fat_halfling.jpg");
-		App.spdc.addOne(n);
 		return cr;
 	}
 	

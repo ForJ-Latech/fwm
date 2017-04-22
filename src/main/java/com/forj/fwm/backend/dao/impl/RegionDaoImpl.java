@@ -18,6 +18,7 @@ import com.forj.fwm.entity.OMRegionRegion;
 import com.forj.fwm.entity.Region;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.support.ConnectionSource;
 
 public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements RegionDao {
@@ -30,7 +31,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		if (arg1 instanceof Integer){
 			preparedQuery = this.queryBuilder().where().like(arg0, arg1).prepare();
 		} else {
-			preparedQuery = this.queryBuilder().where().like(arg0, "%" + arg1 + "%").prepare();
+			preparedQuery = this.queryBuilder().where().like(arg0, new SelectArg("%" + arg1 + "%")).prepare();
 		}
 		return this.query(preparedQuery);
 	}

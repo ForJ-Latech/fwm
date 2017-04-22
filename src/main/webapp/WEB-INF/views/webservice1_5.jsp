@@ -54,7 +54,7 @@
 						<div class="row"><div id="description"></div></div>
 					</span>
 					<span class="col-sm-4">
-						<div id="rellistcontainer">
+						<div id="rellistcontainer" class="text-center">
 							<div>1</div>
 							<div>2</div>
 							<div>3</div>

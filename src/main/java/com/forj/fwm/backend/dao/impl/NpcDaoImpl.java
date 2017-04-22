@@ -16,6 +16,7 @@ import com.forj.fwm.entity.OMNpcInteraction;
 import com.forj.fwm.entity.Region;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.support.ConnectionSource;
 
 public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
@@ -25,10 +26,11 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 
 	public List<Npc> queryForLike(String arg0, Object arg1) throws SQLException {
 		PreparedQuery<Npc> preparedQuery;
+		
 		if (arg1 instanceof Integer){
 			preparedQuery = this.queryBuilder().where().like(arg0, arg1).prepare();
 		} else {
-			preparedQuery = this.queryBuilder().where().like(arg0, "%" + arg1 + "%").prepare();
+			preparedQuery = this.queryBuilder().where().like(arg0, new SelectArg("%" + arg1 + "%")).prepare();
 		}
 		return this.query(preparedQuery);
 	}

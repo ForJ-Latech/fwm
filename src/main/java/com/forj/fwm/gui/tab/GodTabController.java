@@ -20,6 +20,7 @@ import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.startup.App;
+import com.j256.ormlite.stmt.SelectArg;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
 import javafx.application.Platform;
@@ -121,7 +122,7 @@ public class GodTabController implements Saveable {
 		panth.clear();
 		if (god.getPantheon() != null){
 			try {
-				for (God g : Backend.getGodDao().queryForEq("pantheon", god.getPantheon())){
+				for (God g : Backend.getGodDao().queryForEq("pantheon", new SelectArg(god.getPantheon()))){
 					if (g.getID() != god.getID()){
 						panth.add(g);
 					}

@@ -16,6 +16,7 @@ import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Template;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.support.ConnectionSource;
 
 public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements TemplateDao {
@@ -28,7 +29,7 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 		if (arg1 instanceof Integer){
 			preparedQuery = this.queryBuilder().where().like(arg0, arg1).prepare();
 		} else {
-			preparedQuery = this.queryBuilder().where().like(arg0, "%" + arg1 + "%").prepare();
+			preparedQuery = this.queryBuilder().where().like(arg0, new SelectArg("%" + arg1 + "%")).prepare();
 		}
 		return this.query(preparedQuery);
 	}

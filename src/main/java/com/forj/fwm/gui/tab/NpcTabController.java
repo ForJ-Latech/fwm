@@ -20,6 +20,7 @@ import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.startup.App;
+import com.j256.ormlite.stmt.SelectArg;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
 import javafx.application.Platform;
@@ -92,7 +93,7 @@ public class NpcTabController implements Saveable {
 		
 		fam.clear();
 		if (npc.getlName() != null)
-		for (Npc n : Backend.getNpcDao().queryForEq("lname", npc.getlName())){
+		for (Npc n : Backend.getNpcDao().queryForEq("lname", new SelectArg(npc.getlName()))){
 			if (n.getID() != npc.getID()){
 				fam.add(n);
 			}

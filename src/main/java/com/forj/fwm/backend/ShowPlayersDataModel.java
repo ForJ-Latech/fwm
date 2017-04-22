@@ -126,7 +126,13 @@ public class ShowPlayersDataModel {
 	}
 	
 	public ShowData getByIndex(Integer index) {
-		return new ShowData(displayedObjects.get(index), index);
+		if(displayedObjects.size() > index)
+		{
+			return new ShowData(displayedObjects.get(index), index);
+		}else
+		{
+			return null;
+		}
 	}
 	
 	public Integer getIndex(Object o) {
