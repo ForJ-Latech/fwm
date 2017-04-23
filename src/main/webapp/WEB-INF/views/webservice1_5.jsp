@@ -30,29 +30,34 @@
 			</div>
 		</nav>
 	
-    	<div id="outerbox" class="container">
+    	<div class="container outerbox"><br>    		
     		<div class="row">
+    			
     			<span class="col-sm-4 text-center">
-    				<div class="input-group">
+    				<div class="input-group"><br>
       					<input type="text" class="form-control" id="myInput" title="Npc" placeholder="Search Npc...">
       					<span class="input-group-btn">
         					<button class="btn btn-secondary" type="button" onclick="searchvalue(document.getElementById('myInput').value);">Go!</button>
       					</span>
+    				</div>    				
+    				<div id="searchResults">Search&nbsp;Results
     				</div>
-    				<div id="searchResults">Search&nbsp;Results</div>
-    				<div>
-						<div id="listcontainer" >
+    				<div>    				
+						<div class="text-center"  id="listcontainer" >
+						
 					    </div>
-    				</div>
+    				</div>    			
     			</span>
+    			<div class="line1"></div>
     			<span class="col-sm-8 text-center">
-					<div class="row" style="width:100%;">
+					<div class="row text-center" style="width:100%;">
 					<span class="col-sm-8">
-						<div class="row"><div id="cname"></div></div>
+						<div class="row text-center" ><strong><div id="cname"></div></div></strong>
 						<div class="row"><div id="name"></div></div>
 						<div class="row" id="imagecontainer"></div>
 						<div class="row"><div id="description"></div></div>
 					</span>
+					<div class="line1"></div>
 					<span class="col-sm-4">
 						<div id="rellistcontainer" class="text-center">
 							<div>1</div>
@@ -65,7 +70,9 @@
 					</div>
     			</span>
     		</div>
+    	
     	</div>
+    	
 	</body>
 </html>
 
