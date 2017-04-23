@@ -13,16 +13,16 @@ body{
   margin-left: auto;
   margin-right: auto;
 }
+.bold{
+font-weight:bold;
+font-size:20px}
 
 /* Everything under this is unused in the bootstrap version  */
 .outerbox	{ 
-		position:absolute;
-		width:100%;
-		height:89.15%;
-			
-		padding: 5px; 
-		border: 5px solid black;  			
-   		background-color: silver grey; 
+	padding: 20px; 
+    margin: 0 auto;
+	text-align: center;	
+   	background-color: silver grey;
    		
    		
 		} 
@@ -53,6 +53,15 @@ body{
 	border:2px solid grey;
 	float: right;
 	margin-right:100%;
+}
+.line2{
+	position:absolute;
+	width:2px;
+	height:500px;
+	border:2px solid grey;
+	float: left;
+	
+	margin-right: 20%
 }
 
 img	{	

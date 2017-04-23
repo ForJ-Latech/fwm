@@ -35,12 +35,12 @@
     			
     			<span class="col-sm-4 text-center">
     				<div class="input-group"><br>
-      					<input type="text" class="form-control" id="myInput" title="Npc" placeholder="Search Npc...">
+      					<input type="text" class="form-control" id="myInput" title="Npc" placeholder="Search...">
       					<span class="input-group-btn">
-        					<button class="btn btn-secondary" type="button" onclick="searchvalue(document.getElementById('myInput').value);">Go!</button>
+        					<button class="btn btn-secondary" type="button" onclick="searchvalue(document.getElementById('myInput').value);">Search</button>
       					</span>
     				</div>    				
-    				<div id="searchResults">Search&nbsp;Results
+    				<div id="searchResults"><strong>Search&nbsp;Results</strong>
     				</div>
     				<div>    				
 						<div class="text-center"  id="listcontainer" >
@@ -52,19 +52,15 @@
     			<span class="col-sm-8 text-center">
 					<div class="row text-center" style="width:100%;">
 					<span class="col-sm-8">
-						<div class="row text-center" ><strong><div id="cname"></div></div></strong>
-						<div class="row"><div id="name"></div></div>
-						<div class="row" id="imagecontainer"></div>
-						<div class="row"><div id="description"></div></div>
-					</span>
-					<div class="line1"></div>
+						<div class="row cetner" ><div id="cname"></div></div>
+						<div class="row center"><font size="6"><strong><div id="name"></div></strong></font></div><br>
+						<div class="row center" id="imagecontainer"></div><br>
+						<div class="row"><font size="5"><div id="description"></div></font></div><br>
+						</span>	
+						<div class="line2"></div>				
 					<span class="col-sm-4">
-						<div id="rellistcontainer" class="text-center">
-							<div>1</div>
-							<div>2</div>
-							<div>3</div>
-							<div>4</div>
-							<div>5</div>
+						<div id="rellistcontainer" class="text-center bold">
+						
 						</div>
 					</span>
 					</div>
