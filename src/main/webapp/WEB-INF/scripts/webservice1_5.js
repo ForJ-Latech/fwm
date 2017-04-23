@@ -32,7 +32,8 @@ var keynum = 0;
 
 var colors = [
 '#F7B9B9',
-'#BFBFBF'
+'#BFBFBF',
+'#6699CC'
 ];
 
 function changeList(data, key_number){
@@ -64,9 +65,36 @@ function fillDiv(lcont, data){
 		dval.remove();
 	});
 	$.each(data, function(d, dval){
-		lcont.append('<div style="background-color:' + colors[d%2] + ' ;" class="row listItem" onclick="open' + 
+		lcont.append('<div style="background-color:' + colors[d%2] + ' ;" class="row listItem ' + dval.class + '" onclick="open' + 
 		dval.class + '(' + dval.id + ');"><img src="/webservice1_0bs/multimediaImage/' + dval.imageFileName + '" class="listImage"/>&nbsp;' + dval.name + "&nbsp;</div>");
+		
 	});
+}
+ 
+// arguably spaghetti, but prevents us from needing to copy and paste changes multiple places. 
+function makeCell(container, dval){
+	if(dval != null) {
+		container.append('<div style="background-color:' + colors[2] + ' ;" class="row listItem ' + dval.class + '" onclick="open' + 
+		dval.class + '(' + dval.id + ');"><img src="/webservice1_0bs/multimediaImage/' + dval.imageFileName + '" class="listImage"/>&nbsp;' + dval.name + "&nbsp;</div>");
+		
+	}
+}
+
+function applyBasicAttributes(data){
+	that = data;
+	$('#name').html(data.name);
+	$('#description').html(data.description);
+	$('#cname').html(data.class);
+	// clear out the container every time. 
+	$.each($('#imagecontainer').children(), function(d, dval){
+		dval.remove();
+	});	
+	var imgCont = $('#imagecontainer');
+	// need to use .attr here because computed width will be zero if no elements inside div. 
+	var width=imgCont.attr('width');
+	var height = imgCont.attr('height');
+	$('#imagecontainer').append('<img id="image" src="/webservice1_0bs/multimediaImage/' + data.imageFileName + '"/>');
+	calculateWidthHeightImg(width, height, $('#image'));
 }
 
 // it will call open + class name, we need to make more of these. 
@@ -75,29 +103,105 @@ function openNpc(id){
 		        url: "getNpc/" + id,
 		        method: 'GET',
 		        success: function(data){
-					that = data;
-					$('#name').html(data.name);
-					$('#description').html(data.description);
-					$('#cname').html(data.class);
-					// clear out the container every time. 
-					$.each($('#imagecontainer').children(), function(d, dval){
-						dval.remove();
-					});
-					if(data.imageFileName != null){
-						var imgCont = $('#imagecontainer');
-						// need to use .attr here because computed width will be zero if no elements inside div. 
-						var width=imgCont.attr('width');
-						var height = imgCont.attr('height');
-						$('#imagecontainer').append('<img id="image" src="/webservice1_0bs/multimediaImage/' + data.imageFileName + '"/>');
-						calculateWidthHeightImg(width, height, $('#image'));
-					}
+					applyBasicAttributes(data);
 					var relListContainer = $('#rellistcontainer');
-					relListContainer.html('Events<div id="events" class="row"> </div>Regions<div id="regions" class="row"> </div>');				
+					relListContainer.html('God<div id="god" class="row">'
+					+ '</div>Groups<div id="events" class="row">'
+					+ '</div>Regions<div id="regions" class="row"></div>');	
 					// give the dom a second to register things. 
-					setTimeout(function (){
-						fillDiv($('#regions'), data.regions);
-						fillDiv($('#events'), data.events);
-					}, 50);
+					setTimeout(function (){			
+						makeCell($('#god'), data.god);
+						setTimeout(function(){
+							fillDiv($('#regions'), data.regions);
+							setTimeout(function(){
+								fillDiv($('#events'), data.events);
+							}, 100);
+						}, 100);
+					}, 100);
+				}
+	});
+}
+
+function openEvent(id){
+	$.ajax({
+		        url: "getEvent/" + id,
+		        method: 'GET',
+		        success: function(data){
+					applyBasicAttributes(data);
+					// override that shit yo. 
+					$('#cname').html('Group');
+					var relListContainer = $('#rellistcontainer');
+					relListContainer.html('Region<div id="region" class="row"></div>'
+					+'Npcs<div id="npcs" class="row"></div>'
+					+'Gods<div id="gods" class="row"> </div>');	
+					// give the dom a second to register things. 
+					// also load sequentially, so that the app looks funky. 
+					setTimeout(function (){			
+						makeCell($('#region'), data.region);
+						setTimeout(function(){
+							fillDiv($('#npcs'), data.npcs);
+							setTimeout(function(){
+								fillDiv($('#gods'), data.gods);
+							}, 100);
+						}, 100);
+					}, 100);
+				}
+	});
+}
+
+function openRegion(id){
+	$.ajax({
+		        url: "getRegion/" + id,
+		        method: 'GET',
+		        success: function(data){
+					applyBasicAttributes(data);
+					var relListContainer = $('#rellistcontainer');
+					relListContainer.html('Super&nbsp;Region<div id="superregion" class="row"/>'
+					+ 'Sub&nbsp;Regions<div id="subregions" class="row"></div>'
+					+ 'Npcs<div id="npcs" class="row"></div>'
+					+ 'Gods<div id="gods" class="row"> </div>');	
+					// give the dom a second to register things. 
+					// also load sequentially, so that the app looks funky. 
+					setTimeout(function (){			
+						makeCell($('#superregion'), data.superRegion);
+						setTimeout(function(){
+							fillDiv($('#subregions'), data.regions);
+							setTimeout(function(){
+								fillDiv($('#npcs'), data.npcs);
+								setTimeout(function(){
+									fillDiv($('#gods'), data.gods);
+								}, 100);
+							}, 100);
+						}, 100);
+					}, 100);
+				}
+	});
+}
+
+function openGod(id){
+	$.ajax({
+		        url: "getGod/" + id,
+		        method: 'GET',
+		        success: function(data){
+					applyBasicAttributes(data);
+					var relListContainer = $('#rellistcontainer');
+					relListContainer.html('Npcs<div id="npcs" class="row"></div>'
+					+ 'Groups<div id="groups" class="row"></div>'
+					+ 'Regions<div id="regions" class="row"> </div>');	
+					// give the dom a second to register things. 
+					// also load sequentially, so that the app looks funky. 
+					setTimeout(function (){			
+						fillDiv($('#npcs'), data.npcs);
+						setTimeout(function(){
+							fillDiv($('#groups'), data.groups);
+							setTimeout(function(){
+								fillDiv($('#regions'), data.regions);
+								/* setTimeout(function(){
+									fillDiv($('#gods'), data.gods);
+								}, 100); */
+							}, 100);
+						}, 100);
+					}, 100);
 				}
 	});
 }

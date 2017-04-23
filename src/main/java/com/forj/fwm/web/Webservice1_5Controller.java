@@ -91,10 +91,19 @@ public class Webservice1_5Controller {
 	@RequestMapping("getGod/{id}")
 	public @ResponseBody ResponseEntity<String> getGod(@PathVariable("id") int id, HttpServletRequest request, HttpServletResponse response){
 		String json;
-		
 		try{
-			God g = Backend.getGodDao().getFullGod(id);
-			json = g.toOneFiveJsonString();
+			God god = Backend.getGodDao().getFullGod(id);
+			if(showLogic(god) && god != null){
+				JsonHelper help = new JsonHelper(god.toOneFiveJsonString());
+				// should in theory work for every type of searchable list...
+				addListToHelper("npcs", App.toListSearchable(god.getNpcs()), help);
+				addListToHelper("events", App.toListSearchable(god.getEvents()), help);
+				addListToHelper("regions", App.toListSearchable(god.getRegions()), help);
+				json = help.getString();
+			}else
+			{
+				throw new Exception("This npc is not showable.");
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -110,20 +119,23 @@ public class Webservice1_5Controller {
 	public @ResponseBody ResponseEntity<String> getNpc(@PathVariable("id") int id, HttpServletRequest request, HttpServletResponse response){
 		String json;
 		try{
-			Npc g = Backend.getNpcDao().getFullNpc(id);
-			if(showLogic(g) && g != null){
-				JsonHelper help = new JsonHelper(g.toOneFiveJsonString());
-				
+			Npc npc = Backend.getNpcDao().getFullNpc(id);
+			if(showLogic(npc) && npc != null){
+				JsonHelper help = new JsonHelper(npc.toOneFiveJsonString());
+				God curG = null;
+				if(npc.getGod() != null){
+					curG = Backend.getGodDao().getGod(npc.getGod().getID()); 
+				}
 				// add our god
-				if(showLogic(g.getGod())){
-					help.addRawString("god", g.getGod().toOneFiveJsonString());
+				if(showLogic(curG)){
+					help.addRawString("god", curG.toOneFiveJsonString());
 				}else
 				{
 					help.addAttribute("god", null);
 				}
 				// should in theory work for every type of searchable list... 
-				addListToHelper("events", App.toListSearchable(g.getEvents()), help);
-				addListToHelper("regions", App.toListSearchable(g.getRegions()), help);
+				addListToHelper("events", App.toListSearchable(npc.getEvents()), help);
+				addListToHelper("regions", App.toListSearchable(npc.getRegions()), help);
 				json = help.getString();
 			}else
 			{
@@ -144,8 +156,29 @@ public class Webservice1_5Controller {
 	public @ResponseBody ResponseEntity<String> getRegion(@PathVariable("id") int id, HttpServletRequest request, HttpServletResponse response){
 		String json;
 		try{
-			Region g = Backend.getRegionDao().getFullRegion(id);
-			json = g.toOneFiveJsonString();
+			Region reg = Backend.getRegionDao().getFullRegion(id);
+			if(showLogic(reg) && reg != null){
+				JsonHelper help = new JsonHelper(reg.toOneFiveJsonString());
+				Region curReg = null;
+				if(reg.getSuperRegion() != null){
+					curReg = Backend.getRegionDao().getRegion(reg.getSuperRegion().getID()); 
+				}
+				// add our god
+				if(showLogic(curReg)){
+					help.addRawString("superRegion", curReg.toOneFiveJsonString());
+				}else
+				{
+					help.addAttribute("superRegion", null);
+				}
+				// should in theory work for every type of searchable list... 
+				addListToHelper("npcs", App.toListSearchable(reg.getNpcs()), help);
+				addListToHelper("gods", App.toListSearchable(reg.getGods()), help);
+				addListToHelper("regions", App.toListSearchable(reg.getSubRegions()), help);
+				json = help.getString();
+			}else
+			{
+				throw new Exception("This " + Event.WHAT_IT_DO +  " is not showable.");
+			}
 		}
 		catch(Exception e){
 			json = "{\"Message\":\"" + e.getLocalizedMessage() + "\"}";
@@ -160,8 +193,28 @@ public class Webservice1_5Controller {
 	public @ResponseBody ResponseEntity<String> getEvent(@PathVariable("id") int id, HttpServletRequest request, HttpServletResponse response){
 		String json;
 		try{
-			Event g = Backend.getEventDao().getFullEvent(id);
-			json = g.toOneFiveJsonString();
+			Event ev = Backend.getEventDao().getFullEvent(id);
+			if(showLogic(ev) && ev != null){
+				JsonHelper help = new JsonHelper(ev.toOneFiveJsonString());
+				Region curReg = null;
+				if(ev.getRegion() != null){
+					curReg = Backend.getRegionDao().getRegion(ev.getRegion().getID()); 
+				}
+				// add our god
+				if(showLogic(curReg)){
+					help.addRawString("region", curReg.toOneFiveJsonString());
+				}else
+				{
+					help.addAttribute("region", null);
+				}
+				// should in theory work for every type of searchable list... 
+				addListToHelper("npcs", App.toListSearchable(ev.getNpcs()), help);
+				addListToHelper("gods", App.toListSearchable(ev.getGods()), help);
+				json = help.getString();
+			}else
+			{
+				throw new Exception("This " + Event.WHAT_IT_DO +  " is not showable.");
+			}
 		}
 		catch(Exception e){
 			json = "{\"Message\":\"" + e.getLocalizedMessage() + "\"}";

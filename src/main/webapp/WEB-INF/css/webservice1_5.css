@@ -72,6 +72,7 @@ img	{
 
 .listItem{
 	width:100%;
+	display:inline-block;
 }
 .listImage{
 	width:32px;

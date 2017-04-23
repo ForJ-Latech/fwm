@@ -159,6 +159,7 @@ public class Backend {
 	}
 	
 	public static void SaveSimpleSearchable(Searchable s) throws SQLException{
+		log.debug("saving simple searchable of type " + s.getClass().getSimpleName() + " with id: " + s.getID());
 		if(s instanceof Npc){
 			npcDao.createOrUpdate((Npc)s);
 			npcDao.refresh((Npc)s);
