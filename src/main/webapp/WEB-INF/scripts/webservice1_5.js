@@ -206,24 +206,6 @@ function openGod(id){
 	});
 }
 
-// do images and stuff. 
-function calculateWidthHeightImg(width, height, image){
-	var imgWidth = image.width();
-	var imgHeight = image.height();
-	var rel = width/height;
-	var imgRel = imgWidth/imgHeight;
-	if(imgRel > rel){
-		// set to max width.
-		image.attr('width', width);
-		image.attr('height', width / imgWidth * imgHeight);
-	}
-	else{
-		// set to max height. 
-		image.attr('height', height);
-		image.attr('width', height / imgHeight * imgWidth);
-	}
-}
-
 window.addEventListener('resize', function(event){
   fixImageContainerWidthHeight(event);
 });

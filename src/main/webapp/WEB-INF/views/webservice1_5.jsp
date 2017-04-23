@@ -10,6 +10,7 @@
   		<link rel="stylesheet" type="text/css" href="/c/webservice1_5.css">	
 		<script type="text/javascript" src="/s/jquery-3.2.1.min.js"></script>
 		<script src="/s/bootstrap.min.js"></script>
+		<script src="/s/imagesize.js"></script>
 		<script src="/s/webservice1_5.js"></script>
 				
 	</head>
