@@ -1,8 +1,5 @@
 package com.forj.fwm;
 
-import com.forj.fwm.backend.Backend;
-import com.forj.fwm.entity.Npc;
-import com.forj.fwm.entity.Template;
 import com.forj.fwm.startup.App;
 
 public class TemplateTest {

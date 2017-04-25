@@ -22,6 +22,6 @@ For the time being it can be downloaded here: http://138.47.200.245/jehlmann/fwm
 
 Remember, this is an alpha, so things are not entirely finished. With that in mind, if you have any ideas or changes that you would like, talk to me. I would love to hear your thoughts.
 
-Happy Duengon Mastering,
+Happy Dungeon Mastering,
 
 James Ehlmann

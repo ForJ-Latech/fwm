@@ -176,8 +176,6 @@ public class Backend {
 			statblockDao.createOrUpdate((Statblock)s);
 			statblockDao.refresh((Statblock)s);
 		}
-		
-		
 	}
 	
 	public static EventDao getEventDao() {

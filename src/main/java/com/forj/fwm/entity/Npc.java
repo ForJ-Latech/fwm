@@ -32,6 +32,9 @@ public class Npc implements Searchable {
 	@DatabaseField(width=100)
 	private String fName;
 	
+	@DatabaseField(columnDefinition="VARCHAR_IGNORECASE", width=500)
+	private String ignoreCaseName;
+	
 	@DatabaseField(width=100)
 	private String gender;
 
@@ -134,6 +137,11 @@ public class Npc implements Searchable {
 		return fName;
 	}
 	
+	public void setfName(String fName) {
+		this.fName = fName;
+		this.ignoreCaseName = fName;
+	}
+	
 	public String getFullName() {
 		if (getlName() != null) {
 			return (getfName() + " " + getlName()).trim();
@@ -149,10 +157,6 @@ public class Npc implements Searchable {
 	
 	public void setGender(String gender){
 		this.gender = gender;
-	}
-
-	public void setfName(String fName) {
-		this.fName = fName;
 	}
 
 	public String getAttributes() {

@@ -26,9 +26,10 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 
 	public List<Npc> queryForLike(String arg0, Object arg1) throws SQLException {
 		PreparedQuery<Npc> preparedQuery;
-		
-		if (arg1 instanceof Integer){
+		if (arg1 instanceof Integer) {
 			preparedQuery = this.queryBuilder().where().like(arg0, arg1).prepare();
+		} else if (arg0.equals("fName")) {
+			preparedQuery = this.queryBuilder().where().like("ignoreCaseName", new SelectArg("%" + arg1 + "%")).prepare();
 		} else {
 			preparedQuery = this.queryBuilder().where().like(arg0, new SelectArg("%" + arg1 + "%")).prepare();
 		}

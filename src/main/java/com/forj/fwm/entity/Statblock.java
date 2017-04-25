@@ -13,6 +13,9 @@ public class Statblock implements Searchable{
 	@DatabaseField(width=100)
 	private String name;
 	
+	@DatabaseField(columnDefinition="VARCHAR_IGNORECASE", width=500)
+	private String ignoreCaseName;
+	
 	@DatabaseField(width=5000)
 	private String description;
 	
@@ -46,6 +49,7 @@ public class Statblock implements Searchable{
 
 	public void setName(String name) {
 		this.name = name;
+		this.ignoreCaseName = name;
 	}
 
 	public String getDescription() {
