@@ -15,8 +15,11 @@
 				
 	</head>
 	<body>
-		<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-			<div class="navbar navbar-default" id="navbars">
+		<nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse fixed-top">
+      		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
+    			<span class="navbar-toggler-icon"></span>
+ 			</button>
+			<div class="collapse navbar-collapse" id="navbars">
 		    	<ul class="nav navbar-nav">
 		          	<li class="nav-item active">
 		            	<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
@@ -53,7 +56,7 @@
     			<span class="col-sm-8 text-center">
 					<div class="row text-center" style="width:100%;">
 					<span class="col-sm-8">
-						<div class="row cetner" ><div id="cname"></div></div>
+						<div class="row center" ><div id="cname"></div></div>
 						<div class="row center"><font size="6"><strong><div id="name"></div></strong></font></div><br>
 						<div class="row center" id="imagecontainer"></div><br>
 						<div class="row"><font size="5"><div id="description"></div></font></div><br>
