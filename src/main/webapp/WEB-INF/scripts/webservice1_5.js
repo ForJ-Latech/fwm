@@ -105,16 +105,20 @@ function openNpc(id){
 		        success: function(data){
 					applyBasicAttributes(data);
 					var relListContainer = $('#rellistcontainer');
-					relListContainer.html('God<div id="god" class="row">'
+					relListContainer.html('God<div id="god" class="row"></div>'
+					+ 'Family<div id="family" class="row">'
 					+ '</div>Groups<div id="events" class="row">'
 					+ '</div>Regions<div id="regions" class="row"></div>');	
 					// give the dom a second to register things. 
 					setTimeout(function (){			
 						makeCell($('#god'), data.god);
 						setTimeout(function(){
-							fillDiv($('#regions'), data.regions);
+							fillDiv($('#family'), data.family);
 							setTimeout(function(){
-								fillDiv($('#events'), data.events);
+								fillDiv($('#regions'), data.regions);
+								setTimeout(function(){
+									fillDiv($('#events'), data.events);
+								}, 100);
 							}, 100);
 						}, 100);
 					}, 100);
@@ -185,20 +189,21 @@ function openGod(id){
 		        success: function(data){
 					applyBasicAttributes(data);
 					var relListContainer = $('#rellistcontainer');
-					relListContainer.html('Npcs<div id="npcs" class="row"></div>'
+					relListContainer.html('Pantheon<div id="pantheon" class="row"> </div>'
 					+ 'Groups<div id="groups" class="row"></div>'
-					+ 'Regions<div id="regions" class="row"> </div>');	
+					+ 'Regions<div id="regions" class="row"> </div>'
+					+ 'Npcs<div id="npcs" class="row"></div>');	
 					// give the dom a second to register things. 
 					// also load sequentially, so that the app looks funky. 
-					setTimeout(function (){			
-						fillDiv($('#npcs'), data.npcs);
+					setTimeout(function (){		
+						fillDiv($('#pantheon'), data.pantheon);	
 						setTimeout(function(){
-							fillDiv($('#groups'), data.groups);
+							fillDiv($('#groups'), data.events);
 							setTimeout(function(){
 								fillDiv($('#regions'), data.regions);
-								/* setTimeout(function(){
-									fillDiv($('#gods'), data.gods);
-								}, 100); */
+								setTimeout(function(){
+									fillDiv($('#npcs'), data.npcs);
+								}, 100); 
 							}, 100);
 						}, 100);
 					}, 100);
@@ -212,6 +217,7 @@ window.addEventListener('resize', function(event){
 	
 function fixImageContainerWidthHeight(event){
 	that = event;
+	console.debug(event);
 	if(event == undefined)
 	{
 		var width = $(document).width() / 3;

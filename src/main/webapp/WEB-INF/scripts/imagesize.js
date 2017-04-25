@@ -1,8 +1,11 @@
 // do images and stuff. 
 // takes in the width & height of a container, and the image as a $(jquery) thing. 
 function calculateWidthHeightImg(width, height, image){
-	var imgWidth = image.width();
-	var imgHeight = image.height();
+	that = image;
+	var img = document.getElementById(image.attr('id'));
+	that = img;
+	var imgWidth = img.naturalWidth;
+	var imgHeight = img.naturalHeight;
 	var rel = width/height;
 	var imgRel = imgWidth/imgHeight;
 	if(imgRel > rel){
