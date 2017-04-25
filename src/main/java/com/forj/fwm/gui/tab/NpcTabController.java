@@ -112,6 +112,7 @@ public class NpcTabController implements Saveable {
 		myGod.clear();
 		if (npc.getGod() != null){
 			npc.getGod().setName(Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).get(0).getName());
+			npc.getGod().setImageFileName(Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).get(0).getImageFileName());
 			myGod.add(npc.getGod());
 		}
 		godRelation = RelationalField.createRelationalList(this, App.toListSearchable(myGod), "God", true, true, tabType, SearchList.EntitiesToSearch.GOD);

@@ -1,8 +1,11 @@
 package com.forj.fwm.gui;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -18,9 +21,13 @@ import com.forj.fwm.startup.App;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -29,7 +36,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 import javafx.util.Callback;
 
 public class SearchList {
@@ -39,18 +48,17 @@ public class SearchList {
 	private Openable ourOpen;
 
 	public static enum EntitiesToSearch {
-		ALL, NPC, GOD, REGION, EVENT
+		ALL, NPC, GOD, REGION, EVENT, TEMPLATE, STATBLOCK
 	};
 
 	private EntitiesToSearch searchEntity;
 
 	private static Logger log = Logger.getLogger(SearchList.class);
 
-	@FXML
-	private ListView<Searchable> listView = new ListView<Searchable>();
+	@FXML private ListView<Searchable> listView = new ListView<Searchable>();
 	private ObservableList<Searchable> items = FXCollections.observableArrayList();
-	@FXML
-	private TextField searchField;
+	@FXML private TextField searchField;
+	@FXML private VBox vbox;
 
 	private ArrayList<Searchable> searchResults = new ArrayList<Searchable>();
 	private ArrayList<Integer> tree =  new ArrayList<Integer>();
@@ -82,9 +90,63 @@ public class SearchList {
 		}
 		
 		
+		ifLhs();
+		
 		updateList();
 
 	}
+	
+	public void ifLhs() {
+		if (ourOpen instanceof MainController) {
+			final ChoiceBox<String> searchParams = new ChoiceBox<String>();
+
+			searchParams.setOnAction(new EventHandler<ActionEvent>() {
+	            public void handle(ActionEvent event) {
+	                if (((String) searchParams.getValue()).equals("All Entites")) {
+	                	setEntitiesToSearch(EntitiesToSearch.ALL);
+	                } else if (((String) searchParams.getValue()).equals("NPCs")) {
+	                	setEntitiesToSearch(EntitiesToSearch.NPC);
+	                } else if (((String) searchParams.getValue()).equals("Gods")) {
+	                	setEntitiesToSearch(EntitiesToSearch.GOD);
+	                } else if (((String) searchParams.getValue()).equals("Regions")) {
+	                	setEntitiesToSearch(EntitiesToSearch.REGION);
+	                } else if (((String) searchParams.getValue()).equals("Groups")) {
+	                	setEntitiesToSearch(EntitiesToSearch.EVENT);
+	                } else if (((String) searchParams.getValue()).equals("Templates")) {
+	                	setEntitiesToSearch(EntitiesToSearch.TEMPLATE);
+	                } else if (((String) searchParams.getValue()).equals("Statblocks")) {
+	                	setEntitiesToSearch(EntitiesToSearch.STATBLOCK);
+	                }
+	            }
+	        });
+			
+			searchParams.getItems().add("All Entites");
+			searchParams.getItems().add("NPCs");
+			searchParams.getItems().add("Gods");
+			searchParams.getItems().add("Regions");
+			searchParams.getItems().add("Groups");
+			searchParams.getItems().add("Templates");
+			searchParams.getItems().add("Statblocks");
+			
+			searchParams.setPrefWidth(vbox.getPrefWidth());
+			
+			// cancerous way to reorder the nodes to put search option between search bar and results
+			// NO JAY DON'T LOOK
+			
+			List<Node> l = new ArrayList<Node>();
+			l.add(vbox.getChildren().get(0));
+			l.add(searchParams);
+			l.add(vbox.getChildren().get(1));
+			
+			vbox.getChildren().setAll(l);
+			l = null;
+			
+			searchParams.getSelectionModel().select(0);
+			
+		}
+	}
+
+	
 
 	public void updateList() {
 		items = FXCollections.observableArrayList(searchResults);
