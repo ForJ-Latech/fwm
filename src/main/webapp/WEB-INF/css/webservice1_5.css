@@ -83,18 +83,18 @@ font-size:20px}
 	position:realtive;
 	width:2px;
 	height:500px;
-	border:2px solid grey;
+	border-left:2px solid blue;
 	float: right;
 	margin-right:100%;
 }
 .line2{
-	position:absolute;
+	position:realtive;
 	width:2px;
 	height:500px;
-	border:2px solid grey;
+	border-left:2px solid blue;
 	float: left;
 	
-	margin-right: 20%
+	margin-right: 100%
 }
 
 img	{	
@@ -122,3 +122,23 @@ img	{
 	max-width:32px;
 	max-height:32px;
 }
+.style2 {
+	border-top: 3px double #8c8b8b;
+}
+-------------------------------------------
+
+.typerwriter
+{
+  font:500 22px consolas;    
+  width:20ch;
+  white-space:nowrap;
+  overflow:hidden;
+  animation:type 5s steps(20) infinite;
+}
+@keyframes type
+{
+  0%{ width:0; } 
+}
+
+
+

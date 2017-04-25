@@ -23,13 +23,7 @@
 		    	<ul class="nav navbar-nav">
 		          	<li class="nav-item active">
 		            	<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-		          	</li>
-		          	<li class="nav-item">
-		            	<a class="nav-link" href="">Co-Dungeon Master</a>
-		          	</li>
-		          	<li class="nav-item">
-		            	<a class="nav-link" href="">NPCs</a>
-		          	</li>
+		          	</li>		          
 		        </ul>
 			</div>
 		</nav>
@@ -56,16 +50,27 @@
     			<span class="col-sm-8 text-center">
 					<div class="row text-center" style="width:100%;">
 					<span class="col-sm-8">
+<<<<<<< HEAD
 						<div class="row center" ><div id="cname"></div></div>
 						<div class="row center"><font size="6"><strong><div id="name"></div></strong></font></div><br>
+=======
+						<div class="row cetner" ><div id="cname"><div>&nbsp;&nbsp;Here will be description of the NPC i.e Name of NPC, Image related to it, and the description of that NPC.</div></div></div>
+						<div class="row center"><font size="6"><strong><div id="name"></div></strong></font></div>
+>>>>>>> stash
 						<div class="row center" id="imagecontainer"></div><br>
-						<div class="row"><font size="5"><div id="description"></div></font></div><br>
+						<div class="style2"></div>
+						<div class="row"><font size="4"><div id="description">&nbsp;&nbsp;</div></font></div><br>
 						</span>	
 						<div class="line2"></div>				
 					<span class="col-sm-4">
-						<div id="rellistcontainer" class="text-center bold">
+						<div id="rellistcontainer" class="text-center bold">			
+
+						<div class="typewriter"> Here, Region, God, Relation, Group and others properties of NPC's are Displayed. </div>
+
 						
+										
 						</div>
+						
 					</span>
 					</div>
     			</span>
