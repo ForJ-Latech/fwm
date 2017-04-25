@@ -212,6 +212,27 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		}
 	}
 	
+	public List<Region> getAboveFullRegions(Region region) throws SQLException {
+		List<Region> aboveRegions = new ArrayList<Region>();
+		Region r = region;
+		while (r.getSuperRegion() != null) {
+			r = getFullRegion(r.getSuperRegion().getID());
+			aboveRegions.add(r);
+		}
+		return aboveRegions;
+	}
+	
+	public List<Region> getBelowFullRegions(Region region) throws SQLException {
+		List<Region> belowRegions = new ArrayList<Region>();
+		for (Region r : region.getSubRegions()) {
+			Region fr = this.getFullRegion(r.getID());
+			belowRegions.add(fr);
+			belowRegions.addAll(getBelowFullRegions(fr));
+		}
+		
+		return belowRegions;
+	}
+	
 	@Override
 	public int update(Region r) throws SQLException {
 		r.setLastEdited(new Date());
