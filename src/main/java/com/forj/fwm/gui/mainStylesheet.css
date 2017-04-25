@@ -40,6 +40,27 @@
 	-fx-text-fill: #395306;
 }
 
+#statusLabel {
+	-fx-padding: 10;
+	-fx-background-color:
+		linear-gradient(#4fc3f7, #039be5),
+		radial-gradient(center 50% -40%, radius 200%, #03a9f4 45%, #039be5 50%);
+	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
+#statusLabel:hover{
+	-fx-background-color: -fx-shadow-highlight-color, -fx-body-color, 
+		linear-gradient(#60ccff, #11b1fb),
+		radial-gradient(center 50% -40%, radius 200%, #11b1fb 45%, #12aaf1 50%);
+  	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
 .titled-pane > .title{
     -fx-background-color: rgb(180,180,180);
     -fx-border-color: rgb(120,120,120);
@@ -68,12 +89,14 @@
 	-fx-background-color: rgb(0,0,0);
 }
 
+
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-text-fill: rgb(240,240,244);
+    -fx-text-fill: rgb(0,0,0);
 }
 
+
 .list-cell:even { 
-    -fx-background-color: rgb(2,24,244);
+    -fx-background-color: rgb(220,220,230);
 }
 
 .list-cell:odd {
