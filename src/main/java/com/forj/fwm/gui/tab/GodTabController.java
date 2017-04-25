@@ -92,10 +92,7 @@ public class GodTabController implements Saveable {
 		log.debug("god.getNpcs.size: " + god.getNpcs().size());
 		
 		panth.clear();
-		if (god.getPantheon() != null)
-		for (God g : Backend.getGodDao().queryForEq("pantheon", god.getPantheon())){
-			panth.add(g);
-		}
+		panth.addAll(Backend.getGodDao().getPantheon(god));
 		
 		accordion.getPanes().clear();
 		npcRelation = RelationalList.createRelationalList(this, App.toListSearchable(god.getNpcs()), "Worshippers", true, true, tabType, SearchList.EntitiesToSearch.NPC);
@@ -120,17 +117,7 @@ public class GodTabController implements Saveable {
 			}
 		}
 		panth.clear();
-		if (god.getPantheon() != null){
-			try {
-				for (God g : Backend.getGodDao().queryForEq("pantheon", new SelectArg(god.getPantheon()))){
-					if (g.getID() != god.getID()){
-						panth.add(g);
-					}
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		panth.addAll(Backend.getGodDao().getPantheon(god));
 		godRelation.clearList();
 		godRelation.populateList(App.toListSearchable(panth));
 

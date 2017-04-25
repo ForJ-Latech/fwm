@@ -182,6 +182,23 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		}
 	}
 	
+	public ArrayList<God> getPantheon(God g){
+		ArrayList<God> fam = new ArrayList<God>();
+		if (g.getPantheon() != null)
+		{
+			try {
+				for (God cur : this.queryForEq("pantheon", new SelectArg(g.getPantheon()))){
+					if (cur.getID() != g.getID()){
+						fam.add(cur);
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return fam;
+	}
+	
 	@Override
 	public int update(God g) throws SQLException {
 		g.setLastEdited(new Date());

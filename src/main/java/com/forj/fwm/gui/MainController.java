@@ -20,6 +20,7 @@ import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.gui.component.TabControlled;
 import com.forj.fwm.gui.tab.EventTabController;
@@ -27,6 +28,7 @@ import com.forj.fwm.gui.tab.GodTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.tab.TemplateTabController;
 import com.forj.fwm.gui.tab.WelcomeTabController;
 import com.forj.fwm.startup.App;
 import com.forj.fwm.startup.WorldFileUtil;
@@ -290,6 +292,10 @@ public class MainController extends TabControlled implements Openable {
 		else if (o instanceof Event) { 
 			EventTabController tab = EventTabController.startEventTab((Event) o);
 	      addTabController(tab); 
+		}
+		else if(o instanceof Template){
+			TemplateTabController tab = TemplateTabController.startTemplateTab((Template) o);
+			addTabController(tab);
 		}
 	}
 	

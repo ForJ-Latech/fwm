@@ -156,6 +156,23 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 		}
 	}
 	
+	public ArrayList<Npc> getFamily(Npc npc){
+		ArrayList<Npc> fam = new ArrayList<Npc>();
+		if (npc.getlName() != null)
+		{
+			try {
+				for (Npc g : this.queryForEq("lName", new SelectArg(npc.getlName()))){
+					if (g.getID() != npc.getID()){
+						fam.add(g);
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return fam;
+	}
+	
 	@Override
 	public int update(Npc n) throws SQLException {
 		n.setLastEdited(new Date());

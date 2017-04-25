@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Tab fx:id="tabHead" text="Untitled Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.NpcTabController">
+<Tab fx:id="tabHead" text="Untitled Tab" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.NpcTabController">
    <content>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="367.0" prefWidth="588.0">
          <content>
@@ -37,7 +37,7 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <TextField fx:id="lName" promptText="Last Name">
+                                    <TextField fx:id="lName" promptText="Family Name">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>

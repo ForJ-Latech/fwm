@@ -92,12 +92,7 @@ public class NpcTabController implements Saveable {
 	public void startRelationalList() throws Exception {
 		
 		fam.clear();
-		if (npc.getlName() != null)
-		for (Npc n : Backend.getNpcDao().queryForEq("lname", new SelectArg(npc.getlName()))){
-			if (n.getID() != npc.getID()){
-				fam.add(n);
-			}
-		}
+		fam.addAll(Backend.getNpcDao().getFamily(npc));
 
 		accordion.getPanes().clear();
 		npcRelation = RelationalList.createRelationalList(this, App.toListSearchable(fam), "Family", false, false, tabType, SearchList.EntitiesToSearch.NPC);
@@ -128,18 +123,7 @@ public class NpcTabController implements Saveable {
 			}
 		}
 		fam.clear();
-		if (npc.getlName() != null)
-		{
-			try {
-				for (Npc g : Backend.getNpcDao().queryForEq("lName", npc.getlName())){
-					if (g.getID() != npc.getID()){
-						fam.add(g);
-					}
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		fam.addAll(Backend.getNpcDao().getFamily(npc));
 		npcRelation.clearList();
 		npcRelation.populateList(App.toListSearchable(fam));
 	}

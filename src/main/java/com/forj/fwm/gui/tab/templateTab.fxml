@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="com.forj.fwm.gui.tab.TemplateTabController">
+   <tabs>
+      <Tab fx:id="tabHead" text="Untitled Tab">
+         <content>
+            <ScrollPane fitToWidth="true" prefHeight="441.0" prefWidth="600.0">
+               <content>
+                  <VBox prefHeight="692.0" prefWidth="600.0" spacing="5.0">
+                     <children>
+                        <HBox alignment="CENTER" fillHeight="false" prefHeight="36.0" prefWidth="600.0" VBox.vgrow="NEVER">
+                           <children>
+                              <TextField fx:id="name" promptText="Template Name" />
+                           </children>
+                        </HBox>
+                        <GridPane alignment="CENTER" prefHeight="454.0" prefWidth="590.0" vgap="3.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="105.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="485.0" minWidth="10.0" prefWidth="485.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Name" />
+                              <TextArea fx:id="fName" prefHeight="57.0" prefRowCount="2" prefWidth="486.0" promptText="[Jay, James, Jack, Joseph, Diwakar, Ryan, Stephan, Matt]" wrapText="true" GridPane.columnIndex="1" />
+                              <Label text="Family Name" GridPane.rowIndex="1" />
+                              <TextArea fx:id="lName" prefHeight="57.0" prefRowCount="2" prefWidth="484.0" promptText="[Ehlmann, Ortis, Strickland, Hardy, Simkhada, Walters, Hibbard, Swart]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Race" GridPane.rowIndex="2" />
+                              <TextArea fx:id="race" prefHeight="57.0" prefRowCount="2" prefWidth="484.0" promptText="[halfling, kobold, elf, human, half-orc, elf, dragonborn, dwarf]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="Class" GridPane.rowIndex="3" />
+                              <TextArea fx:id="classType" prefHeight="57.0" prefRowCount="2" prefWidth="484.0" promptText="[wizard, bard, beastmaster, bounty hunter, fighter, monk, ranger, barbarian]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="Gender" GridPane.rowIndex="4" />
+                              <TextArea fx:id="gender" prefHeight="57.0" prefRowCount="2" prefWidth="484.0" promptText="[male]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="Age" GridPane.rowIndex="5" />
+                              <TextArea fx:id="age" prefHeight="57.0" prefRowCount="2" prefWidth="484.0" promptText="[50, 14, 420, 22, 18, 69, 33, 119]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                           </children>
+                        </GridPane>
+                        <HBox alignment="CENTER" fillHeight="false" prefWidth="600.0" spacing="10.0">
+                           <children>
+                              <Label prefHeight="16.0" prefWidth="155.0" text="Attributes" />
+                              <TextArea fx:id="attributes" prefRowCount="8" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" fillHeight="false" prefWidth="600.0" spacing="10.0">
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="156.0" text="Description" wrapText="true" />
+                              <TextArea fx:id="description" prefRowCount="8" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" fillHeight="false" prefWidth="600.0" spacing="10.0">
+                           <children>
+                              <Label prefHeight="39.0" prefWidth="155.0" text="History and Goals" wrapText="true" />
+                              <TextArea fx:id="history" prefRowCount="8" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>

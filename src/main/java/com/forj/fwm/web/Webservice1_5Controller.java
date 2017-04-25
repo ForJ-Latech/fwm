@@ -27,6 +27,7 @@ import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.JettyController;
 import com.forj.fwm.startup.App;
 import com.google.gson.Gson;
+import com.j256.ormlite.stmt.SelectArg;
 
 @Controller
 public class Webservice1_5Controller {
@@ -65,7 +66,7 @@ public class Webservice1_5Controller {
 			s.append("[");
 			int cntr = 0;
 			for(Searchable cur : curList){
-				// they should only show up if tehy have been seen in the list. 
+				// they should only show up if they have been seen in the list. 
 				if(showLogic(cur)){
 					if(cntr++ > 0){
 						s.append(",");
@@ -99,6 +100,9 @@ public class Webservice1_5Controller {
 				addListToHelper("npcs", App.toListSearchable(god.getNpcs()), help);
 				addListToHelper("events", App.toListSearchable(god.getEvents()), help);
 				addListToHelper("regions", App.toListSearchable(god.getRegions()), help);
+				addListToHelper("pantheon", 
+						App.toListSearchable(Backend.getGodDao().getPantheon(god)), 
+						help);
 				json = help.getString();
 			}else
 			{
@@ -136,6 +140,9 @@ public class Webservice1_5Controller {
 				// should in theory work for every type of searchable list... 
 				addListToHelper("events", App.toListSearchable(npc.getEvents()), help);
 				addListToHelper("regions", App.toListSearchable(npc.getRegions()), help);
+				addListToHelper("family", 
+						App.toListSearchable(Backend.getNpcDao().getFamily(npc)), 
+						help);
 				json = help.getString();
 			}else
 			{
@@ -163,7 +170,7 @@ public class Webservice1_5Controller {
 				if(reg.getSuperRegion() != null){
 					curReg = Backend.getRegionDao().getRegion(reg.getSuperRegion().getID()); 
 				}
-				// add our god
+				// add our super region
 				if(showLogic(curReg)){
 					help.addRawString("superRegion", curReg.toOneFiveJsonString());
 				}else
