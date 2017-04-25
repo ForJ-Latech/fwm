@@ -400,7 +400,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 				startServer();
 				toggleServerButton.setText("Stop Server");
 				serverStatus.setText("Server is running");
-				serverStatus.setTextFill(Color.web("#00cc00"));
+				serverStatus.setTextFill(Color.web("#0e007c"));
 				started = true;
 			} catch (Exception e) {
 				e.printStackTrace();

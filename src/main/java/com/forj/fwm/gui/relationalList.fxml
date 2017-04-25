@@ -6,10 +6,9 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <TitledPane fx:id="titledPane" alignment="TOP_LEFT" contentDisplay="RIGHT" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Title" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.RelationalList">
    <graphic>
-      <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add" textAlignment="CENTER">
+      <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add" textAlignment="CENTER" translateX="10.0">
          <opaqueInsets>
             <Insets left="2.0" />
          </opaqueInsets>

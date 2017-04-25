@@ -70,7 +70,7 @@
       <VBox alignment="CENTER" prefHeight="90.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
             <Button fx:id="toggleServerButton" mnemonicParsing="false" onAction="#toggleServer" text="Stop Server" />
-            <Label fx:id="serverStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="194.0" text="Server is running" textAlignment="JUSTIFY" textFill="#00cc00" />
+            <Label fx:id="serverStatus" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="194.0" text="Server is running" textAlignment="JUSTIFY" textFill="#0e007c" />
          </children>
       </VBox>
       <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0" VBox.vgrow="ALWAYS">

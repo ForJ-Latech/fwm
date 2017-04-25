@@ -1,19 +1,38 @@
 .root{
-	-fx-background: rgb(180,180,188);
+	-fx-background: rgb(220,220,228);
 }
 
 .text-field{
-	-fx-background-color: rgb(240,240,244);
+	-fx-background-color: rgb(250,250,254);
 }
 
 .text-area .content{
-	-fx-background-color: rgb(240,240,244);
+	-fx-background-color: rgb(250,250,254);
 }
-
 .button {
 	-fx-background-color:
 		linear-gradient(#ffb74d, #ff6f00),
 		radial-gradient(center 50% -40%, radius 200%, #ffb74d 45%, #f4aa40 50%);
+	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
+.button:hover {
+	-fx-background-color: -fx-shadow-highlight-color, -fx-body-color, 
+		linear-gradient(#ffbc5d, #ff7b06),
+		radial-gradient(center 50% -40%, radius 200%, #ffbc5d 45%, #fdb651 50%);
+	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
+.button:pressed {
+	-fx-background-color: -fx-shadow-highlight-color, -fx-body-color, 
+		linear-gradient(#fbab39, #e16500),
+		radial-gradient(center 50% -40%, radius 200%, #fbab39 45%, #eca136 50%);
 	-fx-background-radius: 6, 5;
 	-fx-background-insets: 0, 1;
 	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
