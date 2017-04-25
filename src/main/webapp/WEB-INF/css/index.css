@@ -6,6 +6,11 @@ body {
 	padding-top: 70px;
 }
 
+.navbar, .navbar-inverse {
+	margin-bottom: 0;
+	min-height: 70px;
+}
+
 #main {
 	height: 90%;
 }
