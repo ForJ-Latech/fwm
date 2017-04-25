@@ -28,6 +28,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -151,7 +152,12 @@ public class SearchList {
 	public void updateList() {
 		items = FXCollections.observableArrayList(searchResults);
 		listView.setItems(items);
-
+		
+		if (searchResults.isEmpty()) {
+			listView.setPlaceholder(new Label("No Results"));
+		}
+		
+		
 		listView.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {
 				if (event.getCode().equals(KeyCode.ENTER)) {
