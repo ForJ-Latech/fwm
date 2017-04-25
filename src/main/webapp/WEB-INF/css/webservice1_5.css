@@ -3,7 +3,34 @@ body{
 	margin: 0;
 	width:100%;
   	padding-top: 70px;
+  	background: linear-gradient(135deg, #61efca, #ffa06f, #83aeff);
+	background-size: 600% 600%;
+	-webkit-animation: AnimationName 60s ease infinite;
+	-moz-animation: AnimationName 60s ease infinite;
+	-o-animation: AnimationName 60s ease infinite;
+	animation: AnimationName 60s ease infinite;
    }
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-o-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
 
 .navbar, .navbar-inverse {
 	margin-bottom: 0;
