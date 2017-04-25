@@ -143,16 +143,30 @@ public class RelationalField implements Openable{
 				}
 			}
 		});
+		if (searchResults.isEmpty()) {
+			if (caller.getThing() instanceof Region){
+				Region dummyRegion = new Region();
+				listView.getItems().add(dummyRegion);
+			}
+			if (caller.getThing() instanceof Npc){
+				God dummyGod = new God();
+				listView.getItems().add(dummyGod);
+			}
+		}
 		// JavaFX cancer
 		listView.setCellFactory(new Callback<ListView<Searchable>, ListCell<Searchable>>() {
 			public ListCell<Searchable> call(ListView<Searchable> param) {
 				return new ListCell<Searchable>() {
 					private void openObj(){
-						try{
-							App.getMainController().open(this.getItem());	
-						}catch(Exception e)
-						{
-							e.printStackTrace();
+						if (!searchResults.isEmpty()){
+							try{
+								App.getMainController().open(this.getItem());	
+							}catch(Exception e)
+							{
+								e.printStackTrace();
+							}
+						} else {
+							handleAddButton();
 						}
 					}
 					public void updateItem(final Searchable obj, boolean empty) {
@@ -199,6 +213,12 @@ public class RelationalField implements Openable{
 								name = obj.getName();
 								log.debug(name);
 							}
+							if (searchResults.isEmpty()){
+								if (caller.getThing() instanceof Region)
+									name = ("Add Super Region");
+								if (caller.getThing() instanceof Npc)
+									name = ("Add God to Worship");
+							}
 							try {
 								
 								imageView.setImage(new Image(
@@ -209,6 +229,7 @@ public class RelationalField implements Openable{
 								imageView.setImage(
 										new Image(App.retGlobalResource("/src/main/ui/no_image_icon.png").toString()));
 							}
+							
 						}
 						if (empty) {
 							setText(null);
@@ -219,6 +240,10 @@ public class RelationalField implements Openable{
 							imageView.setFitWidth(maxImageSize);
 							imageView.setPreserveRatio(true);
 							setGraphic(imageView);
+							
+							if (searchResults.isEmpty()){
+								setGraphic(null);
+							}
 						}
 					}
 				};
