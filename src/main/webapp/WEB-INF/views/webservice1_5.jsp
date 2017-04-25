@@ -49,14 +49,10 @@
     			<div class="line1"></div>
     			<span class="col-sm-8 text-center">
 					<div class="row text-center" style="width:100%;">
-					<span class="col-sm-8">
-<<<<<<< HEAD
-						<div class="row center" ><div id="cname"></div></div>
-						<div class="row center"><font size="6"><strong><div id="name"></div></strong></font></div><br>
-=======
+					<span class="col-sm-8">						
 						<div class="row cetner" ><div id="cname"><div>&nbsp;&nbsp;Here will be description of the NPC i.e Name of NPC, Image related to it, and the description of that NPC.</div></div></div>
 						<div class="row center"><font size="6"><strong><div id="name"></div></strong></font></div>
->>>>>>> stash
+
 						<div class="row center" id="imagecontainer"></div><br>
 						<div class="style2"></div>
 						<div class="row"><font size="4"><div id="description">&nbsp;&nbsp;</div></font></div><br>
