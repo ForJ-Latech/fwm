@@ -416,7 +416,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
     };
 	
 	public void createTrayIcon(final Stage stage) {
-		 if(App.getProd()){
+		 if(App.getProd() && !System.getProperty("os.name").contains("Mac")){
 	        if (SystemTray.isSupported()) {
 	            final SystemTray tray = SystemTray.getSystemTray();
 	            Image image = null;
