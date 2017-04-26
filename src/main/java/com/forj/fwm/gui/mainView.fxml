@@ -40,7 +40,7 @@
             <Menu mnemonicParsing="false" text="Search">
                <items>
                   <MenuItem mnemonicParsing="false" text="List Previously Edited" />
-                  <MenuItem mnemonicParsing="false" text="List Interactions" />
+                  <MenuItem mnemonicParsing="false" onAction="#openInteractions" text="List Interactions" />
                   <MenuItem mnemonicParsing="false" text="&quot;I Forgot&quot; Search" />
                </items>
             </Menu>

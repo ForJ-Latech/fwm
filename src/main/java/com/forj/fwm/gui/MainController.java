@@ -19,6 +19,7 @@ import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.gui.component.TabControlled;
 import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
+import com.forj.fwm.gui.tab.InteractionTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.gui.tab.Saveable;
@@ -291,5 +292,18 @@ public class MainController extends TabControlled implements Openable {
 
 	public void addStatus(String text) {
 		statusBarController.addStatus(text);
+	}
+	
+	@FXML
+	public void openInteractions() {
+		try {
+			InteractionTabController tab = InteractionTabController.startInteractionTab();
+			addTabController(tab);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }

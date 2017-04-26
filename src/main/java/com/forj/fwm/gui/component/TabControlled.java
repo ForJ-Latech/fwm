@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.forj.fwm.gui.tab.InteractionTabController;
 import com.forj.fwm.gui.tab.Saveable;
 
 import javafx.event.Event;
@@ -52,18 +53,40 @@ public class TabControlled {
 			// if they have the same class
 			// and we are not trying to create a new one.
 			// and they have the same id. 
+			if (x instanceof InteractionTabController && s instanceof InteractionTabController) {
+				existed = true;
+				tabPane.getSelectionModel().select(x.getTab());
+				log.debug("interaction");
+				continue;
+			}
+			
 			if(x.getClass().equals(s.getClass()) 
 					&& s.getThing().getID() != -1 
 					&& x.getThing().getID() == s.getThing().getID()){
 				existed = true;
 				tabPane.getSelectionModel().select(x.getTab());
+				log.debug("already open");
 			}
+
+			
+			/*if (!(x instanceof InteractionTabController)){
+				if(x.getClass().equals(s.getClass()) 
+						&& s.getThing().getID() != -1 
+						&& x.getThing().getID() == s.getThing().getID()){
+					existed = true;
+					tabPane.getSelectionModel().select(x.getTab());
+				}
+			} else {
+				existed = true;
+				tabPane.getSelectionModel().select(x.getTab());
+			}*/
 		}
 		
 		if(!existed){
 			tabPane.getTabs().add(s.getTab());
 			tabPane.getSelectionModel().select(s.getTab());
 			tabControllers.add(s);
+			log.debug("didn't exist");
 			
 		}
 		else
