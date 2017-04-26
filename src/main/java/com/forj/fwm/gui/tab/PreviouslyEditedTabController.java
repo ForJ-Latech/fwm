@@ -2,6 +2,10 @@ package com.forj.fwm.gui.tab;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -82,34 +86,75 @@ public class PreviouslyEditedTabController implements Saveable{
 		List<Region> regions = Backend.getRegionDao().queryBuilder().limit((long) 100).orderBy("LASTEDITED", false).query();
 		List<Template> templates = Backend.getTemplateDao().queryBuilder().limit((long) 100).orderBy("LASTEDITED", false).query();
 		
-		for (Searchable s : events) {
-			if (list.size() < 100){
-				list.add(s);
-			}
+		for (Event s : events) {
+			list.add(s);
 		}
-		for (Searchable s : gods) {
-			if (list.size() < 100){
-				list.add(s);
-			}
+		for (God s : gods) {
+			list.add(s);
 		}
-		for (Searchable s : npcs) {
-			if (list.size() < 100){
-				list.add(s);
-			}
+		for (Npc s : npcs) {
+			list.add(s);
 		}
-		for (Searchable s : regions) {
-			if (list.size() < 100){
-				list.add(s);
-			}
+		for (Region s : regions) {
+			list.add(s);
 		}
-		for (Searchable s : templates) {
-			if (list.size() < 100){
-				list.add(s);
+		for (Template s : templates) {
+			list.add(s);
+		}
+		
+		Collections.sort(list, new Comparator<Searchable>() {
+		    public int compare(Searchable left, Searchable right) {
+		        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+		    	return compareLR(left,right);
+		    }
+		});
+		
+		for (int i = 0; i < list.size(); i++) {
+			if (i > 99) {
+				list.remove(i);
+				i--;
 			}
 		}
 		
 		return list;		
 	}
+	
+    private int compareLR(Searchable left, Searchable right) {
+    	Date d1 = new Date();
+    	Date d2 = new Date();
+    	
+    	if (left instanceof Event) {
+    		d1 = ((Event)left).getLastEdited();
+    	} else if (left instanceof God) {
+    		d1 = ((God)left).getLastEdited();
+    	} else if (left instanceof Npc) {
+    		d1 = ((Npc)left).getLastEdited();
+    	} else if (left instanceof Region) {
+    		d1 = ((Region)left).getLastEdited();
+    	} else if (left instanceof Template) {
+    		d1 = ((Template)left).getLastEdited();
+    	}
+    	
+    	if (right instanceof Event) {
+    		d2 = ((Event)right).getLastEdited();
+    	} else if (right instanceof God) {
+    		d2 = ((God)right).getLastEdited();
+    	} else if (right instanceof Npc) {
+    		d2 = ((Npc)right).getLastEdited();
+    	} else if (right instanceof Region) {
+    		d2 = ((Region)right).getLastEdited();
+    	} else if (right instanceof Template) {
+    		d2 = ((Template)right).getLastEdited();
+    	}
+    	
+    	if (d1.after(d2)) {
+    		return -1;
+    	} else if (d1.before(d2)) {
+    		return 1;
+    	} else {
+    		return 0;
+    	}
+    }
 	
 	public void updateList() throws SQLException {
 		
