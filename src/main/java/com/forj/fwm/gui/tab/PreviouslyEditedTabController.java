@@ -42,4 +42,7 @@ public class PreviouslyEditedTabController implements Saveable{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public void nameFocus(){
+		
+	}
 }
