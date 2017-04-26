@@ -103,6 +103,8 @@ img	{
 .listItem{
 	width:50%;
 	display:inline-block;
+	margin-left: auto;
+	margin-right: auto;
 }
 .listImage{
 	width:32px;
