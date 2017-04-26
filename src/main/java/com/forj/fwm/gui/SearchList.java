@@ -15,6 +15,8 @@ import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.startup.App;
@@ -432,6 +434,25 @@ private ArrayList<Integer> createTree() {
 				log.error(e.getStackTrace());
 			}
 			break;
+		case TEMPLATE:
+			try {
+				for (Template t: Backend.getTemplateDao().queryForLike("name", searchField.getText())) {
+					addItem(t, false);
+				}
+			} catch (SQLException e) {
+				log.error(e.getStackTrace());
+			}
+			break;
+		case STATBLOCK:
+			try {
+				for (Statblock s: Backend.getStatblockDao().queryForLike("name", searchField.getText())) {
+					addItem(s, false);
+				}
+			} catch (SQLException e) {
+				log.error(e.getStackTrace());
+			}
+			break;
+		
 		}
 		updateList();
 	}
