@@ -6,20 +6,32 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.entity.Interaction;
-import com.forj.fwm.gui.InteractionList.InteractionController;
 import com.forj.fwm.gui.tab.Saveable;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ListController extends Application{
 	private static Logger log = Logger.getLogger(ListController.class);
+	private Saveable s;
+	private List<InteractionController> interactionControllers = new ArrayList<InteractionController>();
+	private static boolean started = false;
+	
+	@FXML private VBox interactionListContainer;
+	@FXML private VBox list;
+	@FXML private Button newInteraction;
+	
+	public static boolean getStarted() {
+		return started;
+	}
+	
+	public VBox getInteractionListContainer(){
+		return interactionListContainer;
+	}
 
 	public void start(VBox rootLayout , List<Interaction> listA, Saveable s) throws Exception {
 		log.debug("start interaction list controller called");
@@ -36,29 +48,6 @@ public class ListController extends Application{
 		}
 		
 	}
-	
-	private Saveable s;
-	
-	private List<InteractionController> interactionControllers = new ArrayList<InteractionController>();
-	
-	private static boolean started = false;
-
-	public static boolean getStarted() {
-		return started;
-	}
-	
-	@FXML
-	private VBox interactionListContainer;
-	
-	public VBox getInteractionListContainer(){
-		return interactionListContainer;
-	}
-	
-	@FXML
-	private VBox list;
-	
-	@FXML
-	private Button newInteraction;
 	
 	@FXML
 	public void addNewInteraction() throws Exception{

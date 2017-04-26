@@ -2,9 +2,6 @@ package com.forj.fwm.gui;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
@@ -15,12 +12,9 @@ import com.forj.fwm.gui.tab.StatBlockTabController;
 import com.forj.fwm.startup.App;
 
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -33,8 +27,6 @@ public class StatBlockController extends TabControlled {
 	private Stage ourStage;
 	
 	private TabPane tabPane;
-	
-	
 	
 	public void start(Stage primaryStage, TabPane rootLayout){
 		tabPane = rootLayout;

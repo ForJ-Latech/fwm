@@ -4,27 +4,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class StatusBarController {
-	
 	protected static Logger log = Logger.getLogger(ShowPlayersController.class);
 	
 	private TextArea statusBarFull;
@@ -40,7 +31,6 @@ public class StatusBarController {
 	private boolean statusFullOn;
 	
 	private int statusMaxSize;
-	
 	
 	public StatusBarController (StackPane stackPane, VBox statusVBoxmc){
 		statusMaxSize = 50;

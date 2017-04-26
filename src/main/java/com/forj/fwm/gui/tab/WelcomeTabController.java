@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class WelcomeTabController implements Saveable {
-
 	@FXML private VBox midVBox;
     @FXML private Tab tabHead;
 

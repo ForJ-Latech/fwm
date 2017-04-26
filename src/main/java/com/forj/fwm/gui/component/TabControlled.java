@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.gui.tab.Saveable;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,13 +18,11 @@ import javafx.scene.control.TabPane;
  *
  */
 public class TabControlled {
-	Logger log = Logger.getLogger(TabControlled.class);
+	private static Logger log = Logger.getLogger(TabControlled.class);
 	
-
 	public ArrayList<Saveable> tabControllers = new ArrayList<Saveable>();
 	
-	@FXML
-	protected TabPane tabPane;
+	@FXML protected TabPane tabPane;
 	
 	private EventHandler<Event> onTabClosed = new EventHandler<Event>(){
 		public void handle(Event event) {

@@ -1,11 +1,7 @@
 package com.forj.fwm.gui.InteractionList;
 
-import java.net.URL;
-import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 
-import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Searchable;
@@ -14,13 +10,11 @@ import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
-import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -28,12 +22,18 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 
 public class InteractionController implements Saveable {
 	private static Logger log = Logger.getLogger(InteractionController.class);
 	private Interaction interaction;
+	private TextInputControl[] thingsThatCanChange;
+	private Saveable s;
+	
+	@FXML private TextField partyMember;
+	@FXML private TextArea description;
+	@FXML private HBox singleInteraction;
+	
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
@@ -44,24 +44,9 @@ public class InteractionController implements Saveable {
 		}
 	};
 	
-	private Saveable s;
-	
-	@FXML
-	private HBox singleInteraction;
-	
 	public HBox getSingleInteraction(){
 		return singleInteraction;
 	}
-	
-	@FXML
-	private TextField partyMember;
-	
-	@FXML
-	private TextArea description;
-	
-	
-	
-	private TextInputControl[] thingsThatCanChange;
 	
 	public void fullSave(){
 			s.relationalSave();
@@ -134,7 +119,6 @@ public class InteractionController implements Saveable {
 		return started;
 	}
 
-
 	public static InteractionController startInteraction(Interaction interaction, Saveable s) throws Exception {
 		log.debug("static startInteraction called.");
 		FXMLLoader loader = new FXMLLoader();
@@ -145,7 +129,6 @@ public class InteractionController implements Saveable {
 		started = true;
 		return cr;
 	}
-	
 
 	public Searchable getThing() {
 		return interaction;
@@ -158,7 +141,6 @@ public class InteractionController implements Saveable {
 	public AddableImage getAddableImage(){
 		return null;
 	}
-
 
 	public Tab getTab() {
 		// TODO Auto-generated method stub

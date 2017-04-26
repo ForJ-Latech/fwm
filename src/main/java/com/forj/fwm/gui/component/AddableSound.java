@@ -14,13 +14,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AddableSound{
-	Logger log = Logger.getLogger(AddableImage.class);
+	private static Logger log = Logger.getLogger(AddableImage.class);
+	private File ourSound;
+	private EventHandler<Event> onChangeHandler = null;
 	
 	private static ExtensionFilter[] filts = new ExtensionFilter[]{
 		new ExtensionFilter("Sound Files", "*.wav", "*.mp3")	
 	};
-	
-	private File ourSound;
 	
 	public AddableSound(File sound) {
 		log.debug("file:" + sound.getAbsolutePath());
@@ -30,8 +30,6 @@ public class AddableSound{
 	public AddableSound() {
 		ourSound = null;
 	}
-	
-	private EventHandler<Event> onChangeHandler = null;
 	
 	private void changeEvent(){
 		if(onChangeHandler == null){

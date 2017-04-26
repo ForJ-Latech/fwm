@@ -1,7 +1,5 @@
 package com.forj.fwm.gui;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +26,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -39,9 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 import javafx.util.Callback;
 
 public class SearchList {
@@ -148,9 +143,7 @@ public class SearchList {
 			
 		}
 	}
-
 	
-
 	public void updateList() {
 		items = FXCollections.observableArrayList(searchResults);
 		listView.setItems(items);
@@ -303,8 +296,7 @@ public class SearchList {
 		return unique;
 	}
 	
-	
-private ArrayList<Integer> createTree() {
+	private ArrayList<Integer> createTree() {
 		
 		ArrayList<Integer> tree =  new ArrayList<Integer>();
 		ArrayList<Region> regs = new ArrayList<Region>();
@@ -334,7 +326,6 @@ private ArrayList<Integer> createTree() {
 		}
 		
 		return tree;
-
 	}
 
 
@@ -346,10 +337,6 @@ private ArrayList<Integer> createTree() {
 		}
 		return false;
 	}
-
-
-
-	
 
 	public void addItem(Searchable item, boolean update) {
 		if (checkUnique(item)) {
@@ -368,10 +355,6 @@ private ArrayList<Integer> createTree() {
 			}
 			
 		}
-	}
-
-	public ListView<Searchable> getList() {
-		return listView;
 	}
 
 	@FXML
@@ -468,6 +451,10 @@ private ArrayList<Integer> createTree() {
 		}
 	}
 
+	public ListView<Searchable> getList() {
+		return listView;
+	}
+	
 	public void setMaxImageSize(int newSize) {
 		maxImageSize = newSize;
 	}
@@ -479,5 +466,4 @@ private ArrayList<Integer> createTree() {
 	public VBox getOurRoot() {
 		return ourRoot;
 	}
-
 }

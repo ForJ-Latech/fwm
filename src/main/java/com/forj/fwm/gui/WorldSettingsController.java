@@ -1,7 +1,5 @@
 package com.forj.fwm.gui;
 
-import java.io.InputStream;
-
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.log4j.Logger;
 
@@ -13,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -63,14 +60,6 @@ public class WorldSettingsController {
        });
     }
 
-	public void setPopUp() throws ConfigurationException{
-		WorldConfig.setShowPlayersPopup(popUpOn.isSelected());
-	}
-	
-	public void setManualSave() throws ConfigurationException{
-		WorldConfig.setManualSaveOnly(manualSaveOn.isSelected());
-	}
-	
 	public static WorldSettingsController startWorldSettingsController() throws Exception{
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(WorldSettingsController.class.getResource("worldSettings.fxml"));
@@ -81,8 +70,15 @@ public class WorldSettingsController {
 		return cr;
 	}
 	
+	public void setPopUp() throws ConfigurationException{
+		WorldConfig.setShowPlayersPopup(popUpOn.isSelected());
+	}
+	
+	public void setManualSave() throws ConfigurationException{
+		WorldConfig.setManualSaveOnly(manualSaveOn.isSelected());
+	}
+	
 	public static Boolean getOpen(){
 		return isOpen;
 	}
-	
 }

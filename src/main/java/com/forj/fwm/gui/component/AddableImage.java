@@ -16,13 +16,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class AddableImage extends ImageView{
-	Logger log = Logger.getLogger(AddableImage.class);
+	private static Logger log = Logger.getLogger(AddableImage.class);
+	private EventHandler<Event> onChangeHandler = null;
+	private File ourImage;
 	
 	private static ExtensionFilter[] filts = new ExtensionFilter[]{
 		new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg")	
 	};
-	
-	private File ourImage;
 	
 	private void setImageTwo(File f){
 		ourImage = f;
@@ -33,8 +33,6 @@ public class AddableImage extends ImageView{
 			log.error(e);
 		}
 	}
-	
-	private EventHandler<Event> onChangeHandler = null;
 	
 	public void setOnImageChanged(EventHandler<Event> ev){
 		onChangeHandler = ev;

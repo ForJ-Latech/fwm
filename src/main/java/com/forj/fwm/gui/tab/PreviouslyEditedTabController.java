@@ -1,12 +1,25 @@
 package com.forj.fwm.gui.tab;
 
+import org.apache.log4j.Logger;
+
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 public class PreviouslyEditedTabController implements Saveable{
+	private static Logger log = Logger.getLogger(PreviouslyEditedTabController.class);
+	
+	@FXML private Tab tabHead;
+	@FXML private ListView<Searchable> listView = new ListView<Searchable>();
+	@FXML private VBox vbox;
 
 	public void fullSave() {
 		// TODO Auto-generated method stub
@@ -42,6 +55,7 @@ public class PreviouslyEditedTabController implements Saveable{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	public void nameFocus(){
 		
 	}
