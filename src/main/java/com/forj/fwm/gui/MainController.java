@@ -21,6 +21,7 @@ import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
 import com.forj.fwm.gui.tab.InteractionTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
+import com.forj.fwm.gui.tab.PreviouslyEditedTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.gui.tab.TemplateTabController;
@@ -295,14 +296,22 @@ public class MainController extends TabControlled implements Openable {
 	}
 	
 	@FXML
+	public void openPreviouslyEdited() {
+		try {
+			PreviouslyEditedTabController tab = PreviouslyEditedTabController.startPreviouslyEditedTab();
+			addTabController(tab);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void openInteractions() {
 		try {
 			InteractionTabController tab = InteractionTabController.startInteractionTab();
 			addTabController(tab);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

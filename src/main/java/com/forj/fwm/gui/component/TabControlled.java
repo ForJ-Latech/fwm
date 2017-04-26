@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.gui.tab.InteractionTabController;
+import com.forj.fwm.gui.tab.PreviouslyEditedTabController;
 import com.forj.fwm.gui.tab.Saveable;
 
 import javafx.event.Event;
@@ -58,6 +59,11 @@ public class TabControlled {
 				tabPane.getSelectionModel().select(x.getTab());
 				log.debug("interaction");
 				break;
+			} else if (x instanceof PreviouslyEditedTabController && s instanceof PreviouslyEditedTabController) {
+				existed = true;
+				tabPane.getSelectionModel().select(x.getTab());
+				log.debug("previouslyEdited");
+				break;
 			}
 			
 			if(x.getClass().equals(s.getClass()) 
@@ -68,7 +74,6 @@ public class TabControlled {
 				log.debug("already open");
 				break;
 			}
-
 			
 			/*if (!(x instanceof InteractionTabController)){
 				if(x.getClass().equals(s.getClass()) 
