@@ -12,4 +12,6 @@ public interface RegionDao extends Dao<Region,String> {
 	public Region getFullRegion(int id) throws SQLException;
 	public void saveFullRegion(Region region) throws SQLException;
 	public void saveRelationalRegion(Region region) throws SQLException;
+	public List<Region> getAboveFullRegions(Region region) throws SQLException;
+	public List<Region> getBelowFullRegions(Region region) throws SQLException;
 }
