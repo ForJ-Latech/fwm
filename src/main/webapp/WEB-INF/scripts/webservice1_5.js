@@ -95,6 +95,7 @@ function applyBasicAttributes(data){
 	var height = imgCont.attr('height');
 	$('#imagecontainer').append('<img id="image" src="/webservice1_0bs/multimediaImage/' + data.imageFileName + '"/>');
 	calculateWidthHeightImg(width, height, $('#image'));
+	fixImageContainerWidthHeight();
 }
 
 // it will call open + class name, we need to make more of these. 

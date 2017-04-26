@@ -32,7 +32,7 @@
 		        </ul>
 	      	</div>
 	    </nav>
-    <div id="display" class="container">
+    <div id="display" class="container-fluid">
 
       	<div id="namebox" class="row text-center" >
 	      	<div class="col-sm-4">
@@ -57,7 +57,6 @@
 	      	</div>
 	      	<div class="col-sm-4"></div>
 		</div>
-
     </div><!-- /.container -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
