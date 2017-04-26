@@ -62,4 +62,7 @@ public class WelcomeTabController implements Saveable {
 	public void relationalSave() {
 		
 	}
+	public void nameFocus(){
+		
+	}
 }

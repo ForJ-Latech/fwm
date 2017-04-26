@@ -19,6 +19,10 @@ import org.apache.log4j.Logger;
 import com.forj.fwm.gui.GenericTextController;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.tab.EventTabController;
+import com.forj.fwm.gui.tab.GodTabController;
+import com.forj.fwm.gui.tab.NpcTabController;
+import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 import com.forj.fwm.startup.WorldFileUtil;
@@ -182,9 +186,12 @@ public class HotkeyController {
 	public static final String TAB_BACKWARD_HOTKEY = "Previous_Tab";
 	public static final String MANUAL_SAVE_CURRENT = "Manual_Save_Current_Tab";
 	public static final String MANUAL_SAVE_ALL = "Manual_Save_All_Tabs";
+	public static final String GROUP_HOTKEY = "Create_Group";
+	public static final String STATBLOCK_HOTKEY = "Open_Statblock";
+	public static final String FOCUS_HOTKEY = "Focus_On_Entity_Name";
 	public static final String[] HOTKEYS = { FORWARD_SHOW_HOTKEY, BACKWARD_SHOW_HOTKEY, NPC_HOTKEY, GOD_HOTKEY,
-			REGION_HOTKEY, SHOW_HOTKEY, IMAGE_HOTKEY, INTERACTION_HOTKEY, SEARCH_HOTKEY,
-			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL, TEMPLATE_HOTKEY };
+			REGION_HOTKEY, GROUP_HOTKEY, INTERACTION_HOTKEY, STATBLOCK_HOTKEY, TEMPLATE_HOTKEY, SHOW_HOTKEY, IMAGE_HOTKEY, SEARCH_HOTKEY,
+			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, FOCUS_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL};
 
 	private static HashMap<String, Hotkey> hotkeys = new HashMap<String, Hotkey>();
 
@@ -357,14 +364,62 @@ public class HotkeyController {
 					try {
 						App.getShowPlayersController().back();
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
+					}
+				}
+				if (HotkeyController.getHotkey(GROUP_HOTKEY).match(keyEvent)) {
+					try {
+						App.getMainController().CreateEvent();
+						App.getMainController().getStage().requestFocus();
+					} catch (Exception e) {
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(FORWARD_SHOW_HOTKEY).match(keyEvent)) {
 					try {
 						App.getShowPlayersController().forward();
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
+					}
+				}
+				if (HotkeyController.getHotkey(FORWARD_SHOW_HOTKEY).match(keyEvent)) {
+					try {
+						App.getShowPlayersController().forward();
+					} catch (Exception e) {
+						log.error(e);
+					}
+				}
+				if (HotkeyController.getHotkey(STATBLOCK_HOTKEY).match(keyEvent)) {
+					try {
+						Saveable tab = App.getMainController()
+						.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+						if(tab instanceof GodTabController)
+						{
+							((GodTabController) tab).showStatBlock();
+						}
+						else if(tab instanceof RegionTabController)
+						{
+							((RegionTabController) tab).showStatBlock();
+						}
+						else if(tab instanceof EventTabController)
+						{
+							
+						}
+						else if(tab instanceof NpcTabController)
+						{
+							((NpcTabController) tab).showStatBlock();
+						}
+					} catch (Exception e) {
+						log.error(e);
+					}
+				}
+				if (HotkeyController.getHotkey(FOCUS_HOTKEY).match(keyEvent)) {
+					try {
+						Saveable tab = App.getMainController()
+						.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+						tab.nameFocus();
+					} catch (Exception e) {
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(NPC_HOTKEY).match(keyEvent)) {
@@ -372,7 +427,7 @@ public class HotkeyController {
 						App.getMainController().CreateNPC();
 						App.getMainController().getStage().requestFocus();
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(GOD_HOTKEY).match(keyEvent)) {
@@ -380,7 +435,7 @@ public class HotkeyController {
 						App.getMainController().CreateGod();
 						App.getMainController().getStage().requestFocus();
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(REGION_HOTKEY).match(keyEvent)) {
@@ -388,7 +443,7 @@ public class HotkeyController {
 						App.getMainController().CreateRegion();
 						App.getMainController().getStage().requestFocus();
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
 					}
 				}
 				if(HotkeyController.getHotkey(TEMPLATE_HOTKEY).match(keyEvent)){
@@ -403,7 +458,7 @@ public class HotkeyController {
 					try {
 						App.getMainController().showPlayers();
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(IMAGE_HOTKEY).match(keyEvent)) {
@@ -415,7 +470,7 @@ public class HotkeyController {
 							image.addImage();
 						}
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(INTERACTION_HOTKEY).match(keyEvent)) {
@@ -428,7 +483,7 @@ public class HotkeyController {
 							listController.addNewInteraction();
 						}
 						} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(SEARCH_HOTKEY).match(keyEvent)) {
@@ -436,7 +491,7 @@ public class HotkeyController {
 						App.getMainController().getStage().requestFocus();
 						App.getMainController().getSearchList().getSearchField().requestFocus();
 					} catch (Exception e) {
-						log.debug(e);
+						log.error(e);
 					}
 				}
 				

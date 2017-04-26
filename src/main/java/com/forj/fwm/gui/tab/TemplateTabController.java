@@ -240,4 +240,7 @@ public class TemplateTabController implements Saveable{
 	public ListController getListController() {
 		return null;
 	}
+	public void nameFocus(){
+		name.requestFocus();
+	}
 }

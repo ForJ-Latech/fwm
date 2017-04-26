@@ -147,4 +147,9 @@ public class StatBlockTabController implements Saveable {
 	public void relationalSave() {
 		fullSave();
 	}
+	
+	public void nameFocus(){
+		log.debug("Focus from statblock");
+		App.getMainController().getStage().requestFocus();
+	}
 }

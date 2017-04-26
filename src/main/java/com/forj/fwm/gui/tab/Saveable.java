@@ -12,6 +12,7 @@ public interface Saveable {
 	public void relationalSave();
 	public AddableImage getAddableImage();
 	public Searchable getThing();
+	public void nameFocus();
 	public ListController getListController();
 	public Tab getTab();
 }

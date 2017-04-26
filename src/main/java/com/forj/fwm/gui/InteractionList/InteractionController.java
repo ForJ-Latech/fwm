@@ -176,5 +176,8 @@ public class InteractionController implements Saveable {
 	public void relationalSave() {
 		fullSave();
 	}
+	public void nameFocus(){
+		
+	}
 }
 

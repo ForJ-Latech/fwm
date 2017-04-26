@@ -449,4 +449,7 @@ public class RegionTabController implements Saveable {
 	public ListController getListController(){
 		return interactionController;
 	}
+	public void nameFocus(){
+		name.requestFocus();
+	}
 }

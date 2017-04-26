@@ -367,7 +367,6 @@ public class NpcTabController implements Saveable {
 		return started;
 	}
 
-
 	public static NpcTabController startNpcTab(Npc npc) throws Exception {
 		log.debug("static startNpcTab called.");
 
@@ -437,5 +436,8 @@ public class NpcTabController implements Saveable {
 	}
 	public ListController getListController(){
 		return interactionController;
+	}
+	public void nameFocus(){
+		fName.requestFocus();
 	}
 }
