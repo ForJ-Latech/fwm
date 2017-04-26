@@ -34,21 +34,21 @@
     		<!-- The main row  -->   		
     		<div class="row">
     			<!-- Left-hand search area  -->
-    			<div class="col-md-4 text-center">
+    			<div class="col-xs-12 col-md-4 text-center">
     				<div id="searchbar" class="input-group"><br>
       					<input type="text" class="form-control" id="myInput" title="Npc" placeholder="Search...">
       					<span class="input-group-btn">
         					<button class="btn btn-secondary" type="button" onclick="searchvalue(document.getElementById('myInput').value);">Go</button>
       					</span>
     				</div>    				
-    				<div class="text-left" id="searchResults"><strong>Search&nbsp;Results</strong>
+    				<div class="text-center" id="searchResults"><strong>Search&nbsp;Results</strong>
     				</div>  				
 					<div class="text-center" id="listcontainer" >
 					</div>  			
     			</div>
     			<!-- <div class="line1"></div -->
     			<!-- The middle display for object -->
-    			<div id="display" class="col-md-4 text-center">
+    			<div id="display" class="col-xs-12 col-md-4 text-center">
 					<div class="row center">
 						<div class="col-md-12">						
 							<div class="row center" >
@@ -79,7 +79,7 @@
 				</div>
     			<!-- <div class="line2"></div> -->
     			<!-- The relational list container  -->
-    			<div class="col-md-4">
+    			<div class="col-xs-12 col-md-4">
 					<div id="rellistcontainer" class="text-center bold center">			
 						<div>Region/God/Group Relations</div>		
 					</div>
