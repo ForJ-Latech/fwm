@@ -41,11 +41,14 @@ public class StatusBarController {
 	
 	private int statusMaxSize;
 	
-	public StatusBarController (StackPane stackPane){
+	
+	public StatusBarController (StackPane stackPane, VBox statusVBoxmc){
 		statusMaxSize = 50;
 		statusBarFull = new TextArea();
 		statusBarSmall = new Label("Ceiling cat is watching your status's, but there is none");
+		statusBarSmall.maxWidthProperty().bind(statusVBoxmc.widthProperty());
 		statusBarSmall.setId("statusLabel");
+		//statusBarSmall.setPrefWidth(statusVBoxmc.getWidth());
 		statusStackPane = stackPane;
 		statusFullOn = false;
 		statusBarSmall.setOnMouseClicked(new EventHandler<MouseEvent>() {

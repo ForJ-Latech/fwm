@@ -135,9 +135,8 @@ public class MainController extends TabControlled implements Openable {
 		   });
 		
 		primaryStage.show();
-		statusBarController = new StatusBarController(statusStackPane);
+		statusBarController = new StatusBarController(statusStackPane, statusVBoxmc);
 		statusVBoxmc.getChildren().add(statusBarController.getSmallStatus());
-
 		ourStage = primaryStage;
 		HotkeyController.giveGlobalHotkeys(myScene);
 		HotkeyController.giveMainControllerHotkeys(myScene);
