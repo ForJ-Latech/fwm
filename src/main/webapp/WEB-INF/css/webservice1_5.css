@@ -140,4 +140,31 @@ img	{
 	text-align: center;
 }
 
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+    	float: none;
+    	display: table-cell;
+    	vertical-align: top;
+        width: 100%;
+    }
+    
+    #display {
+    	text-align: center;
+    	padding-top: 5px;
+    	padding-bottom: 5px;
+    	border-top: 2px solid white;
+    }
+    
+    #listcontainer {
+    	padding-bottom: 5px;
+    }
+    
+    #relcolumn {
+   		border-top: 2px solid white;
+    }
+    
+    
+}
+
 /* trying to make it mobile... */

@@ -67,7 +67,7 @@
 							<div class="row center">
 								<div class="col-md-12 text-center" id="imagecontainer">
 								</div>
-							</div><br>
+							</div>
 							<!-- <div class="style2"> -->
 							<div class="row center">
 								<div class="col-md-12 text-center">
@@ -79,7 +79,7 @@
 				</div>
     			<!-- <div class="line2"></div> -->
     			<!-- The relational list container  -->
-    			<div class="col-xs-12 col-md-4">
+    			<div id="relcolumn" class="col-xs-12 col-md-4">
 					<div id="rellistcontainer" class="text-center bold center">			
 						<div>Region/God/Group Relations</div>		
 					</div>
