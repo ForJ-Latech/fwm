@@ -17,6 +17,7 @@ public class AddableSound{
 	private static Logger log = Logger.getLogger(AddableImage.class);
 	private File ourSound;
 	private EventHandler<Event> onChangeHandler = null;
+	private AudioClip clip;
 	
 	private static ExtensionFilter[] filts = new ExtensionFilter[]{
 		new ExtensionFilter("Sound Files", "*.wav", "*.mp3")	
@@ -68,8 +69,6 @@ public class AddableSound{
 			changeEvent();
 		}		
 	}
-	
-	private AudioClip clip;
 	
 	public void stop()
 	{

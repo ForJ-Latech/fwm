@@ -28,8 +28,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
-
-
 public class ShowPlayersController { // NEEDS to be a space after class name or scene builder can't find it.
 	private static Logger log = Logger.getLogger(ShowPlayersController.class);
 	private static Boolean isOpen = false;

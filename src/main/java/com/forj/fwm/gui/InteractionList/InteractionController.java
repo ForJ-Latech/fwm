@@ -29,6 +29,7 @@ public class InteractionController implements Saveable {
 	private Interaction interaction;
 	private TextInputControl[] thingsThatCanChange;
 	private Saveable s;
+	private static boolean started = false;
 	
 	@FXML private TextField partyMember;
 	@FXML private TextArea description;
@@ -44,19 +45,11 @@ public class InteractionController implements Saveable {
 		}
 	};
 	
-	public HBox getSingleInteraction(){
-		return singleInteraction;
-	}
-	
 	public void fullSave(){
 			s.relationalSave();
 			App.getMainController().addStatus("Successfully saved Interaction ID: " + interaction.getID());
 			log.debug("Save successfull!");
 			log.debug("Interaction id: " + interaction.getID());
-	}
-	
-	public TextField getPartyMember(){
-		return partyMember;
 	}
 	
 	public void start(HBox rootLayout, Interaction interaction, Saveable s) throws Exception {
@@ -113,12 +106,6 @@ public class InteractionController implements Saveable {
 		interaction.setDescription(description.getText());
 	}
 	
-	private static boolean started = false;
-
-	public static boolean getStarted() {
-		return started;
-	}
-
 	public static InteractionController startInteraction(Interaction interaction, Saveable s) throws Exception {
 		log.debug("static startInteraction called.");
 		FXMLLoader loader = new FXMLLoader();
@@ -128,6 +115,18 @@ public class InteractionController implements Saveable {
 		cr.start(rootLayout, interaction, s);
 		started = true;
 		return cr;
+	}
+	
+	public HBox getSingleInteraction(){
+		return singleInteraction;
+	}
+	
+	public static boolean getStarted() {
+		return started;
+	}
+	
+	public TextField getPartyMember(){
+		return partyMember;
 	}
 
 	public Searchable getThing() {

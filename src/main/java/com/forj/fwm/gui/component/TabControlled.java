@@ -45,10 +45,6 @@ public class TabControlled {
 		return -1;
 	}
 	
-	public Saveable findTab(Tab source){
-		return tabControllers.get(findTabIndex(source));
-	}
-	
 	public void addTabController(Saveable s){
 		boolean existed = false;
 		s.getTab().setOnClosed(onTabClosed);
@@ -97,6 +93,10 @@ public class TabControlled {
 		else{
 			tabPane.getSelectionModel().select(newIndex);
 		}
+	}
+	
+	public Saveable findTab(Tab source){
+		return tabControllers.get(findTabIndex(source));
 	}
 	
 	public TabPane getTabPane() {

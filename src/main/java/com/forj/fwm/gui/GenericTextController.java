@@ -1,33 +1,20 @@
 package com.forj.fwm.gui;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URL;
 
 import org.apache.log4j.Logger;
-
-import com.forj.fwm.backend.ShowPlayersDataModel;
-import com.forj.fwm.entity.Event;
-import com.forj.fwm.entity.God;
-import com.forj.fwm.entity.Npc;
-import com.forj.fwm.entity.Region;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class GenericTextController { // NEEDS to be a space after class name or scene builder can't find it.
-
 	protected static Logger log = Logger.getLogger(ShowPlayersController.class);
 	protected static Boolean isOpen = false;
 
@@ -50,7 +37,6 @@ public class GenericTextController { // NEEDS to be a space after class name or 
        textArea.setWrapText(true);
        textArea.setEditable(false);
     }
-
 	
 	public static GenericTextController startGenericTextController(String title) throws Exception{
 		FXMLLoader loader = new FXMLLoader();

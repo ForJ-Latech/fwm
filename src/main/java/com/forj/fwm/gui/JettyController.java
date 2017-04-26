@@ -1,19 +1,26 @@
 package com.forj.fwm.gui;
 
+import java.awt.AWTException;
+import java.awt.Desktop;
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.LinkedList;
-import java.util.Scanner;
 import java.util.jar.Manifest;
-import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
-import javax.swing.event.HyperlinkEvent.EventType;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.log4j.Logger;
@@ -23,59 +30,28 @@ import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.webapp.WebAppClassLoader;
 import org.eclipse.jetty.webapp.WebAppContext;
 
-import com.forj.fwm.backend.Backend;
-import com.forj.fwm.backend.ShowPlayersDataModel;
 import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
-import com.forj.fwm.entity.Npc;
 import com.forj.fwm.startup.App;
-import com.forj.fwm.startup.ComponentSelectorController;
-import com.forj.fwm.web.HelloController;
 
-import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import java.awt.AWTException;
-import java.awt.Desktop;
-import java.awt.Image;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.JarURLConnection;
-import java.net.MalformedURLException;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.URISyntaxException;
-
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 
 /**
  * http://docs.oracle.com/javafx/2/fxml_get_started/jfxpub-fxml_get_started.htm
@@ -101,6 +77,11 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
     private TrayIcon trayIcon;
 	
     private Stage ourStage;
+    
+	private static boolean started = false;
+	
+	private static WebAppContext ctx;
+	private static int port;
     
 	@FXML
 	private Label serverStatus;
@@ -164,15 +145,10 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
        visPasswordVar.toBack();
     }
 	
-	private static boolean started = false;
 	public static boolean getStarted()
 	{
 		return started;
 	}
-	
-	
-	private static WebAppContext ctx;
-	private static int port;
 	
 	public static JettyController startJettyWindow() throws Exception{
 		startServer();
@@ -237,7 +213,6 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 			e.printStackTrace();
 		}
 	}
-	
 
 	public static String getAddress() throws Exception {
 	    InetAddress addr = InetAddress.getLocalHost();
@@ -271,7 +246,6 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 		return myip;
 		*/
 	}
-	
 	
 	@FXML
 	public void showAddress() {
@@ -332,7 +306,6 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 		return loadedPassword;
 	}
 
-	
 	@FXML
 	public void toggleShowPassword() {
 		if (showPasswordButton.isSelected()){
@@ -361,14 +334,12 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 		visPasswordVar.setText(password);
 	}
 	
-	
 	public static Boolean getIsLoggedIn(String ip) {
 		for (int i = 0; i < numLogged; i++){
 			if (loggedArray[i].equals(ip)) return true;
 		}
 		return false;
 	}
-	
 	
 	public static void logIn(String password, String ip){
 		if (numLogged >= 100){
@@ -480,8 +451,6 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 		}
     }
 
-	
-	
     public void showMinimizedMessage() {
         if (firstTime) {
             trayIcon.displayMessage("Fanstasy World Manager",
@@ -501,7 +470,4 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
             }
         });
     }
-
-
-	
 }

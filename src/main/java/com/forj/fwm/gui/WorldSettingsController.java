@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class WorldSettingsController {
-
 	protected static Logger log = Logger.getLogger(ShowPlayersController.class);
 	protected static Boolean isOpen = false;
 	

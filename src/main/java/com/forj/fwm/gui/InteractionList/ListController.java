@@ -25,14 +25,6 @@ public class ListController extends Application{
 	@FXML private VBox list;
 	@FXML private Button newInteraction;
 	
-	public static boolean getStarted() {
-		return started;
-	}
-	
-	public VBox getInteractionListContainer(){
-		return interactionListContainer;
-	}
-
 	public void start(VBox rootLayout , List<Interaction> listA, Saveable s) throws Exception {
 		log.debug("start interaction list controller called");
 		started = true;
@@ -90,5 +82,13 @@ public class ListController extends Application{
 					interactions.add(interactionControllers.get(i).getInteraction());	
 		}
 		return interactions;
+	}
+	
+	public static boolean getStarted() {
+		return started;
+	}
+	
+	public VBox getInteractionListContainer(){
+		return interactionListContainer;
 	}
 }

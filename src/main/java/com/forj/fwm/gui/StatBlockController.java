@@ -20,7 +20,7 @@ import javafx.stage.WindowEvent;
 
 public class StatBlockController extends TabControlled {
 	
-	private Logger log = Logger.getLogger(StatBlockController.class);
+	private static Logger log = Logger.getLogger(StatBlockController.class);
 	
 	private boolean started = false;
 	

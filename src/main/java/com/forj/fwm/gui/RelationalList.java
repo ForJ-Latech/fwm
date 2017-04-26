@@ -1,32 +1,19 @@
 package com.forj.fwm.gui;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
-import com.forj.fwm.entity.Event;
-import com.forj.fwm.entity.God;
-import com.forj.fwm.entity.MMRegionGod;
 import com.forj.fwm.entity.Npc;
-import com.forj.fwm.entity.OMRegionRegion;
-import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.SearchList.EntitiesToSearch;
 import com.forj.fwm.gui.component.Openable;
-import com.forj.fwm.gui.tab.GodTabController;
-import com.forj.fwm.gui.tab.NpcTabController;
-import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,18 +22,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -54,10 +37,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class RelationalList implements Openable{
@@ -90,10 +71,6 @@ public class RelationalList implements Openable{
 	private boolean showButton;
 	private boolean relationsRemovable;
 	
-	public ListView<Searchable> getListView(){
-		return listView;
-	}
-
 	public static RelationalList createRelationalList(Saveable caller, List<Searchable> ourItems, String title, boolean useButton, boolean relationsRemovable, EntitiesToSearch tabType, EntitiesToSearch relationType) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(RelationalList.class.getResource("relationalList.fxml"));
@@ -246,10 +223,6 @@ public class RelationalList implements Openable{
 		searchResults.clear();
 	}
 	
-	public Searchable getTabObject() {
-		return tabObject;
-	}
-
 	private boolean checkUnique(Searchable item) {
 		boolean unique = true;
 		for (Searchable i : searchResults) {
@@ -285,27 +258,6 @@ public class RelationalList implements Openable{
 		updateList();
 	}
 
-	public List<Searchable> getList() {
-		return listView.getItems();
-	}
-	
-
-	public void setMaxImageSize(int newSize) {
-		maxImageSize = newSize;
-	}
-
-	public void setEntitiesToSearch(EntitiesToSearch e) {
-		tabType = e;
-	}
-
-	public Node getOurRoot() {
-		return ourRoot;
-	}
-	
-	public void setButtonText(String newText) {
-		addButton.setText(newText);
-	}
-	
 	@FXML
 	private void handleAddButton() {
 		if (page1)
@@ -372,10 +324,6 @@ public class RelationalList implements Openable{
 		}		
 	}
 	
-	public void setTitle(String newText) {
-		titledPane.setText(newText);
-	}
-	
 	public void populateList(List<Searchable> ourItems) {
 		for(Searchable s: ourItems){
 			addItem(s, false);
@@ -400,5 +348,35 @@ public class RelationalList implements Openable{
 		
 	}
 
+	public ListView<Searchable> getListView(){
+		return listView;
+	}
+	
+	public void setTitle(String newText) {
+		titledPane.setText(newText);
+	}
+	
+	public List<Searchable> getList() {
+		return listView.getItems();
+	}
+	
+	public void setMaxImageSize(int newSize) {
+		maxImageSize = newSize;
+	}
 
+	public void setEntitiesToSearch(EntitiesToSearch e) {
+		tabType = e;
+	}
+
+	public Node getOurRoot() {
+		return ourRoot;
+	}
+	
+	public void setButtonText(String newText) {
+		addButton.setText(newText);
+	}
+	
+	public Searchable getTabObject() {
+		return tabObject;
+	}
 }

@@ -1,24 +1,18 @@
 package com.forj.fwm.gui;
 
 import java.awt.Desktop;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.log.Log;
 
 import com.forj.fwm.backend.Backend;
-import com.forj.fwm.backend.ShowPlayersDataModel;
 import com.forj.fwm.conf.HotkeyController;
 import com.forj.fwm.conf.WorldConfig;
+import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
-import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.component.Openable;
@@ -31,37 +25,24 @@ import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.gui.tab.TemplateTabController;
 import com.forj.fwm.gui.tab.WelcomeTabController;
 import com.forj.fwm.startup.App;
-import com.forj.fwm.startup.WorldFileUtil;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 
 /**
  * http://docs.oracle.com/javafx/2/fxml_get_started/jfxpub-fxml_get_started.htm
@@ -74,7 +55,8 @@ import javafx.util.Callback;
  *
  */
 public class MainController extends TabControlled implements Openable {
-
+	private static Logger log = Logger.getLogger(MainController.class);
+	
 	private ShowPlayersController spController;
 
 	@FXML
@@ -94,7 +76,6 @@ public class MainController extends TabControlled implements Openable {
    
     private StatusBarController statusBarController;
 
-	private static Logger log = Logger.getLogger(MainController.class);
 	private static boolean started = false;
 	private Stage ourStage;
 
@@ -277,14 +258,6 @@ public class MainController extends TabControlled implements Openable {
 		}
 	}
 	
-	public Window getStage() {
-		return ourStage;
-	}
-
-	public void addStatus(String text) {
-		statusBarController.addStatus(text);
-	}
-	
 	public void open(Searchable o) throws Exception {
 		log.debug("opening tab from search");
 		if (o instanceof God) {
@@ -311,5 +284,12 @@ public class MainController extends TabControlled implements Openable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Window getStage() {
+		return ourStage;
+	}
 
+	public void addStatus(String text) {
+		statusBarController.addStatus(text);
+	}
 }
