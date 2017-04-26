@@ -20,7 +20,6 @@ import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.startup.App;
-import com.j256.ormlite.stmt.SelectArg;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
 import javafx.application.Platform;
@@ -45,6 +44,20 @@ import javafx.scene.layout.VBox;
 public class GodTabController implements Saveable {
 	private static Logger log = Logger.getLogger(GodTabController.class);
 	private God god;
+    private ListController interactionController;
+	private AddableImage image;
+	private AddableSound sound;
+	private TextInputControl[] thingsThatCanChange; 
+	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
+	private List<God> panth = new ArrayList<God>();
+	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.GOD;
+	
+	@FXML private TextField name, pantheon, gender, race, godClass; 
+	@FXML private TextArea attributes, description, history;
+	@FXML private VBox interactionContainer, rhsVbox;
+	@FXML private Tab tabHead;
+	@FXML private Button statBlockButton;
+	@FXML private Accordion accordion;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -67,27 +80,6 @@ public class GodTabController implements Saveable {
 		}
 	};
 
-
-    private ListController interactionController;
-    
-	private AddableImage image;
-	private AddableSound sound;
-	
-	
-	@FXML private TextField name, pantheon, gender, race, godClass; 
-	@FXML private TextArea attributes, description, history;
-	@FXML private VBox interactionContainer, rhsVbox;
-	@FXML private Tab tabHead;
-	@FXML private Button statBlockButton;
-	@FXML private Accordion accordion;
-	
-	private TextInputControl[] thingsThatCanChange; 
-	
-	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
-	private List<God> panth = new ArrayList<God>();
-	
-	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.GOD;
-	
 	public void startRelationalList() throws Exception {
 		log.debug("god.getNpcs.size: " + god.getNpcs().size());
 		

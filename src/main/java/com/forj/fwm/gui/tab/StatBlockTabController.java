@@ -1,16 +1,13 @@
 package com.forj.fwm.gui.tab;
 
-import java.net.URL;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
-import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
-import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.startup.App;
@@ -29,6 +26,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class StatBlockTabController implements Saveable {
+	private static Logger log = Logger.getLogger(StatBlockTabController.class);
+	private TextInputControl[] thingsThatCanChange; 
+	private Statblock stat;
+	private Saveable beSaved;
+	
+	@FXML VBox mainVbox;
+	@FXML Tab tabHead;
+	@FXML HBox nameArea;
+	@FXML TextField nameText;
+	@FXML TextArea statBlockText;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -44,23 +51,6 @@ public class StatBlockTabController implements Saveable {
 			}
 		}
 	};
-	
-	@FXML
-	VBox mainVbox;
-	
-	@FXML
-	Tab tabHead;
-	
-	@FXML
-	HBox nameArea;
-	
-	@FXML
-	TextField nameText;
-	
-	@FXML
-	TextArea statBlockText;
-	
-	private static Logger log = Logger.getLogger(StatBlockTabController.class);
 	
 	private void getAllTexts(){
 		stat.setName(nameText.getText());
@@ -86,11 +76,6 @@ public class StatBlockTabController implements Saveable {
 		}
 	}
 	
-	private Statblock stat;
-	
-	private Saveable beSaved;
-	
-	private TextInputControl[] thingsThatCanChange; 
 	public void start(Tab rootLayout, Statblock s, Saveable beSaved) throws Exception {
 		log.debug("statBlockTab.start called");
 		stat = s;

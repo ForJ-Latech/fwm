@@ -46,6 +46,24 @@ import javafx.scene.layout.VBox;
 public class RegionTabController implements Saveable {
 	private static Logger log = Logger.getLogger(RegionTabController.class);
 	private Region region;
+	private ListController interactionController;
+	private AddableImage image;
+    private AddableSound sound;
+    public List<Region> subRegions;
+    public Region superRegion;
+    private TextInputControl[] thingsThatCanChange;
+	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
+	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.REGION;
+	private RelationalField superRelation;
+	private List<Region> superList = new ArrayList<Region>();
+	
+    @FXML private TextField name;
+	@FXML private TextArea attributes, description, history;
+	@FXML private VBox interactionContainer, rhsVbox;
+	@FXML private Tab tabHead;
+	@FXML private Accordion accordion;
+	@FXML private Button statBlockButton;
+	@FXML private StackPane superRegionPane;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -62,30 +80,6 @@ public class RegionTabController implements Saveable {
 		}
 	};
 	
-	
-	private ListController interactionController;
-	
-	private AddableImage image;
-    private AddableSound sound;
-    
-    public List<Region> subRegions;
-    public Region superRegion;
-	
-    @FXML private TextField name;
-	@FXML private TextArea attributes, description, history;
-	@FXML private VBox interactionContainer, rhsVbox;
-	@FXML private Tab tabHead;
-	@FXML private Accordion accordion;
-	@FXML private Button statBlockButton;
-	@FXML private StackPane superRegionPane;
-	
-	private TextInputControl[] thingsThatCanChange;
-	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
-	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.REGION;
-	private RelationalField superRelation;
-	
-	private List<Region> superList = new ArrayList<Region>();
-
 	public void startRelationalList() throws Exception {
 		
 		superList.clear();
@@ -95,7 +89,6 @@ public class RegionTabController implements Saveable {
 		}
 		superRelation = RelationalField.createRelationalList(this, App.toListSearchable(superList), "Super Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		superRegionPane.getChildren().add(superRelation.getOurRoot());
-		
 		
 		accordion.getPanes().clear();
 		regionRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getSubRegions()), "Sub Regions", true, true, tabType, SearchList.EntitiesToSearch.REGION);
@@ -109,10 +102,6 @@ public class RegionTabController implements Saveable {
 		
 		eventRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getEvents()), com.forj.fwm.entity.Event.WHAT_IT_DO + "s", true, true, tabType, SearchList.EntitiesToSearch.EVENT);
 		accordion.getPanes().add((TitledPane) eventRelation.getOurRoot());
-		
-		
-
-		
 	}
 	
 	public void updateTab(){

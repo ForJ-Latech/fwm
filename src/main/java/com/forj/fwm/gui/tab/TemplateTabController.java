@@ -6,11 +6,9 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
-import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
-import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
@@ -35,6 +33,9 @@ import javafx.scene.layout.VBox;
 
 public class TemplateTabController implements Saveable{
 	private static Logger log = Logger.getLogger(TemplateTabController.class);
+	private Openable open;
+    private TextInputControl[] thingsThatCanChange; 
+    private Template template;
 	
 	@FXML private Tab tabHead;
     @FXML private TextField name;
@@ -42,12 +43,6 @@ public class TemplateTabController implements Saveable{
     @FXML private VBox interactionContainer, rhsVbox;
     @FXML private Accordion accordion;
     @FXML private StackPane godPane;
-    
-	private Openable open;
-    
-    private TextInputControl[] thingsThatCanChange; 
-	
-    private Template template;
     
     private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

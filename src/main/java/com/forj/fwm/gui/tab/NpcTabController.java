@@ -20,7 +20,6 @@ import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.startup.App;
-import com.j256.ormlite.stmt.SelectArg;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
 import javafx.application.Platform;
@@ -32,7 +31,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -46,6 +44,22 @@ import javafx.scene.layout.VBox;
 public class NpcTabController implements Saveable {
 	private static Logger log = Logger.getLogger(NpcTabController.class);
 	private Npc npc;
+	private ListController interactionController;
+	private AddableImage image;
+    private AddableSound sound;
+	private TextInputControl[] thingsThatCanChange; 
+	private List<Npc> fam = new ArrayList<Npc>();
+	private List<God> myGod = new ArrayList<God>();
+	private RelationalList npcRelation, eventRelation, regionRelation;
+	private RelationalField godRelation;
+	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.NPC;
+	
+	@FXML private Tab tabHead;
+    @FXML private TextField fName, race, lName, classType, gender, age;
+    @FXML private TextArea description, history, attributes;
+    @FXML private VBox interactionContainer, rhsVbox;
+    @FXML private Accordion accordion;
+    @FXML private StackPane godPane;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -66,28 +80,6 @@ public class NpcTabController implements Saveable {
 			updateFamily(true);
 		}
 	};
-
-    private ListController interactionController;
-	
-	@FXML private Tab tabHead;
-    @FXML private TextField fName, race, lName, classType, gender, age;
-    @FXML private TextArea description, history, attributes;
-    @FXML private VBox interactionContainer, rhsVbox;
-    @FXML private Accordion accordion;
-    @FXML private StackPane godPane;
-	
-    
-    private AddableImage image;
-    private AddableSound sound;
-	private TextInputControl[] thingsThatCanChange; 
-		
-	private List<Npc> fam = new ArrayList<Npc>();
-	private List<God> myGod = new ArrayList<God>();
-
-	
-	private RelationalList npcRelation, eventRelation, regionRelation;
-	private RelationalField godRelation;
-	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.NPC;
 
 	public void startRelationalList() throws Exception {
 		
