@@ -135,9 +135,8 @@ public class MainController extends TabControlled implements Openable {
 		   });
 		
 		primaryStage.show();
-		statusBarController = new StatusBarController(statusStackPane);
+		statusBarController = new StatusBarController(statusStackPane, statusVBoxmc);
 		statusVBoxmc.getChildren().add(statusBarController.getSmallStatus());
-
 		ourStage = primaryStage;
 		HotkeyController.giveGlobalHotkeys(myScene);
 		HotkeyController.giveMainControllerHotkeys(myScene);
@@ -192,6 +191,15 @@ public class MainController extends TabControlled implements Openable {
 	public void CreateEvent() throws Exception {
 		log.debug("Create Event called.");
 		EventTabController cr = EventTabController.startEventTab(null);
+		addTabController(cr);
+		tabPane.getSelectionModel().select(cr.getTab());
+	}
+	
+
+	@FXML
+	public void CreateTemplate() throws Exception{
+		log.debug("create template called.");
+		TemplateTabController cr = TemplateTabController.startTemplateTab(null, this);
 		addTabController(cr);
 		tabPane.getSelectionModel().select(cr.getTab());
 	}
@@ -294,7 +302,7 @@ public class MainController extends TabControlled implements Openable {
 	      addTabController(tab); 
 		}
 		else if(o instanceof Template){
-			TemplateTabController tab = TemplateTabController.startTemplateTab((Template) o);
+			TemplateTabController tab = TemplateTabController.startTemplateTab((Template) o, this);
 			addTabController(tab);
 		}
 	}
@@ -303,4 +311,5 @@ public class MainController extends TabControlled implements Openable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

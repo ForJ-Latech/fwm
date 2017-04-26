@@ -11,6 +11,7 @@ import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
@@ -41,6 +42,8 @@ public class TemplateTabController implements Saveable{
     @FXML private VBox interactionContainer, rhsVbox;
     @FXML private Accordion accordion;
     @FXML private StackPane godPane;
+    
+	private Openable open;
     
     private TextInputControl[] thingsThatCanChange; 
 	
@@ -112,7 +115,8 @@ public class TemplateTabController implements Saveable{
 				log.error(e);
 			}
 		}
-		tabHead.setText(template.getfName());
+		name.setText(template.getName());
+		tabHead.setText(template.getName());
 		history.setText(template.getHistory());
 		description.setText(template.getDescription());
 		attributes.setText(template.getAttributes());
@@ -126,6 +130,7 @@ public class TemplateTabController implements Saveable{
 	
 	private void getAllTexts()
 	{
+		template.setName(name.getText());
 		template.setHistory(history.getText());
 		template.setDescription(description.getText());
 		template.setGender(gender.getText());
@@ -136,14 +141,13 @@ public class TemplateTabController implements Saveable{
 		template.setlName(lName.getText());
 		template.setAge(age.getText());
 	}
-	
-	public void start(Tab rootLayout, Template template) throws Exception {
+	public void start(Tab rootLayout, Template template, Openable open) throws Exception {
 		this.template = template;
 		thingsThatCanChange = new TextInputControl[] {history , description, lName ,fName ,gender ,attributes ,race ,classType};
-		fName.textProperty().addListener(nameListener);
+		name.textProperty().addListener(nameListener);
 		log.debug("start npc tab controller called");
 		setAllTexts(template);
-		
+		this.open = open;
 		for(TextInputControl c: thingsThatCanChange){
 			if (c.getClass() == TextArea.class){
 				c.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
@@ -192,7 +196,7 @@ public class TemplateTabController implements Saveable{
 		});
 	}
 
-	public static TemplateTabController startTemplateTab(Template template) throws Exception {
+	public static TemplateTabController startTemplateTab(Template template, Openable open) throws Exception {
 		log.debug("static startNpcTab called.");
 
 		Template ourT = template;
@@ -209,8 +213,13 @@ public class TemplateTabController implements Saveable{
 		loader.setLocation(TemplateTabController.class.getResource("templateTab.fxml"));
 		Tab rootLayout = (Tab)loader.load();
 		TemplateTabController cr = (TemplateTabController)loader.getController();
-		cr.start(rootLayout, ourT);
+		cr.start(rootLayout, ourT, open);
 		return cr;
+	}
+	
+	@FXML
+	public void newFromTemplate() throws Exception{
+		open.open(template.newFromTemplate());
 	}
 	
 	public Tab getTab(){

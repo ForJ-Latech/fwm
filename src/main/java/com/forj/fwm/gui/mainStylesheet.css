@@ -42,23 +42,14 @@
 
 #statusLabel {
 	-fx-padding: 10;
-	-fx-background-color:
-		linear-gradient(#4fc3f7, #039be5),
-		radial-gradient(center 50% -40%, radius 200%, #03a9f4 45%, #039be5 50%);
-	-fx-background-radius: 6, 5;
-	-fx-background-insets: 0, 1;
-	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
-	-fx-text-fill: #395306;
+	-fx-margin: 5;
+	-fx-alignment: center ;
+	-fx-background-color: rgb(230,230,230);
+    -fx-border-color: rgb(120,120,120);
 }
 
 #statusLabel:hover{
-	-fx-background-color: -fx-shadow-highlight-color, -fx-body-color, 
-		linear-gradient(#60ccff, #11b1fb),
-		radial-gradient(center 50% -40%, radius 200%, #11b1fb 45%, #12aaf1 50%);
-  	-fx-background-radius: 6, 5;
-	-fx-background-insets: 0, 1;
-	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
-	-fx-text-fill: #395306;
+	-fx-background-color: rgb(200,200,200);
 }
 
 .titled-pane > .title{

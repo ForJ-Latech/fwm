@@ -173,6 +173,7 @@ public class HotkeyController {
 	public static final String NPC_HOTKEY = "Create_NPC";
 	public static final String GOD_HOTKEY = "Create_God";
 	public static final String REGION_HOTKEY = "Create_Region";
+	public static final String TEMPLATE_HOTKEY = "Create_Template";
 	public static final String SHOW_HOTKEY = "Show_Players";
 	public static final String IMAGE_HOTKEY = "Select_Image";
 	public static final String INTERACTION_HOTKEY = "Create_Interaction";
@@ -183,7 +184,7 @@ public class HotkeyController {
 	public static final String MANUAL_SAVE_ALL = "Manual_Save_All_Tabs";
 	public static final String[] HOTKEYS = { FORWARD_SHOW_HOTKEY, BACKWARD_SHOW_HOTKEY, NPC_HOTKEY, GOD_HOTKEY,
 			REGION_HOTKEY, SHOW_HOTKEY, IMAGE_HOTKEY, INTERACTION_HOTKEY, SEARCH_HOTKEY,
-			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL };
+			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL, TEMPLATE_HOTKEY };
 
 	private static HashMap<String, Hotkey> hotkeys = new HashMap<String, Hotkey>();
 
@@ -388,6 +389,14 @@ public class HotkeyController {
 						App.getMainController().getStage().requestFocus();
 					} catch (Exception e) {
 						log.debug(e);
+					}
+				}
+				if(HotkeyController.getHotkey(TEMPLATE_HOTKEY).match(keyEvent)){
+					try{
+						App.getMainController().CreateTemplate();
+						App.getMainController().getStage().requestFocus();
+					} catch (Exception e) {
+						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(SHOW_HOTKEY).match(keyEvent)) {
