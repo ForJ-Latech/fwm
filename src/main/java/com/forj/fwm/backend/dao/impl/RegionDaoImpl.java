@@ -12,10 +12,12 @@ import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.MMRegionGod;
 import com.forj.fwm.entity.MMRegionNpc;
+import com.forj.fwm.entity.MMTemplateRegion;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.OMRegionInteraction;
 import com.forj.fwm.entity.OMRegionRegion;
 import com.forj.fwm.entity.Region;
+import com.forj.fwm.entity.Template;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.SelectArg;
@@ -59,6 +61,10 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		
 		for (MMRegionGod relation : Backend.getMmRegionGodDao().queryForEq("region_id", region.getID())) {
 			region.getGods().add(Backend.getGodDao().queryForId("" + relation.getGod().getID()));
+		}
+		
+		for (MMTemplateRegion relation : Backend.getMmTemplateRegionDao().queryForEq("region_id", region.getID())) {
+			region.getTemplates().add(Backend.getTemplateDao().queryForId("" + relation.getTemplate().getID()));
 		}
 		
 		for (OMRegionInteraction relation : Backend.getOmRegionInteractionDao().queryForEq("region_id", region.getID())) {
@@ -127,6 +133,17 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 			}
 		}
 		
+		if (region.getTemplates() != null && !region.getTemplates().isEmpty()) {
+			List<MMTemplateRegion> relations = new ArrayList<MMTemplateRegion>();
+			for (Template template : region.getTemplates()) {
+				Backend.getTemplateDao().createOrUpdate(template);
+				relations.add(new MMTemplateRegion(template, region));
+			}
+			for (MMTemplateRegion relation : relations) {
+				Backend.getMmTemplateRegionDao().save(relation);
+			}
+		}
+		
 		if (region.getEvents() != null && !region.getEvents().isEmpty()) {
 			for (Event event : region.getEvents()) {
 				event.setRegion(region);
@@ -152,6 +169,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 	private void updateFullRegion (Region region) throws SQLException{
 		List<MMRegionNpc> npcs = Backend.getMmRegionNpcDao().queryForEq("region_id", region.getID());
 		List<MMRegionGod> gods = Backend.getMmRegionGodDao().queryForEq("region_id", region.getID());
+		List<MMTemplateRegion> templates = Backend.getMmTemplateRegionDao().queryForEq("region_id", region.getID());
 		List<OMRegionInteraction> interactions = Backend.getOmRegionInteractionDao().queryForEq("region_id", region.getID());
 		List<OMRegionRegion> subRegions = Backend.getOmRegionRegionDao().queryForEq("superRegion_id", region.getID());
 		
@@ -181,6 +199,20 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		}
 		for (MMRegionGod g : gods) {
 			Backend.getMmRegionGodDao().delete(g);
+		}
+		
+		for (int i = 0; i < templates.size(); i++) {
+			MMTemplateRegion relation = templates.get(i);
+			for (Template template : region.getTemplates()) {
+				if (template.getID() == relation.getTemplate().getID()) {
+					templates.remove(i);
+					i--;
+					break;
+				}
+			}
+		}
+		for (MMTemplateRegion t : templates) {
+			Backend.getMmTemplateRegionDao().delete(t);
 		}
 		
 		for (int i = 0; i < interactions.size(); i++) {
@@ -229,7 +261,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 			belowRegions.add(fr);
 			belowRegions.addAll(getBelowFullRegions(fr));
 		}
-		
+		 
 		return belowRegions;
 	}
 	

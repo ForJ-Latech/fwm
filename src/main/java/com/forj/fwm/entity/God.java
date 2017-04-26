@@ -64,6 +64,8 @@ public class God  implements Searchable{
 	
 	private List<Event> events;
 	
+	private List<Template> templates;
+	
 	private boolean full;
 	
 	
@@ -72,6 +74,7 @@ public class God  implements Searchable{
 		regions = new ArrayList<Region>();
 		npcs = new ArrayList<Npc>();
 		events = new ArrayList<Event>();
+		templates = new ArrayList<Template>();
 		full = false;
 		shown = false;
 	}
@@ -252,6 +255,22 @@ public class God  implements Searchable{
 		this.events.remove(event);
 	}
 
+	public List<Template> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<Template> templates) {
+		this.templates = templates;
+	}
+	
+	public void addTemplate(Template template) {
+		this.templates.add(template);
+	}
+
+	public void removeTemplate(Template template) {
+		this.templates.remove(template);
+	}
+	
 	public boolean isFull() {
 		return full;
 	}

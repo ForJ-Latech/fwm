@@ -12,9 +12,11 @@ import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.MMEventGod;
 import com.forj.fwm.entity.MMRegionGod;
+import com.forj.fwm.entity.MMTemplateGod;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.OMGodInteraction;
 import com.forj.fwm.entity.Region;
+import com.forj.fwm.entity.Template;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.SelectArg;
@@ -64,6 +66,10 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 			god.getEvents().add(Backend.getEventDao().queryForId("" + relation.getEvent().getID()));
 		}
 		
+		for (MMTemplateGod relation : Backend.getMmTemplateGodDao().queryForEq("god_id", god.getID())) {
+			god.getTemplates().add(Backend.getTemplateDao().queryForId("" + relation.getTemplate().getID()));
+		}
+		
 		for (Npc npc : Backend.getNpcDao().queryForEq("god_id", god.getID())) {
 			god.getNpcs().add(npc);
 		}
@@ -105,6 +111,17 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 			}
 		}
 		
+		if (god.getTemplates() != null && !god.getTemplates().isEmpty()) {
+			List<MMTemplateGod> relations = new ArrayList<MMTemplateGod>();
+			for (Template template : god.getTemplates()) {
+				Backend.getTemplateDao().createOrUpdate(template);
+				relations.add(new MMTemplateGod(template, god));
+			}
+			for (MMTemplateGod relation : relations) {
+				Backend.getMmTemplateGodDao().save(relation);
+			}
+		}
+		
 		if (god.getNpcs() != null && !god.getNpcs().isEmpty()) {
 			for (Npc npc : god.getNpcs()) {
 				npc.setGod(god);
@@ -124,6 +141,7 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		List<OMGodInteraction> interactions = Backend.getOmGodInteractionDao().queryForEq("god_id", god.getID());
 		List<MMRegionGod> regions = Backend.getMmRegionGodDao().queryForEq("god_id", god.getID());
 		List<MMEventGod> events = Backend.getMmEventGodDao().queryForEq("god_id", god.getID());
+		List<MMTemplateGod> templates = Backend.getMmTemplateGodDao().queryForEq("god_id", god.getID());
 		List<Npc> npcs = Backend.getNpcDao().queryForEq("god_id", god.getID());
 		
 		for (int i = 0; i < interactions.size(); i++) {
@@ -166,6 +184,20 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		}
 		for (MMEventGod e : events) {
 			Backend.getMmEventGodDao().delete(e);
+		}
+		
+		for (int i = 0; i < templates.size(); i++) {
+			MMTemplateGod relation = templates.get(i);
+			for (Template template : god.getTemplates()) {
+				if (template.getID() == relation.getTemplate().getID()) {
+					templates.remove(i);
+					i--;
+					break;
+				}
+			}
+		}
+		for (MMTemplateGod t : templates) {
+			Backend.getMmTemplateGodDao().delete(t);
 		}
 
 		for (int i = 0; i < npcs.size(); i++) {

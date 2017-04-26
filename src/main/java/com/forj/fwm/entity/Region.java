@@ -54,6 +54,8 @@ public class Region implements Searchable {
 	
 	private List<Event> events;
 	
+	private List<Template> templates;
+	
 	private Region superRegion;
 	
 	private boolean full;
@@ -64,6 +66,7 @@ public class Region implements Searchable {
 		interactions = new ArrayList<Interaction>();
 		subRegions = new ArrayList<Region>();
 		events = new ArrayList<Event>();
+		templates = new ArrayList<Template>();
 		superRegion = null;
 		full = false;
 		shown = false;
@@ -237,6 +240,22 @@ public class Region implements Searchable {
 		this.events.remove(event);
 	}
 
+	public List<Template> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<Template> templates) {
+		this.templates = templates;
+	}
+	
+	public void addTemplate(Template template) {
+		this.templates.add(template);
+	}
+
+	public void removeTemplate(Template template) {
+		this.templates.remove(template);
+	}
+	
 	public boolean isFull() {
 		return full;
 	}

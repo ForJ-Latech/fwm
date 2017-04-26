@@ -54,6 +54,8 @@ public class Event implements Searchable {
 	
 	private List<Interaction> interactions;
 	
+	private List<Template> templates;
+	
 	private boolean full;
 	
 	
@@ -62,6 +64,7 @@ public class Event implements Searchable {
 		npcs = new ArrayList<Npc>();
 		statblocks = new ArrayList<Statblock>();
 		interactions = new ArrayList<Interaction>();
+		templates = new ArrayList<Template>();
 		full = false;
 		shown = false;
 	}
@@ -194,6 +197,22 @@ public class Event implements Searchable {
 		this.interactions.remove(interaction);
 	}
 
+	public List<Template> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<Template> templates) {
+		this.templates = templates;
+	}
+	
+	public void addTemplate(Template template) {
+		this.templates.add(template);
+	}
+
+	public void removeTemplate(Template template) {
+		this.templates.remove(template);
+	}
+	
 	public boolean isFull() {
 		return full;
 	}

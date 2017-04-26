@@ -13,9 +13,11 @@ import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.MMEventGod;
 import com.forj.fwm.entity.MMEventNpc;
 import com.forj.fwm.entity.MMEventStatblock;
+import com.forj.fwm.entity.MMTemplateEvent;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.OMEventInteraction;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.entity.Template;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.SelectArg;
@@ -67,6 +69,10 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		
 		for (MMEventGod relation : Backend.getMmEventGodDao().queryForEq("event_id", event.getID())) {
 			event.getGods().add(Backend.getGodDao().queryForId("" + relation.getGod().getID()));
+		}
+		
+		for (MMTemplateEvent relation : Backend.getMmTemplateEventDao().queryForEq("event_id", event.getID())) {
+			event.getTemplates().add(Backend.getTemplateDao().queryForId("" + relation.getTemplate().getID()));
 		}
 		
 		return event;
@@ -121,6 +127,18 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 				Backend.getMmEventGodDao().save(relation);
 			}
 		}
+		
+		if (event.getTemplates() != null && !event.getTemplates().isEmpty()) {
+			List<MMTemplateEvent> relations = new ArrayList<MMTemplateEvent>();
+			for (Template template : event.getTemplates()) {
+				Backend.getTemplateDao().createOrUpdate(template);
+				relations.add(new MMTemplateEvent(template, event));
+			}
+			for (MMTemplateEvent relation : relations) {
+				Backend.getMmTemplateEventDao().save(relation);
+			}
+		}
+		
 		updateFullEvent(event);
 	}
 	
@@ -129,6 +147,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		List<MMEventStatblock> statblocks = Backend.getMmEventStatblockDao().queryForEq("event_id", event.getID());
 		List<MMEventNpc> npcs = Backend.getMmEventNpcDao().queryForEq("event_id", event.getID());
 		List<MMEventGod> gods = Backend.getMmEventGodDao().queryForEq("event_id", event.getID());
+		List<MMTemplateEvent> templates = Backend.getMmTemplateEventDao().queryForEq("event_id", event.getID());
 		
 		for (int i = 0; i < interactions.size(); i++) {
 			OMEventInteraction relation = interactions.get(i);
@@ -184,6 +203,20 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		}
 		for (MMEventGod g : gods) {
 			Backend.getMmEventGodDao().delete(g);
+		}
+		
+		for (int i = 0; i < templates.size(); i++) {
+			MMTemplateEvent relation = templates.get(i);
+			for (Template template : event.getTemplates()) {
+				if (template.getID() == relation.getTemplate().getID()) {
+					templates.remove(i);
+					i--;
+					break;
+				}
+			}
+		}
+		for (MMTemplateEvent t : templates) {
+			Backend.getMmTemplateEventDao().delete(t);
 		}
 	}
 	
