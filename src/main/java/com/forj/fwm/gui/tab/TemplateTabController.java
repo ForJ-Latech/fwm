@@ -1,11 +1,15 @@
 package com.forj.fwm.gui.tab;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
+import com.forj.fwm.entity.Interaction;
+import com.forj.fwm.entity.Npc;
+import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
@@ -138,7 +142,7 @@ public class TemplateTabController implements Saveable{
 	}
 	public void start(Tab rootLayout, Template template, Openable open) throws Exception {
 		this.template = template;
-		thingsThatCanChange = new TextInputControl[] {history , description, lName ,fName ,gender ,attributes ,race ,classType};
+		thingsThatCanChange = new TextInputControl[] {age, name, history , description, lName ,fName ,gender ,attributes ,race ,classType};
 		name.textProperty().addListener(nameListener);
 		log.debug("start npc tab controller called");
 		setAllTexts(template);
@@ -214,7 +218,11 @@ public class TemplateTabController implements Saveable{
 	
 	@FXML
 	public void newFromTemplate() throws Exception{
-		open.open(template.newFromTemplate());
+		Npc n = template.newFromTemplate();
+		n.setEvents(new ArrayList<com.forj.fwm.entity.Event>());
+		n.setInteractions(new ArrayList<Interaction>());
+		n.setRegions(new ArrayList<Region>());
+		open.open(n);
 	}
 	
 	public Tab getTab(){

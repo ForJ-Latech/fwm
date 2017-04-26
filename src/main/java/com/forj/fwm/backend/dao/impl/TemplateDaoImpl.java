@@ -66,8 +66,8 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 	}
 
 	public void saveFullTemplate(Template template) throws SQLException {
-		this.create(template);
-		
+		this.createOrUpdate(template);
+		this.refresh(template);
 		if (template.getEvents() != null && !template.getEvents().isEmpty()) {
 			List<MMTemplateEvent> relations = new ArrayList<MMTemplateEvent>();
 			for (Event event : template.getEvents()) {
@@ -150,6 +150,7 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 		for (MMTemplateRegion r : regions) {
 			Backend.getMmTemplateRegionDao().delete(r);
 		}
+		
 	}
 
 	@Override

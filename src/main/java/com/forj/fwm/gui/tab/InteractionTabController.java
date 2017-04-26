@@ -234,20 +234,27 @@ public class InteractionTabController implements Saveable {
 		
 		for (OMGodInteraction omg : Backend.getOmGodInteractionDao().queryForEq("INTERACTION_ID", interaction.getID())) {
 			intobj = omg.getGod();
-			((God) intobj).setImageFileName(Backend.getGodDao().queryForEq("ID", omg.getGod().getID()).get(0).getImageFileName());
-			((God) intobj).setName(Backend.getGodDao().queryForEq("ID", omg.getGod().getID()).get(0).getName());
+			God g = Backend.getGodDao().queryForEq("ID", omg.getGod().getID()).get(0);
+			((God) intobj).setImageFileName(g.getImageFileName());
+			((God) intobj).setName(g.getName());
 		}
 		for (OMNpcInteraction omn : Backend.getOmNpcInteractionDao().queryForEq("INTERACTION_ID", interaction.getID())) {
 			intobj = omn.getNpc();
-			((Npc) intobj).setImageFileName(Backend.getNpcDao().queryForEq("ID", omn.getNpc().getID()).get(0).getImageFileName());
-			((Npc) intobj).setfName(Backend.getNpcDao().queryForEq("ID", omn.getNpc().getID()).get(0).getFullName());
+			Npc n = Backend.getNpcDao().queryForEq("ID", omn.getNpc().getID()).get(0);
+			((Npc) intobj).setImageFileName(n.getImageFileName());
+			((Npc) intobj).setfName(n.getFullName());
 		}
 		for (OMEventInteraction ome : Backend.getOmEventInteractionDao().queryForEq("INTERACTION_ID", interaction.getID())) {
 			intobj = ome.getEvent();
+			com.forj.fwm.entity.Event e = Backend.getEventDao().queryForEq("ID", ome.getEvent().getID()).get(0);
+			((com.forj.fwm.entity.Event)intobj).setName(e.getName());
+			((com.forj.fwm.entity.Event)intobj).setImageFileName(e.getImageFileName());
 		}
 		for (OMRegionInteraction omr : Backend.getOmRegionInteractionDao().queryForEq("INTERACTION_ID", interaction.getID())) {
 			intobj = omr.getRegion();
-			((Region) intobj).setName(Backend.getRegionDao().queryForEq("ID", omr.getRegion().getID()).get(0).getName());
+			Region r = Backend.getRegionDao().queryForEq("ID", omr.getRegion().getID()).get(0);
+			((Region) intobj).setName(r.getName());
+			((Region) intobj).setImageFileName(r.getImageFileName());
 		}
 		
 		return intobj;

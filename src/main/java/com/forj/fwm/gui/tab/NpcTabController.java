@@ -258,7 +258,7 @@ public class NpcTabController implements Saveable {
 		image.setVisible(true);
 		rhsVbox.getChildren().add(0, image);
 		
-		thingsThatCanChange = new TextInputControl[] {history , description, lName ,fName ,gender ,attributes ,race ,classType};
+		thingsThatCanChange = new TextInputControl[] {history , description, lName ,fName ,gender ,attributes ,race ,classType, age};
 		fName.textProperty().addListener(nameListener);
 		log.debug("start npc tab controller called");
 		setAllTexts(npc);
@@ -372,8 +372,15 @@ public class NpcTabController implements Saveable {
 
 		Npc ourN = npc;
 		if(npc != null){
-			log.debug("ourN got filled from backend");
-			ourN = Backend.getNpcDao().getFullNpc(npc.getID());
+			if(npc.getID() == -1){
+				log.debug("Did not fill from backend, created by template.");
+				ourN = npc;
+			}
+			else
+			{
+				log.debug("ourN got filled from backend");
+				ourN = Backend.getNpcDao().getFullNpc(npc.getID());
+			}
 		}else
 		{
 			ourN = new Npc();

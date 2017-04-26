@@ -299,7 +299,6 @@ public class MainController extends TabControlled implements Openable {
 		try {
 			InteractionTabController tab = InteractionTabController.startInteractionTab();
 			addTabController(tab);
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -57,7 +57,7 @@ public class TabControlled {
 				existed = true;
 				tabPane.getSelectionModel().select(x.getTab());
 				log.debug("interaction");
-				continue;
+				break;
 			}
 			
 			if(x.getClass().equals(s.getClass()) 
@@ -66,6 +66,7 @@ public class TabControlled {
 				existed = true;
 				tabPane.getSelectionModel().select(x.getTab());
 				log.debug("already open");
+				break;
 			}
 
 			
