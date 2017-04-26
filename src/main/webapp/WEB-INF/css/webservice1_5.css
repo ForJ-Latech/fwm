@@ -54,35 +54,8 @@ body{
 }
 
 .bold {
-font-weight:bold;
-font-size:20px
-}
-
-/* Everything under this is unused in the bootstrap version  */
-/* .outerbox { 
-	padding: 20px;
-	width: 100%; 
-    margin: 0 auto;
-	text-align: center;	   		
-}
- */
- 
-.line1 {
-	position:relative;
-	width:2px;
-	height:300px;
-	border-left:2px solid #8c8b8b;
-	float: right;
-	/* margin-right:100%; */
-}
-
-.line2 {
-	position:relative;
-	width:2px;
-	height:300px;
-	border-left:2px solid #8c8b8b;
-	float: left;
-	/* margin-right: 100% */
+	font-weight:bold;
+	font-size:20px
 }
 
 img	{	
@@ -101,10 +74,13 @@ img	{
 }
 
 .listItem{
-	width:50%;
+/* 	width:45%; */
 	display:inline-block;
 	margin-left: auto;
 	margin-right: auto;
+	font-weight: normal;
+	font-size: 15px;
+	border: 2px double white;
 }
 .listImage{
 	width:32px;
@@ -112,29 +88,8 @@ img	{
 	max-width:32px;
 	max-height:32px;
 }
-.style2 {
-	border-top: 3px double #8c8b8b;
-}
 
 /* Jesus help me  */
-
-/* #searchbar {
-	padding-left: 20px;
-	margin-left: auto;
-	margin-right: auto;
-
-}
-
-#searchResults {
-	padding-left: 20px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.form-control {
-	min-width: 30%;
-	max-width: 50%;
-} */
 
 #display {
 	text-align: center;
@@ -166,5 +121,3 @@ img	{
     
     
 }
-
-/* trying to make it mobile... */

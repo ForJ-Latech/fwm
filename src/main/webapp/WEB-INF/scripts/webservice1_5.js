@@ -33,7 +33,9 @@ var keynum = 0;
 var colors = [
 '#F7B9B9',
 '#BFBFBF',
-'#6699CC'
+'#6699CC',
+'#43ABC9',
+'#E0E0E0'
 ];
 
 function changeList(data, key_number){
@@ -65,7 +67,7 @@ function fillDiv(lcont, data){
 		dval.remove();
 	});
 	$.each(data, function(d, dval){
-		lcont.append('<div style="background-color:' + colors[d%2] + ' ;" class="row listItem ' + dval.class + '" onclick="open' + 
+		lcont.append('<div class="row listItem ' + dval.class + '" onclick="open' + 
 		dval.class + '(' + dval.id + ');"><img src="/webservice1_0bs/multimediaImage/' + dval.imageFileName + '" class="listImage"/>&nbsp;' + dval.name + "&nbsp;</div>");
 		
 	});
@@ -74,7 +76,7 @@ function fillDiv(lcont, data){
 // arguably spaghetti, but prevents us from needing to copy and paste changes multiple places. 
 function makeCell(container, dval){
 	if(dval != null) {
-		container.append('<div style="background-color:' + colors[2] + ' ;" class="row listItem ' + dval.class + '" onclick="open' + 
+		container.append('<div class="row listItem ' + dval.class + '" onclick="open' + 
 		dval.class + '(' + dval.id + ');"><img src="/webservice1_0bs/multimediaImage/' + dval.imageFileName + '" class="listImage"/>&nbsp;' + dval.name + "&nbsp;</div>");
 		
 	}
