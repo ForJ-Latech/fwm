@@ -85,8 +85,10 @@ public class RegionTabController implements Saveable {
 		
 		superList.clear();
 		if (region.getSuperRegion() != null){
-			region.getSuperRegion().setName(Backend.getRegionDao().queryForEq("ID", region.getSuperRegion().getID()).get(0).getName());
-			superList.add(region.getSuperRegion());
+			if (!Backend.getRegionDao().queryForEq("ID", region.getSuperRegion().getID()).isEmpty()) {
+				region.getSuperRegion().setName(Backend.getRegionDao().queryForEq("ID", region.getSuperRegion().getID()).get(0).getName());
+				superList.add(region.getSuperRegion());
+			}
 		}
 		superRelation = RelationalField.createRelationalList(this, App.toListSearchable(superList), "Super Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		superRegionPane.getChildren().add(superRelation.getOurRoot());

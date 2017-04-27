@@ -86,9 +86,11 @@ public class EventTabController implements Saveable {
 		
 		myRegion.clear();
 		if (event.getRegion() != null){
-			event.getRegion().setName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getName());
-			event.getRegion().setImageFileName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getImageFileName());
-			myRegion.add(event.getRegion());
+			if (!Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).isEmpty()) {
+				event.getRegion().setName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getName());
+				event.getRegion().setImageFileName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getImageFileName());
+				myRegion.add(event.getRegion());
+			}
 		}
 		regionRelation = RelationalField.createRelationalList(this, App.toListSearchable(myRegion), "Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		regionPane.getChildren().add(regionRelation.getOurRoot());
