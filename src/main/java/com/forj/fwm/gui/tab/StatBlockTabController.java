@@ -8,6 +8,7 @@ import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.startup.App;
@@ -32,7 +33,7 @@ public class StatBlockTabController implements Saveable {
 	private Saveable beSaved;
 	
 	@FXML VBox mainVbox;
-	@FXML Tab tabHead;
+	@FXML public Tab tabHead;
 	@FXML HBox nameArea;
 	@FXML TextField nameText;
 	@FXML TextArea statBlockText;
@@ -70,7 +71,7 @@ public class StatBlockTabController implements Saveable {
 			log.debug("stat id: " + stat.getID());
 			log.debug("truth: " + stat.getDescription());
 			App.getMainController().addStatus("Successfully saved Statblock " + stat.getName() + " ID: " + stat.getID());
-			beSaved.simpleSave();
+			//beSaved.simpleSave();
 		}catch(SQLException e){
 			log.error(e.getStackTrace());
 		}
@@ -80,7 +81,12 @@ public class StatBlockTabController implements Saveable {
 		log.debug("statBlockTab.start called");
 		stat = s;
 		this.beSaved = beSaved ;
-		this.tabHead.setText(((Searchable)beSaved.getThing()).getName());
+		log.debug("Stat ID:" + s.getID());
+		log.debug("NPCstat ID:" + MainController.NPCstat.getID());
+		if(s.getID() != MainController.NPCstat.getID() && s.getID() != MainController.GodStat.getID() && s.getID() != MainController.RegionStat.getID() && s.getID() != MainController.GroupStat.getID()){			
+			this.tabHead.setText(((Searchable)beSaved.getThing()).getName());
+		}
+		
 		setAllTexts(stat);
 		
 		thingsThatCanChange = new TextInputControl[] {nameText, statBlockText};
@@ -121,6 +127,7 @@ public class StatBlockTabController implements Saveable {
 		StatBlockTabController cr = (StatBlockTabController)loader.getController();
 		cr.start(rootLayout, s, beSaved);
 		return cr;
+		
 	}
 
 	public Searchable getThing() {

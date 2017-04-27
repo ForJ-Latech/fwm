@@ -14,6 +14,7 @@ import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
@@ -389,7 +390,7 @@ public class GodTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				god.setStatblock(new Statblock());
-				god.getStatblock().setDescription("");
+				god.getStatblock().setDescription(MainController.GodStat.getDescription());
 			}	
 		App.getStatBlockController().show(god.getStatblock(), this);
 		}

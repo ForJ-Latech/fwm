@@ -14,6 +14,7 @@ import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
@@ -416,7 +417,7 @@ public class RegionTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				region.setStatblock(new Statblock());
-				region.getStatblock().setDescription("");
+				region.getStatblock().setDescription(MainController.RegionStat.getDescription());
 			}	
 			App.getStatBlockController().show(region.getStatblock(), this);
 		}

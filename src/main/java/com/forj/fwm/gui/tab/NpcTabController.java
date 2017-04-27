@@ -13,6 +13,7 @@ import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
@@ -404,7 +405,7 @@ public class NpcTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				npc.setStatblock(new Statblock());
-				npc.getStatblock().setDescription("");
+				npc.getStatblock().setDescription(MainController.NPCstat.getDescription());
 			}	
 		App.getStatBlockController().show(npc.getStatblock(), this);
 		}
