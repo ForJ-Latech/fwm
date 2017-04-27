@@ -1,5 +1,7 @@
 package com.forj.fwm.entity;
 
+import java.util.Date;
+
 import com.forj.fwm.backend.dao.impl.StatblockDaoImpl;
 import com.forj.fwm.web.JsonHelper;
 import com.j256.ormlite.field.DatabaseField;
@@ -63,7 +65,6 @@ public class Statblock implements Searchable{
 	public String getImageFileName() {
 		return "";
 	}
-	
 
 	public boolean isShown() {
 		return false;
@@ -71,5 +72,9 @@ public class Statblock implements Searchable{
 
 	public void setShown(boolean shown) {
 		return;
+	}
+
+	public Date getLastEdited() {
+		return null;
 	}
 }

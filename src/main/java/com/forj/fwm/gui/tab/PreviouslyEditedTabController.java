@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -54,7 +53,6 @@ public class PreviouslyEditedTabController implements Saveable{
 		log.debug("start previously edited tab controller called");
 		
 		tabHead.setText("Previously Edited");
-		
 		
 		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
@@ -109,44 +107,19 @@ public class PreviouslyEditedTabController implements Saveable{
 		    }
 		});
 		
-		for (int i = 0; i < list.size(); i++) {
-			if (i > 99) {
-				list.remove(i);
-				i--;
-			}
+		if (list.size() > 99) {
+			list = list.subList(0,99);
+		} else {
+			list = list.subList(0,list.size());
 		}
 		
 		return list;		
 	}
 	
     private int compareLR(Searchable left, Searchable right) {
-    	Date d1 = new Date();
-    	Date d2 = new Date();
-    	
-    	if (left instanceof Event) {
-    		d1 = ((Event)left).getLastEdited();
-    	} else if (left instanceof God) {
-    		d1 = ((God)left).getLastEdited();
-    	} else if (left instanceof Npc) {
-    		d1 = ((Npc)left).getLastEdited();
-    	} else if (left instanceof Region) {
-    		d1 = ((Region)left).getLastEdited();
-    	} else if (left instanceof Template) {
-    		d1 = ((Template)left).getLastEdited();
-    	}
-    	
-    	if (right instanceof Event) {
-    		d2 = ((Event)right).getLastEdited();
-    	} else if (right instanceof God) {
-    		d2 = ((God)right).getLastEdited();
-    	} else if (right instanceof Npc) {
-    		d2 = ((Npc)right).getLastEdited();
-    	} else if (right instanceof Region) {
-    		d2 = ((Region)right).getLastEdited();
-    	} else if (right instanceof Template) {
-    		d2 = ((Template)right).getLastEdited();
-    	}
-    	
+    	Date d1 = left.getLastEdited();
+    	Date d2 = right.getLastEdited();
+
     	if (d1.after(d2)) {
     		return -1;
     	} else if (d1.before(d2)) {
@@ -223,15 +196,15 @@ public class PreviouslyEditedTabController implements Saveable{
 							}
 							
 							if (intobj instanceof Event) {
-								name = " [Group] " + obj.getName() + " : " + ((Event)obj).getLastEdited();
+								name = " [Group] " + obj.getName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof God) {
-								name = " [God] " + obj.getName() + " : " + ((God)obj).getLastEdited();
+								name = " [God] " + obj.getName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof Npc) {
-								name = " [Npc] " + obj.getName() + " : " + ((Npc)obj).getLastEdited();
+								name = " [NPC] " + obj.getName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof Region) {
-								name = " [Region] " + obj.getName() + " : " + ((Region)obj).getLastEdited();
+								name = " [Region] " + obj.getName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof Template) {
-								name = " [Template] " + obj.getName() + " : " + ((Template)obj).getLastEdited();
+								name = " [Template] " + obj.getName() + " : " + obj.getLastEdited();
 							}
 							
 							try {
