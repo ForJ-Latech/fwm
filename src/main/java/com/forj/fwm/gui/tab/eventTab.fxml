@@ -9,10 +9,11 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Tab fx:id="tabHead" text="Event Tab" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.EventTabController">
+<Tab fx:id="tabHead" text="Event Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.EventTabController">
    <content>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="367.0" prefWidth="588.0">
          <content>
@@ -99,6 +100,7 @@
                            <children>
                               <VBox prefHeight="313.0" prefWidth="199.0" HBox.hgrow="ALWAYS">
                                  <children>
+                                    <StackPane fx:id="regionPane" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" VBox.vgrow="NEVER" />
                                     <Accordion fx:id="accordion" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>

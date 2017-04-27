@@ -12,7 +12,9 @@ import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
+import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
@@ -36,6 +38,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class EventTabController implements Saveable {
@@ -47,7 +50,10 @@ public class EventTabController implements Saveable {
     private TextInputControl[] thingsThatCanChange;
 	private RelationalList npcRelation, godRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.EVENT;
-    
+	private RelationalField regionRelation;
+	private List<Region> myRegion = new ArrayList<Region>();
+	
+	@FXML private StackPane regionPane;
     @FXML private TextField name;
 	@FXML private TextArea description, attributes, history;
 	@FXML private VBox interactionContainer, rhsVbox;
@@ -77,6 +83,16 @@ public class EventTabController implements Saveable {
 		
 		godRelation = RelationalList.createRelationalList(this, App.toListSearchable(event.getGods()), "Gods", true, true, tabType, SearchList.EntitiesToSearch.GOD);
 		accordion.getPanes().add((TitledPane) godRelation.getOurRoot());
+		
+		myRegion.clear();
+		if (event.getRegion() != null){
+			event.getRegion().setName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getName());
+			event.getRegion().setImageFileName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getImageFileName());
+			myRegion.add(event.getRegion());
+		}
+		regionRelation = RelationalField.createRelationalList(this, App.toListSearchable(myRegion), "Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
+		regionPane.getChildren().add(regionRelation.getOurRoot());
+
 	}
 	
 	public void updateTab(){
@@ -132,6 +148,11 @@ public class EventTabController implements Saveable {
 		event.setGods(new ArrayList<God>((List<God>)(List<?>)godRelation.getList()));
 		event.setNpcs(new ArrayList<Npc>((List<Npc>)(List<?>)npcRelation.getList()));
 //		event.setRegion(new Region());	
+		
+		if (!regionRelation.getList().isEmpty()){
+			Region newRegion = new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()).get(0);
+			event.setRegion(newRegion);
+		}
 	}
 	
 	@FXML
@@ -149,6 +170,7 @@ public class EventTabController implements Saveable {
 		}
 		try{
 			Backend.getEventDao().saveFullEvent(event);
+			Backend.getEventDao().refresh(event);
 			log.debug("Save successfull!");
 			log.debug("event id: " + event.getID());
 			App.getMainController().addStatus("Successfully saved full " + Event.WHAT_IT_DO + " " + event.getName() + " ID: " + event.getID());

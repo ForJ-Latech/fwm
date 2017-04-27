@@ -9,12 +9,14 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.conf.WorldConfig;
+import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.SearchList.EntitiesToSearch;
 import com.forj.fwm.gui.component.Openable;
+import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 
@@ -89,7 +91,6 @@ public class RelationalField implements Openable{
 		// set reference to the object owned by the tab
 		tabObject = caller.getThing();
 		populateList(ourItems);
-			
 			
 		updateList();
 		setTitle(title);
@@ -278,6 +279,10 @@ public class RelationalField implements Openable{
 		
 		if (item instanceof Region && tabObject instanceof Region) {
 			((Region) tabObject).setSuperRegion(null);
+		}
+		
+		if (item instanceof Region && tabObject instanceof Event) {
+			((Event) tabObject).setRegion(null);
 		}
 		
 		
