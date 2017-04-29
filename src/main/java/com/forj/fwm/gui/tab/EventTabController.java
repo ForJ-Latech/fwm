@@ -14,6 +14,7 @@ import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
@@ -51,7 +52,7 @@ public class EventTabController implements Saveable {
 	private AddableImage image;
     private AddableSound sound;
     private TextInputControl[] thingsThatCanChange;
-	private RelationalList npcRelation, godRelation, templateRelation;
+	private RelationalList npcRelation, godRelation, templateRelation, statblockRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.EVENT;
 	private RelationalField regionRelation;
 	private List<Region> myRegion = new ArrayList<Region>();
@@ -102,6 +103,9 @@ public class EventTabController implements Saveable {
 		
 		templateRelation = RelationalList.createRelationalList(this, App.toListSearchable(event.getTemplates()), "Templates", true, true, tabType, SearchList.EntitiesToSearch.TEMPLATE);
 		accordion.getPanes().add((TitledPane) templateRelation.getOurRoot());
+		
+		statblockRelation = RelationalList.createRelationalList(this, App.toListSearchable(event.getStatblocks()), "Statblocks", true, true, tabType, SearchList.EntitiesToSearch.STATBLOCK);
+		accordion.getPanes().add((TitledPane) statblockRelation.getOurRoot());
 
 	}
 	
@@ -165,6 +169,7 @@ public class EventTabController implements Saveable {
 			Region newRegion = new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()).get(0);
 			event.setRegion(newRegion);
 		}
+		event.setStatblocks(new ArrayList<Statblock>((List<Statblock>)(List<?>)statblockRelation.getList()));
 	}
 	
 	@FXML
