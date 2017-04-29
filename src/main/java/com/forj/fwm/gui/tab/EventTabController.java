@@ -32,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -39,6 +40,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -60,6 +62,8 @@ public class EventTabController implements Saveable {
 	@FXML private VBox interactionContainer, rhsVbox;
 	@FXML private Tab tabHead;
 	@FXML private Accordion accordion;
+	@FXML private HBox soundHbox;
+	@FXML private Button playButton;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -240,12 +244,13 @@ public class EventTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(event.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(event.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(event.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
 		
 		if(App.worldFileUtil.findMultimedia(event.getImageFileName()) != null)
 		{
@@ -391,9 +396,18 @@ public class EventTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -413,5 +427,9 @@ public class EventTabController implements Saveable {
 	}
 	public void nameFocus(){
 		name.requestFocus();
+	}
+	
+	public Button getPlayButton(){
+		return playButton;
 	}
 }

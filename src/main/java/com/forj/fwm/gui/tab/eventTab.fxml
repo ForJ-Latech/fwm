@@ -73,17 +73,9 @@
                   </VBox>
                   <VBox fx:id="rhsVbox" alignment="TOP_CENTER" maxWidth="400.0" minHeight="200.0" minWidth="180.0" HBox.hgrow="NEVER">
                      <children>
-                        <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="0.0" prefWidth="125.0" VBox.vgrow="NEVER">
+                        <HBox fx:id="soundHbox" alignment="TOP_CENTER" fillHeight="false" prefHeight="0.0" prefWidth="125.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#changeSound" prefHeight="20.0" prefWidth="65.0" text="Set Sound" textAlignment="CENTER" wrapText="true">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="1.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#playSound" prefHeight="20.0" prefWidth="65.0" text="Play" textAlignment="CENTER" wrapText="true">
+                              <Button fx:id="playButton" alignment="CENTER" mnemonicParsing="false" onAction="#playSound" prefHeight="20.0" prefWidth="65.0" text="Play / Stop" textAlignment="CENTER" wrapText="true">
                                  <HBox.margin>
                                     <Insets left="1.0" right="2.0" />
                                  </HBox.margin>

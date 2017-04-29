@@ -43,6 +43,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -65,8 +66,9 @@ public class RegionTabController implements Saveable {
 	@FXML private VBox interactionContainer, rhsVbox;
 	@FXML private Tab tabHead;
 	@FXML private Accordion accordion;
-	@FXML private Button statBlockButton;
+	@FXML private Button statBlockButton, playButton;
 	@FXML private StackPane superRegionPane;
+	@FXML private HBox soundHbox;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -254,12 +256,13 @@ public class RegionTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(region.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(region.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(region.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
 		
 		if(App.worldFileUtil.findMultimedia(region.getImageFileName()) != null)
 		{
@@ -440,9 +443,18 @@ public class RegionTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -463,5 +475,9 @@ public class RegionTabController implements Saveable {
 	}
 	public void nameFocus(){
 		name.requestFocus();
+	}
+	
+	public Button getPlayButton(){
+		return playButton;
 	}
 }

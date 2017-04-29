@@ -41,6 +41,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class GodTabController implements Saveable {
@@ -48,7 +49,8 @@ public class GodTabController implements Saveable {
 	private God god;
     private ListController interactionController;
 	private AddableImage image;
-	private AddableSound sound;
+	@FXML private AddableSound sound;
+	@FXML private HBox soundHbox;
 	private TextInputControl[] thingsThatCanChange; 
 	private RelationalList npcRelation, godRelation, eventRelation, regionRelation, templateRelation;
 	private List<God> panth = new ArrayList<God>();
@@ -58,7 +60,7 @@ public class GodTabController implements Saveable {
 	@FXML private TextArea attributes, description, history;
 	@FXML private VBox interactionContainer, rhsVbox;
 	@FXML private Tab tabHead;
-	@FXML private Button statBlockButton;
+	@FXML private Button statBlockButton, playButton;
 	@FXML private Accordion accordion;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
@@ -238,12 +240,14 @@ public class GodTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(god.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(god.getSoundFileName()));
+			log.debug(App.worldFileUtil.findMultimedia(god.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(god.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
 		
 		if(App.worldFileUtil.findMultimedia(god.getImageFileName()) != null)
 		{
@@ -351,6 +355,7 @@ public class GodTabController implements Saveable {
 	private void getAllTexts()
 	{
 		god.setImageFileName(image.getFilename());
+		log.debug("saving:" + sound.getFilename());
 		god.setSoundFileName(sound.getFilename());
 		god.setHistory(history.getText());
 		god.setDescription(description.getText());
@@ -364,6 +369,7 @@ public class GodTabController implements Saveable {
 	
 	private static boolean started = false;
 
+	
 	public static boolean getStarted() {
 		return started;
 	}
@@ -415,9 +421,18 @@ public class GodTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -438,5 +453,9 @@ public class GodTabController implements Saveable {
 	}
 	public void nameFocus(){
 		name.requestFocus();
+	}
+	
+	public Button getPlayButton(){
+		return playButton;
 	}
 }

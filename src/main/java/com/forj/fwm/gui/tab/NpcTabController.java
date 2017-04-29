@@ -1,5 +1,6 @@
 package com.forj.fwm.gui.tab;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -61,6 +65,8 @@ public class NpcTabController implements Saveable {
     @FXML private VBox interactionContainer, rhsVbox;
     @FXML private Accordion accordion;
     @FXML private StackPane godPane;
+    @FXML private HBox soundHbox;
+    @FXML private Button playButton;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -107,7 +113,7 @@ public class NpcTabController implements Saveable {
 		}
 		godRelation = RelationalField.createRelationalList(this, App.toListSearchable(myGod), "God", true, true, tabType, SearchList.EntitiesToSearch.GOD);
 		godPane.getChildren().add(godRelation.getOurRoot());
-
+		
 	}
 	
 	private void updateFamily(boolean save){
@@ -237,12 +243,14 @@ public class NpcTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(npc.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(npc.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(npc.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
+		
 		if(App.worldFileUtil.findMultimedia(npc.getImageFileName()) != null)
 		{
 			image = new AddableImage(App.worldFileUtil.findMultimedia(npc.getImageFileName()));
@@ -428,9 +436,18 @@ public class NpcTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -449,5 +466,9 @@ public class NpcTabController implements Saveable {
 	}
 	public void nameFocus(){
 		fName.requestFocus();
+	}
+	
+	public Button getPlayButton(){
+		return playButton;
 	}
 }
