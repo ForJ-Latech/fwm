@@ -10,10 +10,12 @@ import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
+import com.forj.fwm.entity.MMTemplateRegion;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
@@ -53,7 +55,7 @@ public class RegionTabController implements Saveable {
     public List<Region> subRegions;
     public Region superRegion;
     private TextInputControl[] thingsThatCanChange;
-	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
+	private RelationalList npcRelation, godRelation, eventRelation, regionRelation, templateRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.REGION;
 	private RelationalField superRelation;
 	private List<Region> superList = new ArrayList<Region>();
@@ -105,6 +107,10 @@ public class RegionTabController implements Saveable {
 		
 		eventRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getEvents()), com.forj.fwm.entity.Event.WHAT_IT_DO + "s", true, true, tabType, SearchList.EntitiesToSearch.EVENT);
 		accordion.getPanes().add((TitledPane) eventRelation.getOurRoot());
+		
+		templateRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getTemplates()), "Templates", true, true, tabType, SearchList.EntitiesToSearch.TEMPLATE);
+		accordion.getPanes().add((TitledPane) templateRelation.getOurRoot());
+		
 	}
 	
 	public void updateTab(){
@@ -161,6 +167,7 @@ public class RegionTabController implements Saveable {
 		region.setNpcs(new ArrayList<Npc>((List<Npc>)(List<?>)npcRelation.getList()));
 		region.setSubRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));
 		region.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));
+		region.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
 		
 		if (!superRelation.getList().isEmpty()){
 			Region newRegion = new ArrayList<Region>((List<Region>)(List<?>)superRelation.getList()).get(0);
@@ -367,6 +374,8 @@ public class RegionTabController implements Saveable {
 		
 		region.setSubRegions(subRegions);
 		region.setSuperRegion(superRegion);
+		
+		
 	}
 	
 	private static boolean started = false;

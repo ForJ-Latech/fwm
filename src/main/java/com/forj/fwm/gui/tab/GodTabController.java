@@ -14,6 +14,7 @@ import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
@@ -49,7 +50,7 @@ public class GodTabController implements Saveable {
 	private AddableImage image;
 	private AddableSound sound;
 	private TextInputControl[] thingsThatCanChange; 
-	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
+	private RelationalList npcRelation, godRelation, eventRelation, regionRelation, templateRelation;
 	private List<God> panth = new ArrayList<God>();
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.GOD;
 	
@@ -99,6 +100,9 @@ public class GodTabController implements Saveable {
 		
 		regionRelation = RelationalList.createRelationalList(this, App.toListSearchable(god.getRegions()), "Regions", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		accordion.getPanes().add((TitledPane) regionRelation.getOurRoot());
+		
+		templateRelation = RelationalList.createRelationalList(this, App.toListSearchable(god.getTemplates()), "Templates", true, true, tabType, SearchList.EntitiesToSearch.TEMPLATE);
+		accordion.getPanes().add((TitledPane) templateRelation.getOurRoot());
 
 	}
 	
@@ -155,6 +159,7 @@ public class GodTabController implements Saveable {
 		god.setInteractions(new ArrayList<Interaction>((List<Interaction>)(List<?>)interactionController.getAllInteractions()));
 		god.setRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));	
 		god.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));	
+		god.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
 	}
 	
 	@FXML

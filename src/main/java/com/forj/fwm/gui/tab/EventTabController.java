@@ -14,6 +14,7 @@ import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
@@ -48,7 +49,7 @@ public class EventTabController implements Saveable {
 	private AddableImage image;
     private AddableSound sound;
     private TextInputControl[] thingsThatCanChange;
-	private RelationalList npcRelation, godRelation;
+	private RelationalList npcRelation, godRelation, templateRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.EVENT;
 	private RelationalField regionRelation;
 	private List<Region> myRegion = new ArrayList<Region>();
@@ -94,6 +95,9 @@ public class EventTabController implements Saveable {
 		}
 		regionRelation = RelationalField.createRelationalList(this, App.toListSearchable(myRegion), "Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		regionPane.getChildren().add(regionRelation.getOurRoot());
+		
+		templateRelation = RelationalList.createRelationalList(this, App.toListSearchable(event.getTemplates()), "Templates", true, true, tabType, SearchList.EntitiesToSearch.TEMPLATE);
+		accordion.getPanes().add((TitledPane) templateRelation.getOurRoot());
 
 	}
 	
@@ -149,6 +153,8 @@ public class EventTabController implements Saveable {
 		event.setInteractions(new ArrayList<Interaction>((List<Interaction>)(List<?>)interactionController.getAllInteractions()));
 		event.setGods(new ArrayList<God>((List<God>)(List<?>)godRelation.getList()));
 		event.setNpcs(new ArrayList<Npc>((List<Npc>)(List<?>)npcRelation.getList()));
+		
+		event.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
 //		event.setRegion(new Region());	
 		
 		if (!regionRelation.getList().isEmpty()){
