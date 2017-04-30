@@ -65,6 +65,19 @@ public class RegionTabController implements Saveable {
 	@FXML private Button statBlockButton;
 	@FXML private StackPane superRegionPane;
 	
+	public RelationalList getNpcRelation(){
+		return npcRelation;
+	}
+	public RelationalList getGodRelation(){
+		return godRelation;
+	}
+	public RelationalList getEventRelation(){
+		return eventRelation;
+	}
+	public RelationalList getRegionRelation(){
+		return regionRelation;
+	}
+
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 			tabHead.setText(newValue);
@@ -451,5 +464,11 @@ public class RegionTabController implements Saveable {
 	}
 	public void nameFocus(){
 		name.requestFocus();
+	}
+	public AddableSound getAddableSound(){
+		return sound;
+	}
+	public Accordion getAccordion(){
+		return accordion;
 	}
 }

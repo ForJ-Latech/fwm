@@ -10,6 +10,7 @@ import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.startup.App;
 
 import javafx.beans.value.ChangeListener;
@@ -151,5 +152,8 @@ public class StatBlockTabController implements Saveable {
 	public void nameFocus(){
 		log.debug("Focus from statblock");
 		App.getMainController().getStage().requestFocus();
+	}
+	public AddableSound getAddableSound(){
+		return null;
 	}
 }

@@ -66,7 +66,18 @@ public class NpcTabController implements Saveable {
 			tabHead.setText(newValue);
 		}
 	};
-	
+	public Accordion getAccordion(){
+		return accordion;
+	}
+	public RelationalList getNpcRelation(){
+		return npcRelation;
+	}
+	public RelationalList getEventRelation(){
+		return eventRelation;
+	}
+	public RelationalList getRegionRelation(){
+		return regionRelation;
+	}
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
@@ -439,5 +450,8 @@ public class NpcTabController implements Saveable {
 	}
 	public void nameFocus(){
 		fName.requestFocus();
+	}
+	public AddableSound getAddableSound(){
+		return sound;
 	}
 }

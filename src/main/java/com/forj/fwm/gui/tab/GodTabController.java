@@ -66,6 +66,19 @@ public class GodTabController implements Saveable {
 	};
 	
 	
+	public RelationalList getNpcRelation(){
+		return npcRelation;
+	}
+	public RelationalList getGodRelation(){
+		return godRelation;
+	}
+	public RelationalList getEventRelation(){
+		return eventRelation;
+	}
+	public RelationalList getRegionRelation(){
+		return regionRelation;
+	}
+
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
@@ -432,5 +445,11 @@ public class GodTabController implements Saveable {
 	}
 	public void nameFocus(){
 		name.requestFocus();
+	}
+	public AddableSound getAddableSound(){
+		return sound;
+	}
+	public Accordion getAccordion(){
+		return accordion;
 	}
 }

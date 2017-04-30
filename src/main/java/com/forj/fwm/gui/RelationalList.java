@@ -259,7 +259,7 @@ public class RelationalList implements Openable{
 	}
 
 	@FXML
-	private void handleAddButton() {
+	public void handleAddButton() {
 		if (page1)
 		{
 			listPane.setMouseTransparent(false);

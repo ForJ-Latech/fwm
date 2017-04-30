@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.component.AddableSound;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -55,5 +56,8 @@ public class PreviouslyEditedTabController implements Saveable{
 	
 	public void nameFocus(){
 		
+	}
+	public AddableSound getAddableSound(){
+		return null;
 	}
 }

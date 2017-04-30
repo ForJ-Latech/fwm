@@ -6,6 +6,7 @@ import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
@@ -159,6 +160,9 @@ public class InteractionController implements Saveable {
 	}
 	public void nameFocus(){
 		
+	}
+	public AddableSound getAddableSound(){
+		return null;
 	}
 }
 

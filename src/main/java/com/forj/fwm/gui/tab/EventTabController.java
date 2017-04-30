@@ -60,6 +60,12 @@ public class EventTabController implements Saveable {
 		}		
 	};
 	
+	public RelationalList getNpcRelation(){
+		return npcRelation;
+	}
+	public RelationalList getGodRelation(){
+		return godRelation;
+	}
 	private EventHandler<javafx.event.Event> saveEvent = new EventHandler<javafx.event.Event>() {
 		public void handle(javafx.event.Event event) {
 			log.debug("Save event firing!");
@@ -383,5 +389,11 @@ public class EventTabController implements Saveable {
 	}
 	public void nameFocus(){
 		name.requestFocus();
+	}
+	public AddableSound getAddableSound(){
+		return sound;
+	}
+	public Accordion getAccordion(){
+		return accordion;
 	}
 }

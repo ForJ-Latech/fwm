@@ -3,6 +3,7 @@ package com.forj.fwm.gui.tab;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.startup.App;
 
 import javafx.fxml.FXML;
@@ -63,5 +64,8 @@ public class WelcomeTabController implements Saveable {
 	}
 	public void nameFocus(){
 		
+	}
+	public AddableSound getAddableSound(){
+		return null;
 	}
 }

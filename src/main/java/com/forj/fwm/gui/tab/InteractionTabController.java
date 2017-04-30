@@ -295,5 +295,7 @@ public class InteractionTabController implements Saveable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	public AddableSound getAddableSound(){
+		return null;
+	}
 }

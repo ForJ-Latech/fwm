@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import com.forj.fwm.gui.GenericTextController;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
@@ -29,6 +30,7 @@ import com.forj.fwm.startup.WorldFileUtil;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -42,6 +44,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -189,9 +192,11 @@ public class HotkeyController {
 	public static final String GROUP_HOTKEY = "Create_Group";
 	public static final String STATBLOCK_HOTKEY = "Open_Statblock";
 	public static final String FOCUS_HOTKEY = "Focus_On_Entity_Name";
+	public static final String SOUND_HOTKEY = "Change_Sound";
+	public static final String ACCORDION_ONE = "First_Accordion";
 	public static final String[] HOTKEYS = { FORWARD_SHOW_HOTKEY, BACKWARD_SHOW_HOTKEY, NPC_HOTKEY, GOD_HOTKEY,
-			REGION_HOTKEY, GROUP_HOTKEY, INTERACTION_HOTKEY, STATBLOCK_HOTKEY, TEMPLATE_HOTKEY, SHOW_HOTKEY, IMAGE_HOTKEY, SEARCH_HOTKEY,
-			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, FOCUS_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL};
+			REGION_HOTKEY, GROUP_HOTKEY, INTERACTION_HOTKEY, STATBLOCK_HOTKEY, TEMPLATE_HOTKEY, SHOW_HOTKEY, IMAGE_HOTKEY, SOUND_HOTKEY, SEARCH_HOTKEY,
+			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, FOCUS_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL, ACCORDION_ONE};
 
 	private static HashMap<String, Hotkey> hotkeys = new HashMap<String, Hotkey>();
 
@@ -360,6 +365,21 @@ public class HotkeyController {
 	public static void giveGlobalHotkeys(Scene scene) {
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 			public void handle(final KeyEvent keyEvent) {
+				String character = keyEvent.getCode().getName();
+				int number = 0;
+				try {
+					log.debug(character);
+					number = Integer.parseInt(character);
+					number--;
+					if (number < 0){
+						number = 10;
+					}
+				}
+				catch (Exception e){
+					number = -1;
+				}
+				log.debug(number);
+				final int pane = number; 
 				if (HotkeyController.getHotkey(BACKWARD_SHOW_HOTKEY).match(keyEvent)) {
 					try {
 						App.getShowPlayersController().back();
@@ -469,6 +489,190 @@ public class HotkeyController {
 						if (image != null){
 							image.addImage();
 						}
+					} catch (Exception e) {
+						log.error(e);
+					}
+				}
+				if (HotkeyController.getHotkey(SOUND_HOTKEY).match(keyEvent)) {
+					try {
+						AddableSound sound = App.getMainController()
+								.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem()).getAddableSound();
+						if (sound != null){
+							sound.changeSound();
+						}
+					} catch (Exception e) {
+						log.error(e);
+					}
+				}
+				if (keyEvent.isAltDown() && number != -1){
+					try {
+						log.debug(number);
+						Accordion accordion = null;
+						final Saveable tab = App.getMainController()
+								.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+								if(tab instanceof GodTabController)
+								{
+									accordion = ((GodTabController) tab).getAccordion();
+									accordion.getPanes().get(number).setExpanded(true);
+									Platform.runLater(new Runnable() {
+								        public void run() {
+								        	if (pane == 0)
+								        	{
+								        		((GodTabController) tab).getNpcRelation().getListView().requestFocus();
+									        	((GodTabController) tab).getNpcRelation().getListView().getFocusModel().focus(0);
+									        	((GodTabController) tab).getNpcRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((GodTabController) tab).getNpcRelation().handleAddButton();
+									        	}
+								        	
+								        	}
+								        	else if (pane == 1)
+								        	{
+								        		((GodTabController) tab).getGodRelation().getListView().requestFocus();
+									        	((GodTabController) tab).getGodRelation().getListView().getFocusModel().focus(0);
+									        	((GodTabController) tab).getGodRelation().getListView().getSelectionModel().select(0);
+								        	}
+								        	else if (pane == 2)
+								        	{
+								        		((GodTabController) tab).getEventRelation().getListView().requestFocus();
+									        	((GodTabController) tab).getEventRelation().getListView().getFocusModel().focus(0);
+									        	((GodTabController) tab).getEventRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((GodTabController) tab).getEventRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 3)
+								        	{
+									        	((GodTabController) tab).getRegionRelation().getListView().requestFocus();
+									        	((GodTabController) tab).getRegionRelation().getListView().getFocusModel().focus(0);
+									        	((GodTabController) tab).getRegionRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((GodTabController) tab).getRegionRelation().handleAddButton();
+									        	}
+								        	}
+								        }
+								    });
+								}
+								else if(tab instanceof RegionTabController)
+								{
+									accordion = ((RegionTabController) tab).getAccordion();
+									accordion.getPanes().get(number).setExpanded(true);
+									Platform.runLater(new Runnable() {
+								        public void run() {
+								        	if (pane == 0)
+								        	{
+									        	((RegionTabController) tab).getRegionRelation().getListView().requestFocus();
+									        	((RegionTabController) tab).getRegionRelation().getListView().getFocusModel().focus(0);
+									        	((RegionTabController) tab).getRegionRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((RegionTabController) tab).getRegionRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 1)
+								        	{
+								        		((RegionTabController) tab).getNpcRelation().getListView().requestFocus();
+									        	((RegionTabController) tab).getNpcRelation().getListView().getFocusModel().focus(0);
+									        	((RegionTabController) tab).getNpcRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((RegionTabController) tab).getNpcRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 2)
+								        	{
+								        		((RegionTabController) tab).getGodRelation().getListView().requestFocus();
+									        	((RegionTabController) tab).getGodRelation().getListView().getFocusModel().focus(0);
+									        	((RegionTabController) tab).getGodRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((RegionTabController) tab).getGodRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 3)
+								        	{
+								        		((RegionTabController) tab).getEventRelation().getListView().requestFocus();
+									        	((RegionTabController) tab).getEventRelation().getListView().getFocusModel().focus(0);
+									        	((RegionTabController) tab).getEventRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((RegionTabController) tab).getEventRelation().handleAddButton();
+									        	}
+								        	}
+								        }
+								    });
+								}
+								else if(tab instanceof EventTabController)
+								{
+									accordion = ((EventTabController) tab).getAccordion();
+									accordion.getPanes().get(number).setExpanded(true);
+									Platform.runLater(new Runnable() {
+								        public void run() {
+								        	if (pane == 0)
+								        	{
+									        	((EventTabController) tab).getNpcRelation().getListView().requestFocus();
+									        	((EventTabController) tab).getNpcRelation().getListView().getFocusModel().focus(0);
+									        	((EventTabController) tab).getNpcRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((EventTabController) tab).getNpcRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 1)
+								        	{
+								        		((EventTabController) tab).getGodRelation().getListView().requestFocus();
+									        	((EventTabController) tab).getGodRelation().getListView().getFocusModel().focus(0);
+									        	((EventTabController) tab).getGodRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((EventTabController) tab).getGodRelation().handleAddButton();
+									        	}
+								        	}
+								        }
+								    });
+								}
+								else if(tab instanceof NpcTabController)
+								{
+									accordion = ((NpcTabController) tab).getAccordion();
+									accordion.getPanes().get(number).setExpanded(true);
+									Platform.runLater(new Runnable() {
+								        public void run() {
+								        	if (pane == 0)
+								        	{
+									        	((NpcTabController) tab).getNpcRelation().getListView().requestFocus();
+									        	((NpcTabController) tab).getNpcRelation().getListView().getFocusModel().focus(0);
+									        	((NpcTabController) tab).getNpcRelation().getListView().getSelectionModel().select(0);
+								        	}
+								        	else if (pane == 1)
+								        	{
+								        		((NpcTabController) tab).getEventRelation().getListView().requestFocus();
+									        	((NpcTabController) tab).getEventRelation().getListView().getFocusModel().focus(0);
+									        	((NpcTabController) tab).getEventRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((NpcTabController) tab).getEventRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 2)
+								        	{
+								        		((NpcTabController) tab).getRegionRelation().getListView().requestFocus();
+									        	((NpcTabController) tab).getRegionRelation().getListView().getFocusModel().focus(0);
+									        	((NpcTabController) tab).getRegionRelation().getListView().getSelectionModel().select(0);	
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((NpcTabController) tab).getRegionRelation().handleAddButton();
+									        	}
+								        	}
+								        }
+								    });
+								}
+								if (accordion != null)
+								{
+									
+								}
 					} catch (Exception e) {
 						log.error(e);
 					}

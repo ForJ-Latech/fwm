@@ -9,6 +9,7 @@ import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
@@ -242,5 +243,8 @@ public class TemplateTabController implements Saveable{
 	}
 	public void nameFocus(){
 		name.requestFocus();
+	}
+	public AddableSound getAddableSound(){
+		return null;
 	}
 }
