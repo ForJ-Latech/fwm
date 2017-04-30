@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.HBox?>
 
-<Tab fx:id="tabHead" text="God Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.InteractionTabController">
+<Tab fx:id="tabHead" text="Interactions Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.InteractionTabController">
    <content>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="367.0" prefWidth="588.0">
          <content>

@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.HBox?>
 
+<Tab fx:id="tabHead" text="Previously Edited Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.PreviouslyEditedTabController">
+   <content>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="367.0" prefWidth="588.0">
+         <content>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
+   </content>
+</Tab>
 

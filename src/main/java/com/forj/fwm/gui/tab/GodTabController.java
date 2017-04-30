@@ -14,6 +14,8 @@ import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.entity.Template;
+import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
@@ -39,6 +41,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class GodTabController implements Saveable {
@@ -46,9 +49,10 @@ public class GodTabController implements Saveable {
 	private God god;
     private ListController interactionController;
 	private AddableImage image;
-	private AddableSound sound;
+	@FXML private AddableSound sound;
+	@FXML private HBox soundHbox;
 	private TextInputControl[] thingsThatCanChange; 
-	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
+	private RelationalList npcRelation, godRelation, eventRelation, regionRelation, templateRelation;
 	private List<God> panth = new ArrayList<God>();
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.GOD;
 	
@@ -56,7 +60,7 @@ public class GodTabController implements Saveable {
 	@FXML private TextArea attributes, description, history;
 	@FXML private VBox interactionContainer, rhsVbox;
 	@FXML private Tab tabHead;
-	@FXML private Button statBlockButton;
+	@FXML private Button statBlockButton, playButton;
 	@FXML private Accordion accordion;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
@@ -111,6 +115,9 @@ public class GodTabController implements Saveable {
 		
 		regionRelation = RelationalList.createRelationalList(this, App.toListSearchable(god.getRegions()), "Regions", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		accordion.getPanes().add((TitledPane) regionRelation.getOurRoot());
+		
+		templateRelation = RelationalList.createRelationalList(this, App.toListSearchable(god.getTemplates()), "Templates", true, true, tabType, SearchList.EntitiesToSearch.TEMPLATE);
+		accordion.getPanes().add((TitledPane) templateRelation.getOurRoot());
 
 	}
 	
@@ -167,6 +174,7 @@ public class GodTabController implements Saveable {
 		god.setInteractions(new ArrayList<Interaction>((List<Interaction>)(List<?>)interactionController.getAllInteractions()));
 		god.setRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));	
 		god.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));	
+		god.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
 	}
 	
 	@FXML
@@ -245,12 +253,14 @@ public class GodTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(god.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(god.getSoundFileName()));
+			log.debug(App.worldFileUtil.findMultimedia(god.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(god.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
 		
 		if(App.worldFileUtil.findMultimedia(god.getImageFileName()) != null)
 		{
@@ -358,6 +368,7 @@ public class GodTabController implements Saveable {
 	private void getAllTexts()
 	{
 		god.setImageFileName(image.getFilename());
+		log.debug("saving:" + sound.getFilename());
 		god.setSoundFileName(sound.getFilename());
 		god.setHistory(history.getText());
 		god.setDescription(description.getText());
@@ -371,6 +382,7 @@ public class GodTabController implements Saveable {
 	
 	private static boolean started = false;
 
+	
 	public static boolean getStarted() {
 		return started;
 	}
@@ -402,7 +414,7 @@ public class GodTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				god.setStatblock(new Statblock());
-				god.getStatblock().setDescription("");
+				god.getStatblock().setDescription(MainController.GodStat.getDescription());
 			}	
 		App.getStatBlockController().show(god.getStatblock(), this);
 		}
@@ -422,9 +434,18 @@ public class GodTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -451,5 +472,8 @@ public class GodTabController implements Saveable {
 	}
 	public Accordion getAccordion(){
 		return accordion;
+	}	
+	public Button getPlayButton(){
+		return playButton;
 	}
 }

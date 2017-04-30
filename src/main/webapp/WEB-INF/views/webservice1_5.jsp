@@ -41,12 +41,11 @@
         					<button class="btn btn-secondary" type="button" onclick="searchvalue(document.getElementById('myInput').value);">Go</button>
       					</span>
     				</div>    				
-    				<div class="text-center" id="searchResults"><strong>Search&nbsp;Results</strong>
+    				<div class="text-center bold" id="searchResults">Search&nbsp;Results
     				</div>  				
 					<div class="text-center" id="listcontainer" >
 					</div>  			
     			</div>
-    			<!-- <div class="line1"></div -->
     			<!-- The middle display for object -->
     			<div id="display" class="col-xs-12 col-md-4 text-center">
 					<div class="row center">
@@ -68,16 +67,14 @@
 								<div class="col-md-12 text-center" id="imagecontainer">
 								</div>
 							</div>
-							<!-- <div class="style2"> -->
 							<div class="row center">
 								<div class="col-md-12 text-center">
-									<div id="description">&nbsp;&nbsp;</div>
+									<strong><div id="description">&nbsp;&nbsp;</div></strong>
 								</div>
 							</div>
 						</div>
 					</div>					
 				</div>
-    			<!-- <div class="line2"></div> -->
     			<!-- The relational list container  -->
     			<div id="relcolumn" class="col-xs-12 col-md-4">
 					<div id="rellistcontainer" class="text-center bold center">			

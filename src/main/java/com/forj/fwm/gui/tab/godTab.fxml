@@ -12,64 +12,92 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Tab fx:id="tabHead" text="God Tab" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.GodTabController">
+<Tab fx:id="tabHead" text="Untitled Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.GodTabController">
    <content>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="367.0" prefWidth="588.0">
          <content>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
+                  <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+                        <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <TextField fx:id="name" promptText="Name">
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
+                                    <TextField fx:id="name" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Name">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="race" promptText="Race" />
-                                    <Label text="Attributes" textAlignment="CENTER" />
-                                    <TextArea fx:id="attributes" minHeight="-Infinity" prefHeight="200.0" prefWidth="178.0" promptText="This text will not be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS" />
+                                    <TextField fx:id="pantheon" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Pantheon">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="gender" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Gender">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
                                  </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                              </HBox>
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <TextField fx:id="pantheon" promptText="Pantheon">
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
+                                    <TextField fx:id="race" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Race">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="godClass" promptText="Class" />
-                                    <Label text="Description" />
-                                    <TextArea fx:id="description" minHeight="-Infinity" prefHeight="200.0" prefWidth="178.0" promptText="This text will be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS" />
+                                    <TextField fx:id="godClass" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Class">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
                                  </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                              </HBox>
+                              <HBox maxHeight="1.7976931348623157E308" prefHeight="800.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <TextField fx:id="gender" promptText="Gender">
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                    </TextField>
-                                    <TextField visible="false" />
-                                    <Label text="History and Goals" />
-                                    <TextArea fx:id="history" minHeight="-Infinity" prefHeight="200.0" prefWidth="178.0" promptText="This text will not be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS" />
+                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Attributes" textAlignment="CENTER" />
+                                          <TextArea fx:id="attributes" minHeight="-Infinity" prefHeight="200.0" prefWidth="178.0" promptText="This text will not be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </TextArea>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Description" />
+                                          <TextArea fx:id="description" minHeight="-Infinity" prefHeight="200.0" prefWidth="178.0" promptText="This text will be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </TextArea>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="History and Goals" />
+                                          <TextArea fx:id="history" minHeight="-Infinity" prefHeight="200.0" prefWidth="178.0" promptText="This text will not be shown to the player by default." wrapText="true" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </TextArea>
+                                       </children>
+                                    </VBox>
                                  </children>
-                              </VBox>
+                              </HBox>
                            </children>
+                        </VBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets left="3.0" right="3.0" />
                            </padding>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                           	<padding>
-                              	<Insets left="3.0" right="3.0" />
-                           	</padding>
-                           	<children>
-                              	<VBox fx:id="interactionContainer" prefHeight="200.0" prefWidth="516.0" HBox.hgrow="ALWAYS" />
-                           	</children>
+                           <children>
+                              <VBox fx:id="interactionContainer" maxHeight="400.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS" />
+                           </children>
                         </HBox>
                      </children>
                      <padding>
@@ -86,17 +114,9 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="0.0" prefWidth="125.0" VBox.vgrow="NEVER">
+                        <HBox fx:id="soundHbox" alignment="TOP_CENTER" fillHeight="false" prefHeight="0.0" prefWidth="125.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#changeSound" prefHeight="20.0" prefWidth="65.0" text="Set Sound" textAlignment="CENTER" wrapText="true">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="1.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#playSound" prefHeight="20.0" prefWidth="65.0" text="Play" textAlignment="CENTER" wrapText="true">
+                              <Button fx:id="playButton" alignment="CENTER" mnemonicParsing="false" onAction="#playSound" prefHeight="20.0" prefWidth="65.0" text="Play / Stop" textAlignment="CENTER" wrapText="true">
                                  <HBox.margin>
                                     <Insets left="1.0" right="2.0" />
                                  </HBox.margin>

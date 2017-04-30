@@ -59,7 +59,7 @@ public class SearchList {
 	@FXML private VBox vbox;
 
 	private ArrayList<Searchable> searchResults = new ArrayList<Searchable>();
-	private ArrayList<Integer> tree =  new ArrayList<Integer>();
+	private List<Integer> tree =  new ArrayList<Integer>();
 	private boolean regionregion = false;
 
 	public TextField getSearchField() {
@@ -83,7 +83,13 @@ public class SearchList {
 		if (ourOpen instanceof RelationalField){
 			if (((RelationalField) ourOpen).getTabObject() instanceof Region && searchEntity == EntitiesToSearch.REGION) {
 				regionregion = true;
-				this.tree = createTree();
+				this.tree = createTree((Region) ((RelationalField) ourOpen).getTabObject());
+			}
+		}
+		if (ourOpen instanceof RelationalList){
+			if (((RelationalList) ourOpen).getTabObject() instanceof Region && searchEntity == EntitiesToSearch.REGION) {
+				regionregion = true;
+				this.tree = createTree((Region) ((RelationalList) ourOpen).getTabObject());
 			}
 		}
 		
@@ -202,34 +208,6 @@ public class SearchList {
 						if (obj != null) {
 							if (obj instanceof Npc) {
 								name = ((Npc) obj).getFullName();
-
-								// Don't list region if it is a super region to
-								// current region or sub region of a super
-								// region
-							} else if (obj instanceof Region && ourOpen instanceof RegionTabController) {
-								ArrayList<Region> regs = new ArrayList<Region>();
-
-								// Find highest super region in tree
-								Region r = (((Region) ((RegionTabController) ourOpen).getThing()).getSuperRegion());
-								Region s = (((Region) ((RegionTabController) ourOpen).getThing()));
-								while (r != null) {
-									r = r.getSuperRegion();
-									if (r != null) {
-										s = r;
-									}
-								}
-								// s is the topmost super region
-								regs.add(s);
-								while (!regs.isEmpty()) {
-									for (Region i : regs.get(0).getSubRegions()) {
-										regs.add(i);
-										if (((Region) obj).getID() == i.getID()) {
-											return;
-										}
-									}
-									regs.remove(0);
-								}
-
 							} else {
 								name = obj.getName();
 							}
@@ -296,36 +274,33 @@ public class SearchList {
 		return unique;
 	}
 	
-	private ArrayList<Integer> createTree() {
-		
-		ArrayList<Integer> tree =  new ArrayList<Integer>();
-		ArrayList<Region> regs = new ArrayList<Region>();
+	private List<Integer> createTree(Region region) {
 
-		// Find highest super region in tree
-		Region r = (((Region) ((RelationalField) ourOpen).getTabObject()).getSuperRegion());
-		Region s = (((Region) ((RelationalField) ourOpen).getTabObject()));
-		while (r != null) {
-			r = r.getSuperRegion();
-			if (r != null) {
-				s = r;
-			}
-		}
-		// s is the topmost super region
-		regs.add(s);
-		while (!regs.isEmpty()) {
-			for (Region i : regs.get(0).getSubRegions()) {
-				regs.add(i);
-			}
-			tree.add(regs.get(0).getID());
-			regs.remove(0);
+		List<Integer> allregID = new ArrayList<Integer>();
+		allregID.add(region.getID());
+		
+		
+		try {
+			List<Region> aboveFull =  Backend.getRegionDao().getAboveFullRegions(region);
+			aboveFull.add(region);
+			for (Region reg : aboveFull){
 				
+				if (!allregID.contains(reg.getID())){
+					allregID.add(reg.getID());
+				}
+				
+				for (Region reg2 : Backend.getRegionDao().getBelowFullRegions(reg)){
+					if (!allregID.contains(reg2.getID())){
+						allregID.add(reg2.getID());
+					}
+				}				
+			}
+			
+		} catch (SQLException e) {
+			log.error(e);
 		}
 		
-		for (Integer i1 : tree){
-			System.out.println(i1);
-		}
-		
-		return tree;
+		return allregID;
 	}
 
 
@@ -351,7 +326,11 @@ public class SearchList {
 				updateList();
 			}
 			if (regionregion){
-				createTree();
+				if (ourOpen instanceof RelationalList){
+					createTree((Region) ((RelationalList) ourOpen).getTabObject());
+				} else {
+					createTree((Region) ((RelationalField) ourOpen).getTabObject());
+				}
 			}
 			
 		}

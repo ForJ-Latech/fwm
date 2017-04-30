@@ -1,5 +1,6 @@
 package com.forj.fwm.gui.tab;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
@@ -31,13 +33,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -60,6 +65,8 @@ public class NpcTabController implements Saveable {
     @FXML private VBox interactionContainer, rhsVbox;
     @FXML private Accordion accordion;
     @FXML private StackPane godPane;
+    @FXML private HBox soundHbox;
+    @FXML private Button playButton;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -109,13 +116,15 @@ public class NpcTabController implements Saveable {
 		
 		myGod.clear();
 		if (npc.getGod() != null){
-			npc.getGod().setName(Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).get(0).getName());
-			npc.getGod().setImageFileName(Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).get(0).getImageFileName());
-			myGod.add(npc.getGod());
+			if (!Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).isEmpty()){
+				npc.getGod().setName(Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).get(0).getName());
+				npc.getGod().setImageFileName(Backend.getGodDao().queryForEq("ID", npc.getGod().getID()).get(0).getImageFileName());
+				myGod.add(npc.getGod());
+			}
 		}
 		godRelation = RelationalField.createRelationalList(this, App.toListSearchable(myGod), "God", true, true, tabType, SearchList.EntitiesToSearch.GOD);
 		godPane.getChildren().add(godRelation.getOurRoot());
-
+		
 	}
 	
 	private void updateFamily(boolean save){
@@ -245,12 +254,14 @@ public class NpcTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(npc.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(npc.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(npc.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
+		
 		if(App.worldFileUtil.findMultimedia(npc.getImageFileName()) != null)
 		{
 			image = new AddableImage(App.worldFileUtil.findMultimedia(npc.getImageFileName()));
@@ -269,7 +280,7 @@ public class NpcTabController implements Saveable {
 		image.setVisible(true);
 		rhsVbox.getChildren().add(0, image);
 		
-		thingsThatCanChange = new TextInputControl[] {history , description, lName ,fName ,gender ,attributes ,race ,classType};
+		thingsThatCanChange = new TextInputControl[] {history , description, lName ,fName ,gender ,attributes ,race ,classType, age};
 		fName.textProperty().addListener(nameListener);
 		log.debug("start npc tab controller called");
 		setAllTexts(npc);
@@ -383,8 +394,15 @@ public class NpcTabController implements Saveable {
 
 		Npc ourN = npc;
 		if(npc != null){
-			log.debug("ourN got filled from backend");
-			ourN = Backend.getNpcDao().getFullNpc(npc.getID());
+			if(npc.getID() == -1){
+				log.debug("Did not fill from backend, created by template.");
+				ourN = npc;
+			}
+			else
+			{
+				log.debug("ourN got filled from backend");
+				ourN = Backend.getNpcDao().getFullNpc(npc.getID());
+			}
 		}else
 		{
 			ourN = new Npc();
@@ -408,7 +426,7 @@ public class NpcTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				npc.setStatblock(new Statblock());
-				npc.getStatblock().setDescription("");
+				npc.getStatblock().setDescription(MainController.NPCstat.getDescription());
 			}	
 		App.getStatBlockController().show(npc.getStatblock(), this);
 		}
@@ -429,9 +447,18 @@ public class NpcTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -453,5 +480,8 @@ public class NpcTabController implements Saveable {
 	}
 	public AddableSound getAddableSound(){
 		return sound;
+	}	
+	public Button getPlayButton(){
+		return playButton;
 	}
 }

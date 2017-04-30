@@ -10,10 +10,13 @@ import com.forj.fwm.backend.Backend;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
+import com.forj.fwm.entity.MMTemplateRegion;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.entity.Template;
+import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
@@ -40,6 +43,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -52,7 +56,7 @@ public class RegionTabController implements Saveable {
     public List<Region> subRegions;
     public Region superRegion;
     private TextInputControl[] thingsThatCanChange;
-	private RelationalList npcRelation, godRelation, eventRelation, regionRelation;
+	private RelationalList npcRelation, godRelation, eventRelation, regionRelation, templateRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.REGION;
 	private RelationalField superRelation;
 	private List<Region> superList = new ArrayList<Region>();
@@ -62,8 +66,9 @@ public class RegionTabController implements Saveable {
 	@FXML private VBox interactionContainer, rhsVbox;
 	@FXML private Tab tabHead;
 	@FXML private Accordion accordion;
-	@FXML private Button statBlockButton;
+	@FXML private Button statBlockButton, playButton;
 	@FXML private StackPane superRegionPane;
+	@FXML private HBox soundHbox;
 	
 	public RelationalList getNpcRelation(){
 		return npcRelation;
@@ -97,8 +102,10 @@ public class RegionTabController implements Saveable {
 		
 		superList.clear();
 		if (region.getSuperRegion() != null){
-			region.getSuperRegion().setName(Backend.getRegionDao().queryForEq("ID", region.getSuperRegion().getID()).get(0).getName());
-			superList.add(region.getSuperRegion());
+			if (!Backend.getRegionDao().queryForEq("ID", region.getSuperRegion().getID()).isEmpty()) {
+				region.getSuperRegion().setName(Backend.getRegionDao().queryForEq("ID", region.getSuperRegion().getID()).get(0).getName());
+				superList.add(region.getSuperRegion());
+			}
 		}
 		superRelation = RelationalField.createRelationalList(this, App.toListSearchable(superList), "Super Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
 		superRegionPane.getChildren().add(superRelation.getOurRoot());
@@ -115,6 +122,10 @@ public class RegionTabController implements Saveable {
 		
 		eventRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getEvents()), com.forj.fwm.entity.Event.WHAT_IT_DO + "s", true, true, tabType, SearchList.EntitiesToSearch.EVENT);
 		accordion.getPanes().add((TitledPane) eventRelation.getOurRoot());
+		
+		templateRelation = RelationalList.createRelationalList(this, App.toListSearchable(region.getTemplates()), "Templates", true, true, tabType, SearchList.EntitiesToSearch.TEMPLATE);
+		accordion.getPanes().add((TitledPane) templateRelation.getOurRoot());
+		
 	}
 	
 	public void updateTab(){
@@ -171,6 +182,7 @@ public class RegionTabController implements Saveable {
 		region.setNpcs(new ArrayList<Npc>((List<Npc>)(List<?>)npcRelation.getList()));
 		region.setSubRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));
 		region.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));
+		region.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
 		
 		if (!superRelation.getList().isEmpty()){
 			Region newRegion = new ArrayList<Region>((List<Region>)(List<?>)superRelation.getList()).get(0);
@@ -257,12 +269,13 @@ public class RegionTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(region.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(region.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(region.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
 		
 		if(App.worldFileUtil.findMultimedia(region.getImageFileName()) != null)
 		{
@@ -377,6 +390,8 @@ public class RegionTabController implements Saveable {
 		
 		region.setSubRegions(subRegions);
 		region.setSuperRegion(superRegion);
+		
+		
 	}
 	
 	private static boolean started = false;
@@ -429,7 +444,7 @@ public class RegionTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				region.setStatblock(new Statblock());
-				region.getStatblock().setDescription("");
+				region.getStatblock().setDescription(MainController.RegionStat.getDescription());
 			}	
 			App.getStatBlockController().show(region.getStatblock(), this);
 		}
@@ -441,9 +456,18 @@ public class RegionTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -470,5 +494,8 @@ public class RegionTabController implements Saveable {
 	}
 	public Accordion getAccordion(){
 		return accordion;
+	}	
+	public Button getPlayButton(){
+		return playButton;
 	}
 }

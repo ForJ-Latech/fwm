@@ -50,7 +50,7 @@
 	      	</div>
       	</div>
 		<hr>
-		<div class="row text-center">
+		<div class="row text-center" id="descriptioncontainer">
 			<div class="col-sm-4"></div>
 	      	<div class="col-sm-4">
 	      		<p id="desc">${Description}</p>
@@ -66,7 +66,16 @@
     <script src="/s/bootstrap.min.js"></script>
     <script type="text/javascript" src="/s/imagesize.js"></script>
     <script type="text/javascript">
+			function fixImageContainerWidthHeight(){
+				var height = ($(window).height() - $('.navbar').height()) * 6.5 / 10;
+				$('#imagecontainer').attr('height', height);
+				$('#imagecontainer').attr('max-height', height);
+			}
+
 	 		$(document).ready(function() {
+				fixImageContainerWidthHeight();
+				var imgContainer = $('#imagecontainer');
+				calculateWidthHeightImg(imgContainer.width(), imgContainer.attr('height'), $('#img'));
 	 			var soundFile = "${SoundFileName}";
 	 			var audio = $("#player");
 	 			if (soundFile.length > 0) {

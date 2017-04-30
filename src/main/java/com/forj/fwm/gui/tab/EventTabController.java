@@ -12,7 +12,11 @@ import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
+import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.entity.Template;
+import com.forj.fwm.gui.RelationalField;
 import com.forj.fwm.gui.RelationalList;
 import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
@@ -29,6 +33,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -36,6 +41,8 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class EventTabController implements Saveable {
@@ -45,14 +52,19 @@ public class EventTabController implements Saveable {
 	private AddableImage image;
     private AddableSound sound;
     private TextInputControl[] thingsThatCanChange;
-	private RelationalList npcRelation, godRelation;
+	private RelationalList npcRelation, godRelation, templateRelation, statblockRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.EVENT;
-    
+	private RelationalField regionRelation;
+	private List<Region> myRegion = new ArrayList<Region>();
+	
+	@FXML private StackPane regionPane;
     @FXML private TextField name;
 	@FXML private TextArea description, attributes, history;
 	@FXML private VBox interactionContainer, rhsVbox;
 	@FXML private Tab tabHead;
 	@FXML private Accordion accordion;
+	@FXML private HBox soundHbox;
+	@FXML private Button playButton;
 	
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -83,6 +95,24 @@ public class EventTabController implements Saveable {
 		
 		godRelation = RelationalList.createRelationalList(this, App.toListSearchable(event.getGods()), "Gods", true, true, tabType, SearchList.EntitiesToSearch.GOD);
 		accordion.getPanes().add((TitledPane) godRelation.getOurRoot());
+		
+		myRegion.clear();
+		if (event.getRegion() != null){
+			if (!Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).isEmpty()) {
+				event.getRegion().setName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getName());
+				event.getRegion().setImageFileName(Backend.getRegionDao().queryForEq("ID", event.getRegion().getID()).get(0).getImageFileName());
+				myRegion.add(event.getRegion());
+			}
+		}
+		regionRelation = RelationalField.createRelationalList(this, App.toListSearchable(myRegion), "Region", true, true, tabType, SearchList.EntitiesToSearch.REGION);
+		regionPane.getChildren().add(regionRelation.getOurRoot());
+		
+		templateRelation = RelationalList.createRelationalList(this, App.toListSearchable(event.getTemplates()), "Templates", true, true, tabType, SearchList.EntitiesToSearch.TEMPLATE);
+		accordion.getPanes().add((TitledPane) templateRelation.getOurRoot());
+		
+		statblockRelation = RelationalList.createRelationalList(this, App.toListSearchable(event.getStatblocks()), "Statblocks", true, true, tabType, SearchList.EntitiesToSearch.STATBLOCK);
+		accordion.getPanes().add((TitledPane) statblockRelation.getOurRoot());
+
 	}
 	
 	public void updateTab(){
@@ -137,7 +167,15 @@ public class EventTabController implements Saveable {
 		event.setInteractions(new ArrayList<Interaction>((List<Interaction>)(List<?>)interactionController.getAllInteractions()));
 		event.setGods(new ArrayList<God>((List<God>)(List<?>)godRelation.getList()));
 		event.setNpcs(new ArrayList<Npc>((List<Npc>)(List<?>)npcRelation.getList()));
+		
+		event.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
 //		event.setRegion(new Region());	
+		
+		if (!regionRelation.getList().isEmpty()){
+			Region newRegion = new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()).get(0);
+			event.setRegion(newRegion);
+		}
+		event.setStatblocks(new ArrayList<Statblock>((List<Statblock>)(List<?>)statblockRelation.getList()));
 	}
 	
 	@FXML
@@ -155,6 +193,7 @@ public class EventTabController implements Saveable {
 		}
 		try{
 			Backend.getEventDao().saveFullEvent(event);
+			Backend.getEventDao().refresh(event);
 			log.debug("Save successfull!");
 			log.debug("event id: " + event.getID());
 			App.getMainController().addStatus("Successfully saved full " + Event.WHAT_IT_DO + " " + event.getName() + " ID: " + event.getID());
@@ -216,12 +255,13 @@ public class EventTabController implements Saveable {
 		
 		if(App.worldFileUtil.findMultimedia(event.getSoundFileName()) != null)
 		{
-			sound = new AddableSound(App.worldFileUtil.findMultimedia(event.getSoundFileName()));
+			sound = new AddableSound(this, App.worldFileUtil.findMultimedia(event.getSoundFileName()));
 		}
 		else
 		{
-			sound = new AddableSound();
+			sound = new AddableSound(this);
 		}
+		soundHbox.getChildren().add(sound);
 		
 		if(App.worldFileUtil.findMultimedia(event.getImageFileName()) != null)
 		{
@@ -367,9 +407,18 @@ public class EventTabController implements Saveable {
 	
 	@FXML 
 	public void playSound() throws Exception{
-		if(sound != null)
+		if(sound != null && sound.hasSound())
 		{
-			sound.play();
+			if (!sound.isPlaying()) {
+				sound.play();
+				log.debug("not playing. So play it.");
+			} else {
+				sound.stop();
+				log.debug("playing. so stop it");
+			}
+			
+		} else  {
+			log.debug("nosound");
 		}
 	}
 	
@@ -395,5 +444,8 @@ public class EventTabController implements Saveable {
 	}
 	public Accordion getAccordion(){
 		return accordion;
+	}
+	public Button getPlayButton(){
+		return playButton;
 	}
 }

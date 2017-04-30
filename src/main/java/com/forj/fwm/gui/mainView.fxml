@@ -22,6 +22,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" text="Change World" />
                   <MenuItem mnemonicParsing="false" onAction="#startWebservice" text="Start Webservice" />
+                  <MenuItem mnemonicParsing="false" onAction="#exitApplication" text="Close Application" />
                </items>
             </Menu>
             <Menu fx:id="GlobalSettingsMenu" mnemonicParsing="false" text="Global Settings">
@@ -33,15 +34,16 @@
             <Menu fx:id="WorldSettingsMenu" mnemonicParsing="false" text="World Settings">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#showWorldSettings" text="Open World Settings" />
-                  <MenuItem mnemonicParsing="false" text="Edit World God Statblock" />
-                  <MenuItem mnemonicParsing="false" text="Edit World NPC Statblock" />
+                  <MenuItem mnemonicParsing="false" onAction="#editGodStatblock" text="Edit World God Statblock" />
+                  <MenuItem mnemonicParsing="false" onAction="#editNPCStatblock" text="Edit World NPC Statblock" />
+                  <MenuItem mnemonicParsing="false" onAction="#editRegionStatblock" text="Edit World Region Statblock" />
+                  <MenuItem mnemonicParsing="false" onAction="#editGroupStatblock" text="Edit World Group Statblock" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Search">
                <items>
-                  <MenuItem mnemonicParsing="false" text="List Previously Edited" />
+                  <MenuItem mnemonicParsing="false" onAction="#openPreviouslyEdited" text="List Previously Edited" />
                   <MenuItem mnemonicParsing="false" onAction="#openInteractions" text="List Interactions" />
-                  <MenuItem mnemonicParsing="false" text="&quot;I Forgot&quot; Search" />
                </items>
             </Menu>
             <Menu fx:id="HelpMenu" mnemonicParsing="false" text="Help">

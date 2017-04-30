@@ -14,6 +14,7 @@ import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.gui.component.TabControlled;
@@ -21,8 +22,10 @@ import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
 import com.forj.fwm.gui.tab.InteractionTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
+import com.forj.fwm.gui.tab.PreviouslyEditedTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
 import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.tab.StatBlockTabController;
 import com.forj.fwm.gui.tab.TemplateTabController;
 import com.forj.fwm.gui.tab.WelcomeTabController;
 import com.forj.fwm.startup.App;
@@ -76,6 +79,15 @@ public class MainController extends TabControlled implements Openable {
     private StackPane statusStackPane;
    
     private StatusBarController statusBarController;
+
+	public static Statblock NPCstat = new Statblock();
+	public static Statblock GodStat = new Statblock();
+	public static Statblock RegionStat = new Statblock();
+	public static Statblock GroupStat = new Statblock();
+	private Saveable save;
+	
+	
+	
 
 	private static boolean started = false;
 	private Stage ourStage;
@@ -133,7 +145,12 @@ public class MainController extends TabControlled implements Openable {
 			public void handle(KeyEvent key) {
 			
 			}
-		}); 
+		});
+
+		Backend.getStatblockDao().createIfNotExists(NPCstat);
+		Backend.getStatblockDao().createIfNotExists(GodStat);
+		Backend.getStatblockDao().createIfNotExists(RegionStat);
+		Backend.getStatblockDao().createIfNotExists(GroupStat);
 	}
 
 	public static MainController startMainUi() throws Exception {
@@ -210,6 +227,11 @@ public class MainController extends TabControlled implements Openable {
     }
 
 	@FXML
+	public void exitApplication() throws Exception {
+		System.exit(0);
+	}
+	
+	@FXML
 	public void showReadme() throws Exception {
 		log.debug("Readme Called");
 		GenericTextController cr = GenericTextController.startGenericTextController("Readme");
@@ -227,6 +249,30 @@ public class MainController extends TabControlled implements Openable {
 	public void showWorldSettings() throws Exception{
 		log.debug("World Settings called");
 		WorldSettingsController.startWorldSettingsController();
+	}
+	
+	@FXML
+	public void editNPCStatblock() throws Exception{
+		log.debug("Edit NPC Statblock called");
+		App.getStatBlockController().show(NPCstat, save);
+	}
+	
+	@FXML
+	public void editGodStatblock() throws Exception{
+		log.debug("Edit God Statblock called");
+		App.getStatBlockController().show(GodStat, save);
+	}
+	
+	@FXML
+	public void editRegionStatblock() throws Exception{
+		log.debug("Edit Region Statblock called");
+		App.getStatBlockController().show(RegionStat, save);
+	}
+	
+	@FXML
+	public void editGroupStatblock() throws Exception{
+		log.debug("Edit Group Statblock called");
+		App.getStatBlockController().show(GroupStat, save);
 	}
 	
 	@FXML
@@ -295,15 +341,22 @@ public class MainController extends TabControlled implements Openable {
 	}
 	
 	@FXML
+	public void openPreviouslyEdited() {
+		try {
+			PreviouslyEditedTabController tab = PreviouslyEditedTabController.startPreviouslyEditedTab();
+			addTabController(tab);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
 	public void openInteractions() {
 		try {
 			InteractionTabController tab = InteractionTabController.startInteractionTab();
 			addTabController(tab);
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

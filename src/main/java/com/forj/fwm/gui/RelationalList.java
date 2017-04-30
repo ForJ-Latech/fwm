@@ -1,6 +1,7 @@
 package com.forj.fwm.gui;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.SearchList.EntitiesToSearch;
 import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.gui.tab.Saveable;
@@ -70,6 +72,7 @@ public class RelationalList implements Openable{
 	
 	private boolean showButton;
 	private boolean relationsRemovable;
+	private boolean isTemplate = false;
 	
 	public static RelationalList createRelationalList(Saveable caller, List<Searchable> ourItems, String title, boolean useButton, boolean relationsRemovable, EntitiesToSearch tabType, EntitiesToSearch relationType) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -95,6 +98,9 @@ public class RelationalList implements Openable{
 		if (!showButton) {
 			addButton.setMouseTransparent(true);
 			addButton.setVisible(false);
+		}
+		if (r == EntitiesToSearch.TEMPLATE) {
+			this.isTemplate = true;
 		}
 		
 		// set reference to the object owned by the tab
@@ -145,7 +151,8 @@ public class RelationalList implements Openable{
 						super.updateItem(obj, empty);
 						
 						final ContextMenu contextMenu = new ContextMenu();
-				        MenuItem deleteMenuItem = new MenuItem("Remove Relation");
+				        MenuItem deleteMenuItem = new MenuItem("Remove");
+				        
 				        
 				        deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 				            public void handle(ActionEvent e) {
@@ -153,8 +160,25 @@ public class RelationalList implements Openable{
 				                log.debug("removed relation");
 				            }
 				        });
-				        
 				        contextMenu.getItems().addAll(deleteMenuItem);
+				        if (isTemplate) {
+				        	MenuItem templateItem = new MenuItem("Create NPC from template");
+					        templateItem.setOnAction(new EventHandler<ActionEvent>() {
+					            public void handle(ActionEvent e) {
+					                try {
+										Npc n = ((Template) obj).newFromTemplate();
+										App.getMainController().open(n);
+										log.debug("trying to create new");
+									} catch (SQLException e1) {
+										log.debug(e1);
+									} catch (Exception e1) {
+										log.debug(e1);
+									}
+					            }
+					        });
+					        contextMenu.getItems().add(templateItem);					       
+				        }			
+				        
 				        this.setContextMenu(contextMenu);
 				        final ListCell<Searchable> thing = this;
 				        
