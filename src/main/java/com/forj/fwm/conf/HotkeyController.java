@@ -368,7 +368,6 @@ public class HotkeyController {
 				String character = keyEvent.getCode().getName();
 				int number = 0;
 				try {
-					log.debug(character);
 					number = Integer.parseInt(character);
 					number--;
 					if (number < 0){
@@ -378,7 +377,6 @@ public class HotkeyController {
 				catch (Exception e){
 					number = -1;
 				}
-				log.debug(number);
 				final int pane = number; 
 				if (HotkeyController.getHotkey(BACKWARD_SHOW_HOTKEY).match(keyEvent)) {
 					try {
