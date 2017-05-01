@@ -271,4 +271,8 @@ public class Region implements Searchable {
 	public void setShown(boolean shown) {
 		this.shown = shown;
 	}
+
+	public String getShownName() {
+		return name;
+	}
 }

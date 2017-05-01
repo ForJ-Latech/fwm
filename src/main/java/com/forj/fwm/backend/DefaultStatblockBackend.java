@@ -82,6 +82,10 @@ public class DefaultStatblockBackend {
 		return groupDefaultSaveable;
 	}
 	
+	public static DefaultStatSaveable spawnEmptyStatSaveable(){
+		return new DefaultStatSaveable("");
+	}
+	
 	private static class DefaultStatSaveable implements Saveable{
 		private static class DefaultSearchable implements Searchable{
 			private String name;
@@ -93,7 +97,7 @@ public class DefaultStatblockBackend {
 				return 0;
 			}
 
-			public String getName() {
+			public String getShownName() {
 				return name;
 			}
 

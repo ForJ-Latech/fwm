@@ -197,7 +197,7 @@ public class InteractionTabController implements Saveable {
 								log.debug(e1);
 							}
 							//name = intobj.getName() + " [" + date + "] " + obj.getPlayerCharacter() + " : " + obj.getDescription();
-							name = " [" + intobj.getName() + "] "  + obj.getPlayerCharacter() + " : " + obj.getDescription();
+							name = " [" + intobj.getShownName() + "] "  + obj.getPlayerCharacter() + " : " + obj.getDescription();
 
 							
 							try {

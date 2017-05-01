@@ -4,7 +4,7 @@ import java.util.Date;
 
 public interface Searchable {	
 	public int getID();
-	public String getName();
+	public String getShownName();
 	public String getImageFileName();
 	public Date getLastEdited();
 	public String toOneFiveJsonString();

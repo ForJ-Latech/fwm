@@ -367,4 +367,8 @@ public class Template implements Searchable {
 	public void setShown(boolean shown) {
 		return;
 	}
+
+	public String getShownName() {
+		return this.name;
+	}
 }

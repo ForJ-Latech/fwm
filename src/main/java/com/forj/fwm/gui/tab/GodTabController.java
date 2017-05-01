@@ -163,15 +163,6 @@ public class GodTabController implements Saveable {
 		
 		god.setNpcs(new ArrayList<Npc>((List<Npc>)(List<?>)npcRelation.getList()));
 		
-		for (Npc n : (List<Npc>)(List<?>)npcRelation.getList()) {
-			log.debug("!!!!!!!!!!!!!!!" + n.getName());
-		}
-		
-		for (Searchable n : npcRelation.getList()) {
-			log.debug("???????????????" + n.getName());
-		}
-		
-		
 		god.setInteractions(new ArrayList<Interaction>((List<Interaction>)(List<?>)interactionController.getAllInteractions()));
 		god.setRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));	
 		god.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));	

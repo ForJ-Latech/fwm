@@ -192,7 +192,16 @@ public class MainController extends TabControlled implements Openable {
 		addTabController(cr);
 		tabPane.getSelectionModel().select(cr.getTab());
 	}
-
+	
+	@FXML
+	public void CreateNamedStatblock() throws Exception{
+		log.debug("create named statblock called");
+		Statblock s = new Statblock();
+		s.setName("$");
+		StatBlockTabController cr = StatBlockTabController.startStatBlockTabController(s, DefaultStatblockBackend.spawnEmptyStatSaveable());
+		App.getStatBlockController().addTabController(cr);
+	}
+	
 	@FXML
 	public void showPlayers() throws Exception {
 		log.debug("attempting to show players.");
@@ -307,13 +316,18 @@ public class MainController extends TabControlled implements Openable {
 			RegionTabController tab = RegionTabController.startRegionTab((Region) o);
 			addTabController(tab);
 		}
-		else if (o instanceof Event) { 
+		else if (o instanceof Event) {
 			EventTabController tab = EventTabController.startEventTab((Event) o);
-	      addTabController(tab); 
+			addTabController(tab);
 		}
 		else if(o instanceof Template){
 			TemplateTabController tab = TemplateTabController.startTemplateTab((Template) o, this);
 			addTabController(tab);
+		}
+		else if(o instanceof Statblock){
+			StatBlockTabController tab = StatBlockTabController.startStatBlockTabController((Statblock)o, DefaultStatblockBackend.spawnEmptyStatSaveable());
+			App.getStatBlockController().addTabController(tab);
+			App.getStatBlockController().getStage().requestFocus();
 		}
 	}
 	

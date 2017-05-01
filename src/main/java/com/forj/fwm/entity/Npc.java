@@ -282,4 +282,8 @@ public class Npc implements Searchable {
 	public void setShown(boolean shown) {
 		this.shown = shown;
 	}
+
+	public String getShownName() {
+		return this.getFullName();
+	}
 }

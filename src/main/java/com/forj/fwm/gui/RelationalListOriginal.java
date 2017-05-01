@@ -175,11 +175,7 @@ public class RelationalListOriginal implements Openable{
 						String name = "";
 						if (obj != null) {
 							// TODO: Region should have hierarchy??
-							if (obj instanceof Npc) {
-								name = ((Npc) obj).getFullName();
-							} else {
-								name = obj.getName();
-							}
+							name = obj.getShownName();
 							try {
 								
 								imageView.setImage(new Image(

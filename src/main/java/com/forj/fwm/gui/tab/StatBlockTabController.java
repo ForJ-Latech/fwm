@@ -55,7 +55,11 @@ public class StatBlockTabController implements Saveable {
 	};
 	
 	private void getAllTexts(){
-		stat.setName(nameText.getText());
+		if(wasNamed){
+			stat.setName("$" + nameText.getText());
+		}else{
+			stat.setName("");
+		}
 		stat.setDescription(statBlockText.getText());
 		log.debug("getting Description to save");
 		log.debug("stat.getDesc: " + stat.getDescription());
@@ -64,6 +68,12 @@ public class StatBlockTabController implements Saveable {
 	
 	public void fullSave(){
 		getAllTexts();
+		// it needs to be named well. 
+		if(wasNamed && stat.getName().length() < 2){
+			log.info("Can't save no name");
+			App.getMainController().addStatus("Cannot save Statblock with ID: " + stat.getID() + " no name!");
+			return;
+		}
 		try{
 			Backend.getStatblockDao().createIfNotExists(stat);
 			Backend.getStatblockDao().update(stat);
@@ -71,7 +81,9 @@ public class StatBlockTabController implements Saveable {
 			log.debug("Save successfull!");
 			log.debug("stat id: " + stat.getID());
 			log.debug("description: " + stat.getDescription());
-			App.getMainController().addStatus("Successfully saved Statblock " + stat.getName() + " ID: " + stat.getID());
+			App.getMainController().addStatus("Successfully saved Statblock " + 
+			("".equals(stat.getShownName()) ? "without name": stat.getShownName()) + 
+			" ID: " + stat.getID());
 			beSaved.simpleSave();
 		}catch(SQLException e){
 			log.error(e.getStackTrace());
@@ -92,21 +104,23 @@ public class StatBlockTabController implements Saveable {
 		}
 		
 	}
-	
+	private boolean wasNamed = false;
 	private void setAllTexts(Statblock s){
-		if(stat.getName() == null || stat.getName().equals("")){
+		if(stat.getName() == null || "".equals(stat.getName())){
 			nameArea.setVisible(false);
 			mainVbox.getChildren().remove(nameArea);
-			tabHead.setText(beSaved.getThing().getName());
+			tabHead.setText(beSaved.getThing().getShownName());
 		}
 		else
 		{
+			wasNamed = true;
 			if(!mainVbox.getChildren().contains(nameArea)){
 				mainVbox.getChildren().add(0, nameArea);
 			}
 			nameArea.setVisible(true);
-			nameText.setText(stat.getName());
-			tabHead.setText(stat.getName());
+			// we ignore the first char, so that we can tell if something had been named in the past. 
+			nameText.setText(stat.getName().substring(1));
+			tabHead.setText(stat.getName().substring(1));
 		}
 		statBlockText.setText(stat.getDescription());
 		log.debug(stat.getDescription());

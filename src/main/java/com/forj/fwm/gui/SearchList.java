@@ -206,11 +206,7 @@ public class SearchList {
 						ImageView imageView = new ImageView();
 						String name = "";
 						if (obj != null) {
-							if (obj instanceof Npc) {
-								name = ((Npc) obj).getFullName();
-							} else {
-								name = obj.getName();
-							}
+							name = obj.getShownName();
 							try {
 								imageView.setImage(new Image(
 										App.worldFileUtil.findMultimedia(obj.getImageFileName()).toURI().toString(),

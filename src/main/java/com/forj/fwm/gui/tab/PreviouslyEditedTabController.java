@@ -197,15 +197,15 @@ public class PreviouslyEditedTabController implements Saveable{
 							}
 							
 							if (intobj instanceof Event) {
-								name = " [Group] " + obj.getName() + " : " + obj.getLastEdited();
+								name = " [Group] " + obj.getShownName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof God) {
-								name = " [God] " + obj.getName() + " : " + obj.getLastEdited();
+								name = " [God] " + obj.getShownName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof Npc) {
-								name = " [NPC] " + obj.getName() + " : " + obj.getLastEdited();
+								name = " [NPC] " + obj.getShownName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof Region) {
-								name = " [Region] " + obj.getName() + " : " + obj.getLastEdited();
+								name = " [Region] " + obj.getShownName() + " : " + obj.getLastEdited();
 							} else if (intobj instanceof Template) {
-								name = " [Template] " + obj.getName() + " : " + obj.getLastEdited();
+								name = " [Template] " + obj.getShownName() + " : " + obj.getLastEdited();
 							}
 							
 							try {

@@ -179,12 +179,7 @@ public class RelationalField implements Openable{
 						String name = "";
 						if (obj != null) {
 							// TODO: Region should have hierarchy??
-							if (obj instanceof Npc) {
-								name = ((Npc) obj).getFullName();
-							} else {
-								name = obj.getName();
-								log.debug(name);
-							}
+							name = obj.getShownName();
 							if (searchResults.isEmpty()){
 								if (caller.getThing() instanceof Region)
 									name = ("Add Super Region");

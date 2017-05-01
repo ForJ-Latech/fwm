@@ -244,4 +244,8 @@ public class Event implements Searchable {
 	public void setLastEdited(Date lastEdited) {
 		this.lastEdited = lastEdited;
 	}
+
+	public String getShownName() {
+		return name;
+	}
 }

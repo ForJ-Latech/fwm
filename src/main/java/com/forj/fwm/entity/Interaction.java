@@ -31,9 +31,8 @@ public class Interaction implements Searchable{
 	public String toOneFiveJsonString(){
 		JsonHelper j = new JsonHelper();
 		j.addAttribute("id", getID());
-		j.addAttribute("name", getName());
+		j.addAttribute("name", getShownName());
 		j.addAttribute("description", getDescription());
-		j.addAttribute("name", getName());
 		j.addAttribute("class", this.getClass().getSimpleName());
 		return j.getString();
 	}
@@ -73,9 +72,9 @@ public class Interaction implements Searchable{
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public String getName() {
-		return description;
+	
+	public String getShownName(){
+		return this.getPlayerCharacter() + ": " + this.getDescription();
 	}
 
 	public String getImageFileName() {

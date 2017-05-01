@@ -81,4 +81,14 @@ public class Statblock implements Searchable{
 	public void setID(int id){
 		this.ID = id;
 	}
+
+	public String getShownName() {
+		if(this.name.length() >= 1){
+			return this.name.substring(1);
+		}
+		else
+		{
+			return this.name;
+		}
+	}
 }

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.MainController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.MainController">
    <children>
       <MenuBar fx:id="MenuBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="27.0" prefWidth="533.0">
          <menus>
@@ -25,26 +25,35 @@
                   <MenuItem mnemonicParsing="false" onAction="#exitApplication" text="Close Application" />
                </items>
             </Menu>
-            <Menu fx:id="GlobalSettingsMenu" mnemonicParsing="false" text="Global Settings">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Set Max Number of Tabs" />
-                  <MenuItem mnemonicParsing="false" onAction="#showHotkeySettings" text="Edit Hotkeys" />
-               </items>
-            </Menu>
-            <Menu fx:id="WorldSettingsMenu" mnemonicParsing="false" text="World Settings">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showWorldSettings" text="Open World Settings" />
-                  <MenuItem mnemonicParsing="false" onAction="#editGodStatblock" text="Edit World God Statblock" />
-                  <MenuItem mnemonicParsing="false" onAction="#editNPCStatblock" text="Edit World NPC Statblock" />
-                  <MenuItem mnemonicParsing="false" onAction="#editRegionStatblock" text="Edit World Region Statblock" />
-                  <MenuItem mnemonicParsing="false" onAction="#editGroupStatblock" text="Edit World Group Statblock" />
-               </items>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showHotkeySettings" text="Change Hotkeys" />
+                  <MenuItem mnemonicParsing="false" onAction="#showWorldSettings" text="Change World Settings" />
+                  <Menu fx:id="WorldSettingsMenu" mnemonicParsing="false" text="Modify Default Statblocks">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#editGodStatblock" text="God Statblock" />
+                        <MenuItem mnemonicParsing="false" onAction="#editNPCStatblock" text="NPC Statblock" />
+                        <MenuItem mnemonicParsing="false" onAction="#editRegionStatblock" text="Named Statblock" />
+                        <MenuItem mnemonicParsing="false" onAction="#editGroupStatblock" text="Group Statblock" />
+                     </items>
+                  </Menu>
+              </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Search">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#openPreviouslyEdited" text="List Previously Edited" />
                   <MenuItem mnemonicParsing="false" onAction="#openInteractions" text="List Interactions" />
                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Create">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#CreateTemplate" text="Template" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateNamedStatblock" text="Named Statblock" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateNPC" text="NPC" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateGod" text="God" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateEvent" text="Group" />
+                  <MenuItem mnemonicParsing="false" onAction="#CreateRegion" text="Region" />
+              </items>
             </Menu>
             <Menu fx:id="HelpMenu" mnemonicParsing="false" text="Help">
                <items>
@@ -76,19 +85,19 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="CreateRegionButton" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#CreateRegion" text="Region" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+                                    <Button fx:id="CreateRegionButton" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CreateRegion" text="Region" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                                        <GridPane.margin>
                                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                        </GridPane.margin></Button>
-                                    <Button fx:id="CreateNPCButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#CreateNPC" text="NPC" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                    <Button fx:id="CreateNPCButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateNPC" text="NPC" textAlignment="CENTER" wrapText="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                        <GridPane.margin>
                                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                        </GridPane.margin></Button>
-                                    <Button fx:id="CreateGodButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#CreateGod" text="God" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                    <Button fx:id="CreateGodButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateGod" text="God" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                        <GridPane.margin>
                                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                        </GridPane.margin></Button>
-                                    <Button fx:id="CreateEventButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#CreateEvent" text="Group" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                    <Button fx:id="CreateEventButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CreateEvent" text="Group" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                        <GridPane.margin>
                                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                        </GridPane.margin></Button>
