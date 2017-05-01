@@ -218,7 +218,7 @@ public class HotkeyController {
 				}
 				hotkeys.put(key, new Hotkey(key, value));
 			} catch (Exception e) {
-				log.debug(key + " had no correct default hotkey");
+				log.info(key + " had no set hotkey");
 				hotkeys.put(key, new Hotkey(key, value));
 				log.debug(e);
 			}
