@@ -370,7 +370,9 @@ public class MainController extends TabControlled implements Openable {
 		JettyController.close();
 		App.getShowPlayersController().closeWindow();
 		App.getStatBlockController().closeWindow();
-		ws.closeWindow();
+		if(ws != null){
+			ws.closeWindow();
+		}
 	}
 
 }

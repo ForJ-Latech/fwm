@@ -47,7 +47,6 @@ public class WorldConfig {
 	public static final String PASSWORD = "password";
 	public static final String RADIO10 = "radio10";
 	public static final String RADIO15 = "radio15";
-	public static final String RADIO20 = "radio20";
 	public static final String SHOWPLAYERSPOPUP = "showPlayersPopup";
 	public static final String MANUAL_SAVE_ONLY = "manualSavingOnly";
 	
@@ -64,16 +63,14 @@ public class WorldConfig {
 		builder.save();
 	}
 	
-	public static void saveRadios(boolean r10, boolean r15, boolean r20) throws ConfigurationException {
+	public static void saveRadios(boolean r10, boolean r15) throws ConfigurationException {
 		log.debug("saveJettyRadios");
 		config=builder.getConfiguration();
 		config.setProperty(RADIO10, r10);
 		config.setProperty(RADIO15, r15);
-		config.setProperty(RADIO20, r20);
 		builder.save();
 		log.debug("radio 1.0: " + config.getBoolean(RADIO10) + 
-				"\nradio 1.5: " + config.getBoolean(RADIO15) + 
-				"\nradio 2.0: " + config.getBoolean(RADIO20));
+				"\nradio 1.5: " + config.getBoolean(RADIO15));
 		
 	}
 
@@ -98,9 +95,6 @@ public class WorldConfig {
 	}
 	public static boolean getRad15() {
 		return config.getBoolean(RADIO15);
-	}
-	public static boolean getRad20() {
-		return config.getBoolean(RADIO20);
 	}
 	
 	public static boolean getShowPlayersPopup(){
