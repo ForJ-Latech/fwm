@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
+import com.forj.fwm.backend.DefaultStatblockBackend;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
@@ -426,7 +427,7 @@ public class NpcTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				npc.setStatblock(new Statblock());
-				npc.getStatblock().setDescription(MainController.NPCstat.getDescription());
+				npc.getStatblock().setDescription(DefaultStatblockBackend.getNpcStat().getDescription());
 			}	
 		App.getStatBlockController().show(npc.getStatblock(), this);
 		}

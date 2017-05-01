@@ -3,6 +3,7 @@ package com.forj.fwm.backend;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -47,11 +48,17 @@ import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.entity.Template;
+import com.forj.fwm.gui.InteractionList.ListController;
+import com.forj.fwm.gui.component.AddableImage;
+import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+
+import javafx.scene.control.Tab;
 
 public class Backend {
 	private static String connectionHeader = "jdbc:h2:";
@@ -77,7 +84,7 @@ public class Backend {
 	private static OMRegionRegionDao omRegionRegionDao;
 	private static RegionDao regionDao;
 	private static StatblockDao statblockDao;
-
+	
 	public static void start() {
 		connectionName = connectionHeader + App.worldFileUtil.getDbLocation();
 
@@ -128,12 +135,13 @@ public class Backend {
 			omRegionRegionDao = DaoManager.createDao(connectionSource, OMRegionRegion.class);
 			regionDao = DaoManager.createDao(connectionSource, Region.class);
 			statblockDao = DaoManager.createDao(connectionSource, Statblock.class);
+			DefaultStatblockBackend.createStatBlocks();
 		} catch (SQLException sqle) {
 			log.error(sqle.getMessage());
 		}
 		App.spdc = new ShowPlayersDataModel();
 	}
-
+		
 	public static ArrayList<Searchable> searchAllByLike(String name){
 		ArrayList<Searchable> results = new ArrayList<Searchable>();
 		try {

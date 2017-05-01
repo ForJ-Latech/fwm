@@ -9,8 +9,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName="STATBLOCK", daoClass = StatblockDaoImpl.class)
 public class Statblock implements Searchable{ 
-	@DatabaseField(generatedId = true)
-	private int ID = -1;
+	@DatabaseField(generatedId = true, allowGeneratedIdInsert = true)
+	private int ID = 0;
 	
 	@DatabaseField(width=100)
 	private String name;
@@ -76,5 +76,9 @@ public class Statblock implements Searchable{
 
 	public Date getLastEdited() {
 		return null;
+	}
+	
+	public void setID(int id){
+		this.ID = id;
 	}
 }

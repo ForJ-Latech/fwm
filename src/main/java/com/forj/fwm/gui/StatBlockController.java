@@ -57,18 +57,6 @@ public class StatBlockController extends TabControlled {
 	
 	public void show(Statblock s, Saveable b) throws Exception{
 		StatBlockTabController cr = StatBlockTabController.startStatBlockTabController(s, b);
-		if(s.getID() == MainController.NPCstat.getID()){
-			cr.tabHead.setText("Default NPC Statblock");
-		}
-		else if(s.getID() == MainController.GodStat.getID()){
-			cr.tabHead.setText("Default God Statblock");
-		}
-		else if(s.getID() == MainController.RegionStat.getID()){
-			cr.tabHead.setText("Default Region Statblock");
-		}
-		else if(s.getID() == MainController.GroupStat.getID()){
-			cr.tabHead.setText("Default Group Statblock");
-		}
 		addTabController(cr);
 		ourStage.requestFocus();
 	}

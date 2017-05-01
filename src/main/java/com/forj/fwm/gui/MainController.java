@@ -7,6 +7,7 @@ import java.net.URL;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
+import com.forj.fwm.backend.DefaultStatblockBackend;
 import com.forj.fwm.conf.HotkeyController;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Event;
@@ -83,15 +84,6 @@ public class MainController extends TabControlled implements Openable {
     private StatusBarController statusBarController;
     private WorldSettingsController ws;
     
-	public static Statblock NPCstat = new Statblock();
-	public static Statblock GodStat = new Statblock();
-	public static Statblock RegionStat = new Statblock();
-	public static Statblock GroupStat = new Statblock();
-	private Saveable save;
-	
-	
-	
-
 	private static boolean started = false;
 	private Stage ourStage;
 
@@ -106,7 +98,6 @@ public class MainController extends TabControlled implements Openable {
 	public SearchList getSearchList(){
 		return sl;
 	}
-
 	
 	public void startSearchList() throws Exception {
 		searchPane.getChildren().clear();
@@ -115,6 +106,7 @@ public class MainController extends TabControlled implements Openable {
 		searchPane.getChildren().add(sl.getOurRoot());
 	}
 
+	
 	public void start(Stage primaryStage, Pane rootLayout) throws Exception {
 		primaryStage.setTitle("Fantasy World Manager");
 		primaryStage.getIcons()
@@ -149,11 +141,6 @@ public class MainController extends TabControlled implements Openable {
 			
 			}
 		});
-
-		Backend.getStatblockDao().createIfNotExists(NPCstat);
-		Backend.getStatblockDao().createIfNotExists(GodStat);
-		Backend.getStatblockDao().createIfNotExists(RegionStat);
-		Backend.getStatblockDao().createIfNotExists(GroupStat);
 	}
 
 	public static MainController startMainUi() throws Exception {
@@ -257,25 +244,25 @@ public class MainController extends TabControlled implements Openable {
 	@FXML
 	public void editNPCStatblock() throws Exception{
 		log.debug("Edit NPC Statblock called");
-		App.getStatBlockController().show(NPCstat, save);
+		App.getStatBlockController().show(DefaultStatblockBackend.getNpcStat(), DefaultStatblockBackend.getNpcDefaultSaveable());
 	}
 	
 	@FXML
 	public void editGodStatblock() throws Exception{
 		log.debug("Edit God Statblock called");
-		App.getStatBlockController().show(GodStat, save);
+		App.getStatBlockController().show(DefaultStatblockBackend.getGodStat(),  DefaultStatblockBackend.getGodDefaultSaveable());
 	}
 	
 	@FXML
 	public void editRegionStatblock() throws Exception{
 		log.debug("Edit Region Statblock called");
-		App.getStatBlockController().show(RegionStat, save);
+		App.getStatBlockController().show(DefaultStatblockBackend.getRegionStat(),  DefaultStatblockBackend.getRegionDefaultSaveable());
 	}
 	
 	@FXML
 	public void editGroupStatblock() throws Exception{
 		log.debug("Edit Group Statblock called");
-		App.getStatBlockController().show(GroupStat, save);
+		App.getStatBlockController().show(DefaultStatblockBackend.getGroupStat(),  DefaultStatblockBackend.getGroupDefaultSaveable());
 	}
 	
 	@FXML

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
+import com.forj.fwm.backend.DefaultStatblockBackend;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
@@ -444,7 +445,7 @@ public class RegionTabController implements Saveable {
 			{
 				log.debug("statblock is null.");
 				region.setStatblock(new Statblock());
-				region.getStatblock().setDescription(MainController.RegionStat.getDescription());
+				region.getStatblock().setDescription(DefaultStatblockBackend.getRegionStat().getDescription());
 			}	
 			App.getStatBlockController().show(region.getStatblock(), this);
 		}

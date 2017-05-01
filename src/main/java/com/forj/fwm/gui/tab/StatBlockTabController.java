@@ -70,9 +70,9 @@ public class StatBlockTabController implements Saveable {
 			Backend.getStatblockDao().refresh(stat);
 			log.debug("Save successfull!");
 			log.debug("stat id: " + stat.getID());
-			log.debug("truth: " + stat.getDescription());
+			log.debug("description: " + stat.getDescription());
 			App.getMainController().addStatus("Successfully saved Statblock " + stat.getName() + " ID: " + stat.getID());
-			//beSaved.simpleSave();
+			beSaved.simpleSave();
 		}catch(SQLException e){
 			log.error(e.getStackTrace());
 		}
@@ -83,11 +83,6 @@ public class StatBlockTabController implements Saveable {
 		stat = s;
 		this.beSaved = beSaved ;
 		log.debug("Stat ID:" + s.getID());
-		log.debug("NPCstat ID:" + MainController.NPCstat.getID());
-		if(s.getID() != MainController.NPCstat.getID() && s.getID() != MainController.GodStat.getID() && s.getID() != MainController.RegionStat.getID() && s.getID() != MainController.GroupStat.getID()){			
-			this.tabHead.setText(((Searchable)beSaved.getThing()).getName());
-		}
-		
 		setAllTexts(stat);
 		
 		thingsThatCanChange = new TextInputControl[] {nameText, statBlockText};
@@ -100,22 +95,19 @@ public class StatBlockTabController implements Saveable {
 	
 	private void setAllTexts(Statblock s){
 		if(stat.getName() == null || stat.getName().equals("")){
-			System.out.println("1");
 			nameArea.setVisible(false);
 			mainVbox.getChildren().remove(nameArea);
+			tabHead.setText(beSaved.getThing().getName());
 		}
 		else
 		{
-			System.out.println("2");
 			if(!mainVbox.getChildren().contains(nameArea)){
-				System.out.println("3");
 				mainVbox.getChildren().add(0, nameArea);
 			}
-			System.out.println("4");
 			nameArea.setVisible(true);
 			nameText.setText(stat.getName());
+			tabHead.setText(stat.getName());
 		}
-		System.out.println("5");
 		statBlockText.setText(stat.getDescription());
 		log.debug(stat.getDescription());
 	}
