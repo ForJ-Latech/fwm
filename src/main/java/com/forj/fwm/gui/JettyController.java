@@ -76,7 +76,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 	private boolean firstTime;
     private TrayIcon trayIcon;
 	
-    private Stage ourStage;
+    private static Stage ourStage;
     
 	private static boolean started = false;
 	
@@ -106,6 +106,19 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 			closeWindow(e);
 		}
 	};
+	
+	public static void close(){
+		log.debug("Jetty Controller is closing");
+        try {
+        	Platform.setImplicitExit(true);
+     	   started = false;
+     	   server.stop();
+     	   server.join();
+     	   ourStage.close();
+	   } catch (Exception e1) {
+		   e1.printStackTrace();
+	   }
+	}
 	
 	private void closeWindow(WindowEvent e){
 		log.debug("Jetty Controller is closing");

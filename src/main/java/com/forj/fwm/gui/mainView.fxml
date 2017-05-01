@@ -20,7 +20,7 @@
          <menus>
             <Menu fx:id="FileMenu" mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Change World" />
+                  <MenuItem mnemonicParsing="false" onAction="#selectWorld" text="Select World" />
                   <MenuItem mnemonicParsing="false" onAction="#startWebservice" text="Start Webservice" />
                   <MenuItem mnemonicParsing="false" onAction="#exitApplication" text="Close Application" />
                </items>

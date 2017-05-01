@@ -29,7 +29,10 @@ public class ComponentSelectorController{
 	private static Logger log = Logger.getLogger(ComponentSelectorController.class);
 	private Stage primaryStage;
 	private Pane myPane;
-	
+	private static WorldSelector worldSelector;
+	public static WorldSelector getWorldSelector(){
+		return worldSelector;
+	}
 	public void start(Stage primaryStage, Pane myPane) throws Exception {
 		this.myPane = myPane;
 		this.primaryStage = primaryStage;
@@ -45,7 +48,7 @@ public class ComponentSelectorController{
 		// if we're in production, we need to start the app correctly. 
 		if (App.getProd() || AppConfig.getStartTest()) {
 			App.worldFileUtil = new WorldFileUtil(chosenLocation);
-			WorldSelector s = WorldSelector.startWorldSelector(new Stage(), this);
+			worldSelector = WorldSelector.startWorldSelector(new Stage(), this);
 			File selectedDirectory = null ;
 		} else {
 			// otherwise assume that we want to start both things. 
@@ -70,7 +73,7 @@ public class ComponentSelectorController{
 		}
 		else
 		{
-			WorldSelector s = WorldSelector.startWorldSelector(primaryStage, this);
+			worldSelector = WorldSelector.startWorldSelector(primaryStage, this);
 		}
 	}
 	

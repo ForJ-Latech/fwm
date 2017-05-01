@@ -54,6 +54,12 @@ public class App extends Application {
 	
 	private static MainController mc;
 	
+	private static ComponentSelectorController componentSelectorController;
+	
+	public static ComponentSelectorController getComponentSelectorController(){
+		return componentSelectorController;
+	}
+	
 	private static ShowPlayersController showPlayersController;
 	
 	public static ShowPlayersController getShowPlayersController(){
@@ -164,10 +170,9 @@ public class App extends Application {
 		loader.setLocation(getClass().getResource("startup.fxml"));
 		AnchorPane rootLayout = (AnchorPane)loader.load();
 		
-		ComponentSelectorController cr = (ComponentSelectorController)loader.getController();
-		cr.start(primaryStage, rootLayout);
+		componentSelectorController = (ComponentSelectorController)loader.getController();
+		componentSelectorController.start(primaryStage, rootLayout);
 	}
-	
 
 	public static MainController getMainController(){
 		return mc;

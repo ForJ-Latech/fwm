@@ -102,6 +102,10 @@ public class WorldSelector {
 		primaryStage.show();
 	}
 	
+	public void selectWorld(){
+		primaryStage.show();
+	}
+	
 	public static WorldSelector startWorldSelector(Stage primaryStage, ComponentSelectorController ds) throws IOException{
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(WorldSelector.class.getResource("worldSelector.fxml"));

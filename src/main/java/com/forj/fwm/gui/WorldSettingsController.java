@@ -24,14 +24,15 @@ public class WorldSettingsController {
 	@FXML private RadioButton popUpOn, popUpOff, manualSaveOn, manualSaveOff;
 	
 	@FXML private Label manualSaveLabel;
-	
+	private Stage ourStage;
 	final ToggleGroup popUp = new ToggleGroup();
 	final ToggleGroup manualSaveGroup = new ToggleGroup();
 	
 	// Method called on wrong thread for servers to be started
 	// started on GUI thread.
     public void start(Stage primaryStage, Pane rootLayout, String title) throws Exception {
-       primaryStage.setTitle(title);
+       ourStage = primaryStage;
+    	primaryStage.setTitle(title);
        Scene myScene = new Scene(rootLayout);
        primaryStage.setScene(myScene);
        primaryStage.show();
@@ -79,5 +80,8 @@ public class WorldSettingsController {
 	
 	public static Boolean getOpen(){
 		return isOpen;
+	}
+	public void closeWindow(){
+		ourStage.close();
 	}
 }

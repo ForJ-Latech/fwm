@@ -29,6 +29,8 @@ import com.forj.fwm.gui.tab.StatBlockTabController;
 import com.forj.fwm.gui.tab.TemplateTabController;
 import com.forj.fwm.gui.tab.WelcomeTabController;
 import com.forj.fwm.startup.App;
+import com.forj.fwm.startup.ComponentSelectorController;
+import com.forj.fwm.startup.WorldSelector;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -79,7 +81,8 @@ public class MainController extends TabControlled implements Openable {
     private StackPane statusStackPane;
    
     private StatusBarController statusBarController;
-
+    private WorldSettingsController ws;
+    
 	public static Statblock NPCstat = new Statblock();
 	public static Statblock GodStat = new Statblock();
 	public static Statblock RegionStat = new Statblock();
@@ -248,7 +251,7 @@ public class MainController extends TabControlled implements Openable {
 	@FXML
 	public void showWorldSettings() throws Exception{
 		log.debug("World Settings called");
-		WorldSettingsController.startWorldSettingsController();
+		ws = WorldSettingsController.startWorldSettingsController();
 	}
 	
 	@FXML
@@ -359,4 +362,14 @@ public class MainController extends TabControlled implements Openable {
 			e.printStackTrace();
 		}
 	}
+	@FXML
+	public void selectWorld(){
+		ComponentSelectorController.getWorldSelector().selectWorld();
+		ourStage.close();
+		JettyController.close();
+		App.getShowPlayersController().closeWindow();
+		App.getStatBlockController().closeWindow();
+		ws.closeWindow();
+	}
+
 }

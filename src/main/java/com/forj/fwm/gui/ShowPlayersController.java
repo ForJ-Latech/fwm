@@ -88,7 +88,10 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	public boolean isShowing(){
 		return ourStage.isShowing();
 	}
-
+	
+	public void closeWindow(){
+		ourStage.close();
+	}
 	
 	@FXML
 	public void back() {

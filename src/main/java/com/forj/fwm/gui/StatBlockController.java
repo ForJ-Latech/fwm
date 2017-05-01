@@ -80,4 +80,7 @@ public class StatBlockController extends TabControlled {
 	public Stage getStage(){
 		return ourStage;
 	}
+	public void closeWindow(){
+		ourStage.close();
+	}
 }
