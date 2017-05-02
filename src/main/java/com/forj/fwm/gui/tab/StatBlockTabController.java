@@ -32,6 +32,7 @@ public class StatBlockTabController implements Saveable {
 	private TextInputControl[] thingsThatCanChange; 
 	private Statblock stat;
 	private Saveable beSaved;
+	private boolean wasNamed = false;
 	
 	@FXML VBox mainVbox;
 	@FXML public Tab tabHead;
@@ -75,8 +76,7 @@ public class StatBlockTabController implements Saveable {
 			return;
 		}
 		try{
-			Backend.getStatblockDao().createIfNotExists(stat);
-			Backend.getStatblockDao().update(stat);
+			Backend.getStatblockDao().createOrUpdate(stat);
 			Backend.getStatblockDao().refresh(stat);
 			log.debug("Save successfull!");
 			log.debug("stat id: " + stat.getID());
@@ -102,17 +102,15 @@ public class StatBlockTabController implements Saveable {
 		for(TextInputControl c: thingsThatCanChange){
 			c.setOnKeyReleased(saveEvent);
 		}
-		
 	}
-	private boolean wasNamed = false;
+	
 	private void setAllTexts(Statblock s){
-		if(stat.getName() == null || "".equals(stat.getName())){
+		if(stat.getName() == null || "".equals(stat.getName())) {
 			nameArea.setVisible(false);
 			mainVbox.getChildren().remove(nameArea);
 			tabHead.setText(beSaved.getThing().getShownName());
 		}
-		else
-		{
+		else {
 			wasNamed = true;
 			if(!mainVbox.getChildren().contains(nameArea)){
 				mainVbox.getChildren().add(0, nameArea);
@@ -134,15 +132,27 @@ public class StatBlockTabController implements Saveable {
 		StatBlockTabController cr = (StatBlockTabController)loader.getController();
 		cr.start(rootLayout, s, beSaved);
 		return cr;
-		
 	}
 
+	public void nameFocus(){
+		log.debug("Focus from statblock");
+		App.getMainController().getStage().requestFocus();
+	}
+	
 	public Searchable getThing() {
 		return stat;
 	}
 
 	public Tab getTab() {
 		return tabHead;
+	}
+	
+	public void simpleSave() {
+		fullSave();
+	}
+
+	public void relationalSave() {
+		fullSave();
 	}
 	
 	public AddableImage getAddableImage() {
@@ -152,20 +162,7 @@ public class StatBlockTabController implements Saveable {
 	public ListController getListController(){
 		return null;
 	}
-
-	public void simpleSave() {
-		fullSave();
-		
-	}
-
-	public void relationalSave() {
-		fullSave();
-	}
 	
-	public void nameFocus(){
-		log.debug("Focus from statblock");
-		App.getMainController().getStage().requestFocus();
-	}
 	public AddableSound getAddableSound(){
 		return null;
 	}

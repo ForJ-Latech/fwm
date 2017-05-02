@@ -11,7 +11,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	fixImageContainerWidthHeight();
 });
 
 function searchvalue(text){
@@ -67,7 +66,7 @@ function fillDiv(lcont, data){
 		dval.remove();
 	});
 	$.each(data, function(d, dval){
-		lcont.append('<div class="row listItem ' + dval.class + '" onclick="open' + 
+		lcont.append('<div class="col-xs-12 col-md-12 listItem ' + dval.class + '" onclick="open' + 
 		dval.class + '(' + dval.id + ');"><img src="/webservice1_0bs/multimediaImage/' + dval.imageFileName + '" class="listImage"/>&nbsp;' + dval.name + "&nbsp;</div>");
 		
 	});
@@ -76,7 +75,7 @@ function fillDiv(lcont, data){
 // arguably spaghetti, but prevents us from needing to copy and paste changes multiple places. 
 function makeCell(container, dval){
 	if(dval != null) {
-		container.append('<div class="row listItem ' + dval.class + '" onclick="open' + 
+		container.append('<div class="col-xs-12 col-md-12 listItem ' + dval.class + '" onclick="open' + 
 		dval.class + '(' + dval.id + ');"><img src="/webservice1_0bs/multimediaImage/' + dval.imageFileName + '" class="listImage"/>&nbsp;' + dval.name + "&nbsp;</div>");
 		
 	}
@@ -93,11 +92,12 @@ function applyBasicAttributes(data){
 	});	
 	var imgCont = $('#imagecontainer');
 	// need to use .attr here because computed width will be zero if no elements inside div. 
-	var width=imgCont.attr('width');
-	var height = imgCont.attr('height');
+	var width = $(document).width() / 3;
+	var height = ($(document).height() - $('.navbar').height()) * 3 / 5;
+	console.debug(width + " " + height);
 	$('#imagecontainer').append('<img id="image" src="/webservice1_0bs/multimediaImage/' + data.imageFileName + '"/>');
 	calculateWidthHeightImg(width, height, $('#image'));
-	fixImageContainerWidthHeight();
+	
 }
 
 // it will call open + class name, we need to make more of these. 
@@ -232,6 +232,7 @@ function fixImageContainerWidthHeight(event){
 	} 
 	else
 	{
+		$('#image').css('max-width', 'none');
 		var width = $(document).width() / 3;
 		var height = ($(document).height() - $('.navbar').height()) * 3 / 5;
 		$('#imagecontainer').attr('width', width); 
@@ -243,3 +244,4 @@ function fixImageContainerWidthHeight(event){
 		}
 	}
 }
+

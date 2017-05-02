@@ -19,6 +19,7 @@ import org.springframework.web.servlet.*;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.ShowPlayersDataModel;
+import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
@@ -33,13 +34,10 @@ import com.j256.ormlite.stmt.SelectArg;
 public class Webservice1_5Controller {
 	private static Logger log = Logger.getLogger(Webservice1_5Controller.class);
 
-	private enum gameObject {
-		Npc, Event, God, Region;
-	}
-	
 	@RequestMapping("/webservice1_5")
 	public ModelAndView startWS1_5(ModelMap modelMap, HttpServletRequest request) throws Exception {
 		return new ModelAndView("views/webservice1_5.html");
+
 	}
 	
 	@RequestMapping("searchAll/{text}")
@@ -223,6 +221,9 @@ public class Webservice1_5Controller {
 		// because null will always be fine to show, lmao. 
 		if(s == null){
 			return false;
+		} else if (!WorldConfig.getRad15()) {
+			validateWS1_5("");
+			return false;
 		}
 		return s.isShown();
 	}
@@ -245,4 +246,15 @@ public class Webservice1_5Controller {
 		help.addRawString(key, events.toString());
 		
 	}
+	
+	private static ModelAndView validateWS1_5(String dest) {
+		
+		if (WorldConfig.getRad15() && dest != ""){
+			return new ModelAndView(dest);
+		} else {
+			return new ModelAndView("error");
+		}
+		
+	}
+	
 }

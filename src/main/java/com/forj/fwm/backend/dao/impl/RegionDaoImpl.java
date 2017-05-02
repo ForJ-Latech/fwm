@@ -96,7 +96,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		if (region.getNpcs() != null && !region.getNpcs().isEmpty()) {
 			List<MMRegionNpc> relations = new ArrayList<MMRegionNpc>();
 			for (Npc npc : region.getNpcs()) {
-				Backend.getNpcDao().createOrUpdate(npc);
+				Backend.getNpcDao().createIfNotExists(npc);
 				relations.add(new MMRegionNpc(region, npc));
 			}
 			for (MMRegionNpc relation : relations) {
@@ -107,7 +107,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		if (region.getGods() != null && !region.getGods().isEmpty()) {
 			List<MMRegionGod> relations = new ArrayList<MMRegionGod>();
 			for (God god : region.getGods()) {
-				Backend.getGodDao().createOrUpdate(god);
+				Backend.getGodDao().createIfNotExists(god);
 				relations.add(new MMRegionGod(region, god));
 			}
 			for (MMRegionGod relation : relations) {
@@ -118,7 +118,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		if (region.getInteractions() != null && !region.getInteractions().isEmpty()) {
 			List<OMRegionInteraction> relations = new ArrayList<OMRegionInteraction>();
 			for (Interaction interaction : region.getInteractions()) {
-				Backend.getInteractionDao().createOrUpdate(interaction);
+				Backend.getInteractionDao().createIfNotExists(interaction);
 				relations.add(new OMRegionInteraction(region, interaction));
 			}
 			for (OMRegionInteraction relation : relations) {
@@ -129,7 +129,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		if (region.getSubRegions() != null && !region.getSubRegions().isEmpty()) {
 			List<OMRegionRegion> relations = new ArrayList<OMRegionRegion>();
 			for (Region subRegion : region.getSubRegions()) {
-				Backend.getRegionDao().createOrUpdate(subRegion);
+				Backend.getRegionDao().createIfNotExists(subRegion);
 				relations.add(new OMRegionRegion(region, subRegion));
 			}
 			for (OMRegionRegion relation : relations) {
@@ -140,7 +140,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		if (region.getTemplates() != null && !region.getTemplates().isEmpty()) {
 			List<MMTemplateRegion> relations = new ArrayList<MMTemplateRegion>();
 			for (Template template : region.getTemplates()) {
-				Backend.getTemplateDao().createOrUpdate(template);
+				Backend.getTemplateDao().createIfNotExists(template);
 				relations.add(new MMTemplateRegion(template, region));
 			}
 			for (MMTemplateRegion relation : relations) {

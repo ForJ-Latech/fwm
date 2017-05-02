@@ -72,7 +72,7 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 		if (template.getEvents() != null && !template.getEvents().isEmpty()) {
 			List<MMTemplateEvent> relations = new ArrayList<MMTemplateEvent>();
 			for (Event event : template.getEvents()) {
-				Backend.getEventDao().createOrUpdate(event);
+				Backend.getEventDao().createIfNotExists(event);
 				relations.add(new MMTemplateEvent(template, event));
 			}
 			for (MMTemplateEvent relation : relations) {
@@ -83,7 +83,7 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 		if (template.getGods() != null && !template.getGods().isEmpty()) {
 			List<MMTemplateGod> relations = new ArrayList<MMTemplateGod>();
 			for (God god : template.getGods()) {
-				Backend.getGodDao().createOrUpdate(god);
+				Backend.getGodDao().createIfNotExists(god);
 				relations.add(new MMTemplateGod(template, god));
 			}
 			for (MMTemplateGod relation : relations) {
@@ -94,7 +94,7 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 		if (template.getRegions() != null && !template.getRegions().isEmpty()) {
 			List<MMTemplateRegion> relations = new ArrayList<MMTemplateRegion>();
 			for (Region region : template.getRegions()) {
-				Backend.getRegionDao().createOrUpdate(region);
+				Backend.getRegionDao().createIfNotExists(region);
 				relations.add(new MMTemplateRegion(template, region));
 			}
 			for (MMTemplateRegion relation : relations) {

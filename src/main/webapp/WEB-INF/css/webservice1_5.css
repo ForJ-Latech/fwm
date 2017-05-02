@@ -59,7 +59,9 @@ body{
 }
 
 img	{	
-	margin:auto; 
+	/* margin:auto; */ 
+	margin-left: auto;
+	margin-right: auto;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 	
@@ -73,9 +75,8 @@ img	{
     vertical-align: top;
 }
 
-.listItem{
-/* 	width:45%; */
-	display:inline-block;
+.listItem {
+	max-width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 	font-weight: normal;
@@ -83,11 +84,18 @@ img	{
 	background-color: #f2f2f2;
 	border: 2px double white;
 }
-.listImage{
+.listImage {
 	width:32px;
 	height:32px;
 	max-width:32px;
 	max-height:32px;
+	float: left;
+}
+
+#image {
+	max-width: 100%;
+	display: block;
+	
 }
 
 /* Jesus help me  */

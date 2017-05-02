@@ -33,8 +33,8 @@ public class InteractionDaoImpl extends BaseDaoImpl<Interaction,String> implemen
 	}
 	
 	@Override
-	public CreateOrUpdateStatus createOrUpdate(Interaction i) throws SQLException {
+	public int create(Interaction i) throws SQLException {
 		i.setLastEdited(new Date());
-		return super.createOrUpdate(i);
+		return super.create(i);
 	}
 }

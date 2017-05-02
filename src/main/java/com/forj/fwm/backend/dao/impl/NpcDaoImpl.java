@@ -68,14 +68,14 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 	
 	public void saveFullNpc(Npc npc) throws SQLException {
 		this.createOrUpdateWLE(npc);
-		saveRelationalNpc(npc);
+		this.saveRelationalNpc(npc);
 	}
 	
 	public void saveRelationalNpc(Npc npc) throws SQLException{
 		if (npc.getInteractions() != null && !npc.getInteractions().isEmpty()) {
 			List<OMNpcInteraction> relations = new ArrayList<OMNpcInteraction>();
 			for (Interaction interaction : npc.getInteractions()) {
-				Backend.getInteractionDao().createOrUpdate(interaction);
+				Backend.getInteractionDao().createIfNotExists(interaction);
 				relations.add(new OMNpcInteraction(npc, interaction));
 			}
 			for (OMNpcInteraction relation : relations) {
@@ -86,7 +86,7 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 		if (npc.getRegions() != null && !npc.getRegions().isEmpty()) {
 			List<MMRegionNpc> relations = new ArrayList<MMRegionNpc>();
 			for (Region region : npc.getRegions()) {
-				Backend.getRegionDao().createOrUpdate(region);
+				Backend.getRegionDao().createIfNotExists(region);
 				relations.add(new MMRegionNpc(region, npc));
 			}
 			for (MMRegionNpc relation : relations) {
@@ -97,7 +97,7 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 		if (npc.getEvents() != null && !npc.getEvents().isEmpty()) {
 			List<MMEventNpc> relations = new ArrayList<MMEventNpc>();
 			for (Event event : npc.getEvents()) {
-				Backend.getEventDao().createOrUpdate(event);
+				Backend.getEventDao().createIfNotExists(event);
 				relations.add(new MMEventNpc(event, npc));
 			}
 			for (MMEventNpc relation : relations) {
