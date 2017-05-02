@@ -36,8 +36,16 @@ public class Webservice1_5Controller {
 
 	@RequestMapping("/webservice1_5")
 	public ModelAndView startWS1_5(ModelMap modelMap, HttpServletRequest request) throws Exception {
-		return new ModelAndView("views/webservice1_5.html");
+		return validateWS1_5("views/webservice1_5.html");
 
+	}
+	
+	private static ModelAndView validateWS1_5(String dest) {
+		if (WorldConfig.getRad15() && dest != ""){
+			return new ModelAndView(dest);
+		} else {
+			return new ModelAndView("views/error.html");
+		}
 	}
 	
 	@RequestMapping("searchAll/{text}")
@@ -222,7 +230,6 @@ public class Webservice1_5Controller {
 		if(s == null){
 			return false;
 		} else if (!WorldConfig.getRad15()) {
-			validateWS1_5("");
 			return false;
 		}
 		return s.isShown();
@@ -246,15 +253,4 @@ public class Webservice1_5Controller {
 		help.addRawString(key, events.toString());
 		
 	}
-	
-	private static ModelAndView validateWS1_5(String dest) {
-		
-		if (WorldConfig.getRad15() && dest != ""){
-			return new ModelAndView(dest);
-		} else {
-			return new ModelAndView("error");
-		}
-		
-	}
-	
 }
