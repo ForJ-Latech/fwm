@@ -20,8 +20,17 @@
                <children>
                   <HBox alignment="CENTER" fillHeight="false" prefHeight="36.0" spacing="20.0" VBox.vgrow="NEVER">
                      <children>
-                        <TextField fx:id="name" promptText="Template Name" />
-                        <Button mnemonicParsing="false" onAction="#newFromTemplate" text="New From Template" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newFromTemplate" text="New From Template" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="name" promptText="Template Name" HBox.hgrow="NEVER" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#openStatblock" text="Statblock" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
                      </children>
                   </HBox>
                   <HBox VBox.vgrow="NEVER">

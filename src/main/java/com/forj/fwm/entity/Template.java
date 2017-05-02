@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.dao.impl.TemplateDaoImpl;
 import com.forj.fwm.web.JsonHelper;
 import com.j256.ormlite.field.DatabaseField;
@@ -113,6 +114,13 @@ public class Template implements Searchable {
 		
 		if (age != null) {
 			npc.setAge(randomize(age));
+		}
+		
+		if(statblock != null){
+			Statblock s = new Statblock();
+			Statblock cur = Backend.getStatblockDao().queryForSameId(statblock);
+			s.setDescription(randomize(cur.getDescription()));
+			npc.setStatblock(s);
 		}
 		
 		return npc;

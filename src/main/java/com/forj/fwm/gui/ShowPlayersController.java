@@ -174,10 +174,15 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	}
 	
 	private void setImage(String newImageFileName) {
-		if (newImageFileName == "" || newImageFileName == null) return;
-		File newImageFile = App.worldFileUtil.findMultimedia(newImageFileName);
-		Image newImage = new Image(newImageFile.toURI().toString());
-		image.setImage(newImage);
+		if (newImageFileName == "" || newImageFileName == null){
+			image.setImage(new Image(App.retGlobalResource("/src/main/ui/no_image.png").toString()));
+		} 
+		else
+		{
+			File newImageFile = App.worldFileUtil.findMultimedia(newImageFileName);
+			Image newImage = new Image(newImageFile.toURI().toString());
+			image.setImage(newImage);
+		}
 	}
 	
 	public void setObject(ShowPlayersDataModel.ShowData obj) {
@@ -197,19 +202,13 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 			newDescription = ((Region) currObject).getDescription();
 			newImage = ((Region) currObject).getImageFileName();
 		} else if (currObject instanceof Npc){
-			if(((Npc) currObject).getlName() != null)
-			{
-				newName = ((Npc) currObject).getfName() + " " + ((Npc) currObject).getlName();
-			}	
-			else
-			{
-				newName = ((Npc) currObject).getfName();
-			}
+			newName = ((Npc) currObject).getShownName();	
 			newDescription = ((Npc) currObject).getDescription();
 			newImage = ((Npc) currObject).getImageFileName();
 		} else if (currObject instanceof Event){
 			newName = ((Event) currObject).getName();
 			newDescription = ((Event) currObject).getDescription();
+			newImage = ((Event)currObject).getImageFileName();
 		}
 		
 		setName(newName);

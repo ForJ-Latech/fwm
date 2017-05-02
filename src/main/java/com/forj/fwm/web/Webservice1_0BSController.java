@@ -31,7 +31,7 @@ import com.google.gson.Gson;
 @Controller
 public class Webservice1_0BSController {
 
-	private static Logger log = Logger.getLogger(Webservice1_0Controller.class);
+	private static Logger log = Logger.getLogger(Webservice1_0BSController.class);
 	private static ShowPlayersDataModel.ShowData showdata;
 
 	private enum gameObject {

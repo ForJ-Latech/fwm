@@ -213,6 +213,10 @@ public class NpcTabController implements Saveable {
 			return;
 		}
 		try{
+			// handle if we were made from the template, need to preserve the templated statblock.
+			if(npc.getID() == -1 && npc.getStatblock() != null){
+				Backend.SaveSimpleSearchable(npc.getStatblock());
+			}
 			Backend.SaveSimpleSearchable(npc);
 			log.debug("Save successfull!");
 			log.debug("npc id: " + npc.getID());
@@ -348,7 +352,7 @@ public class NpcTabController implements Saveable {
 	}
 
 	private void setAllTexts(Npc npc){
-		if(npc.getStatblock() != null)
+		if(npc.getStatblock() != null && npc.getID() != -1)
 		{
 			try {
 				npc.setStatblock(Backend.getStatblockDao().queryForSameId(npc.getStatblock()));

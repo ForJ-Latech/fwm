@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
+import com.forj.fwm.backend.DefaultStatblockBackend;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
+import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
@@ -111,7 +113,6 @@ public class TemplateTabController implements Saveable{
 			try {
 				template.setStatblock(Backend.getStatblockDao().queryForSameId(template.getStatblock()));
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				log.error(e);
 			}
 		}
@@ -224,6 +225,21 @@ public class TemplateTabController implements Saveable{
 		n.setInteractions(new ArrayList<Interaction>());
 		n.setRegions(new ArrayList<Region>());
 		open.open(n);
+	}
+	
+	@FXML
+	public void openStatblock() throws Exception{
+		log.debug("inside template open statblock.");
+		Statblock s = null;
+		if(template.getStatblock() != null){
+			s = Backend.getStatblockDao().queryForSameId(template.getStatblock());
+		}else{
+			s = new Statblock();
+			s.setDescription(DefaultStatblockBackend.getNpcStat().getDescription());
+		}
+		template.setStatblock(s);
+		StatBlockTabController cr = StatBlockTabController.startStatBlockTabController(s, this);
+		App.getStatBlockController().addTabController(cr);
 	}
 	
 	public Tab getTab(){
