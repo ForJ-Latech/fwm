@@ -4,6 +4,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.conf.WorldConfig;
+import com.forj.fwm.startup.App;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,12 +22,13 @@ public class WorldSettingsController {
 	protected static Logger log = Logger.getLogger(ShowPlayersController.class);
 	protected static Boolean isOpen = false;
 	
-	@FXML private RadioButton popUpOn, popUpOff, manualSaveOn, manualSaveOff;
+	@FXML private RadioButton popUpOn, popUpOff, manualSaveOn, manualSaveOff, darkModeOn, darkModeOff;
 	
-	@FXML private Label manualSaveLabel;
+	@FXML private Label manualSaveLabel, darkModeLabel;
 	private Stage ourStage;
 	final ToggleGroup popUp = new ToggleGroup();
 	final ToggleGroup manualSaveGroup = new ToggleGroup();
+	final ToggleGroup darkModeGroup = new ToggleGroup();
 	
 	// Method called on wrong thread for servers to be started
 	// started on GUI thread.
@@ -36,6 +38,7 @@ public class WorldSettingsController {
        Scene myScene = new Scene(rootLayout);
        primaryStage.setScene(myScene);
        primaryStage.show();
+       
        popUpOn.setToggleGroup(popUp);
        popUpOff.setToggleGroup(popUp);
        if(WorldConfig.getShowPlayersPopup()) {
@@ -51,6 +54,14 @@ public class WorldSettingsController {
     	   manualSaveOn.setSelected(true);
        }else{
     	   manualSaveOff.setSelected(true);
+       }
+       
+       darkModeOn.setToggleGroup(darkModeGroup);
+       darkModeOff.setToggleGroup(darkModeGroup);
+       if(WorldConfig.getDarkMode()){
+    	   darkModeOn.setSelected(true);
+       }else{
+    	   darkModeOff.setSelected(true);
        }
        
        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -76,6 +87,14 @@ public class WorldSettingsController {
 	
 	public void setManualSave() throws ConfigurationException{
 		WorldConfig.setManualSaveOnly(manualSaveOn.isSelected());
+	}
+	
+	public void setDarkMode() throws ConfigurationException{
+		WorldConfig.setDarkMode(darkModeOn.isSelected());
+		App.getMainController().setDark(darkModeOn.isSelected());
+		JettyController.setDark(darkModeOn.isSelected());
+		ShowPlayersController.setDark(darkModeOn.isSelected());
+		
 	}
 	
 	public static Boolean getOpen(){
