@@ -12,4 +12,5 @@ public interface EventDao extends Dao<Event,String> {
 	public Event getFullEvent(int id) throws SQLException;
 	public void saveFullEvent(Event event) throws SQLException;
 	public void saveRelationalEvent(Event event) throws SQLException;
+	public CreateOrUpdateStatus createOrUpdateWLE(Event e) throws SQLException;
 }

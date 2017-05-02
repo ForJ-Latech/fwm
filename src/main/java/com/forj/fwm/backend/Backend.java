@@ -3,7 +3,6 @@ package com.forj.fwm.backend;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -48,17 +47,11 @@ import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.entity.Template;
-import com.forj.fwm.gui.InteractionList.ListController;
-import com.forj.fwm.gui.component.AddableImage;
-import com.forj.fwm.gui.component.AddableSound;
-import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-
-import javafx.scene.control.Tab;
 
 public class Backend {
 	private static String connectionHeader = "jdbc:h2:";
@@ -169,16 +162,16 @@ public class Backend {
 	public static void SaveSimpleSearchable(Searchable s) throws SQLException{
 		log.debug("saving simple searchable of type " + s.getClass().getSimpleName() + " with id: " + s.getID());
 		if(s instanceof Npc){
-			npcDao.createOrUpdate((Npc)s);
+			npcDao.createOrUpdateWLE((Npc)s);
 			npcDao.refresh((Npc)s);
 		}else if(s instanceof God){
-			godDao.createOrUpdate((God)s);
+			godDao.createOrUpdateWLE((God)s);
 			godDao.refresh((God)s);
 		}else if(s instanceof Region){
-			regionDao.createOrUpdate((Region)s);
+			regionDao.createOrUpdateWLE((Region)s);
 			regionDao.refresh((Region)s);
 		}else if(s instanceof Event){
-			eventDao.createOrUpdate((Event)s);
+			eventDao.createOrUpdateWLE((Event)s);
 			eventDao.refresh((Event)s);
 		}else if(s instanceof Statblock){
 			statblockDao.createOrUpdate((Statblock)s);

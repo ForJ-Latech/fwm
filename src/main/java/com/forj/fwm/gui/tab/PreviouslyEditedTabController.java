@@ -85,20 +85,31 @@ public class PreviouslyEditedTabController implements Saveable{
 		List<Region> regions = Backend.getRegionDao().queryBuilder().limit((long) 100).orderBy("LASTEDITED", false).query();
 		List<Template> templates = Backend.getTemplateDao().queryBuilder().limit((long) 100).orderBy("LASTEDITED", false).query();
 		
+		// This could maybe be optimized to not have to just auto add 100 of each to ensure the correct number, but eh
 		for (Event s : events) {
-			list.add(s);
+			if (s.getLastEdited() != null && s.getShownName() != null) {
+				list.add(s);
+			}
 		}
 		for (God s : gods) {
-			list.add(s);
+			if (s.getLastEdited() != null && s.getShownName() != null) {
+				list.add(s);
+			}
 		}
 		for (Npc s : npcs) {
-			list.add(s);
+			if (s.getLastEdited() != null && s.getShownName() != null) {
+				list.add(s);
+			}
 		}
 		for (Region s : regions) {
-			list.add(s);
+			if (s.getLastEdited() != null && s.getShownName() != null) {
+				list.add(s);
+			}
 		}
 		for (Template s : templates) {
-			list.add(s);
+			if (s.getLastEdited() != null && s.getShownName() != null) {
+				list.add(s);
+			}
 		}
 		
 		Collections.sort(list, new Comparator<Searchable>() {

@@ -66,8 +66,12 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 		return npc;
 	}
 	
+	public void saveFullNpc(Npc npc) throws SQLException {
+		this.createOrUpdateWLE(npc);
+		saveRelationalNpc(npc);
+	}
+	
 	public void saveRelationalNpc(Npc npc) throws SQLException{
-
 		if (npc.getInteractions() != null && !npc.getInteractions().isEmpty()) {
 			List<OMNpcInteraction> relations = new ArrayList<OMNpcInteraction>();
 			for (Interaction interaction : npc.getInteractions()) {
@@ -102,11 +106,6 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 		}
 		
 		updateFullNpc(npc);
-	}
-	
-	public void saveFullNpc(Npc npc) throws SQLException {
-		this.createOrUpdate(npc);
-		saveRelationalNpc(npc);
 	}
 	
 	private void updateFullNpc (Npc npc) throws SQLException{
@@ -174,14 +173,8 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 		return fam;
 	}
 	
-	@Override
-	public int update(Npc n) throws SQLException {
-		n.setLastEdited(new Date());
-		return super.update(n);
-	}
-	
-	@Override
-	public CreateOrUpdateStatus createOrUpdate(Npc n) throws SQLException {
+	// WLE -> With Last Edited
+	public CreateOrUpdateStatus createOrUpdateWLE(Npc n) throws SQLException {
 		n.setLastEdited(new Date());
 		return super.createOrUpdate(n);
 	}
