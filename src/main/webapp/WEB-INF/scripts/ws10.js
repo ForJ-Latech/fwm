@@ -78,7 +78,10 @@ function showElement(obj){
 	currentIndex = obj['CurrentIndex'];
 	$('#desc').html(obj['Description']);
 	$('#name').html(obj['Name']);
-	document.getElementById('img').src = "/webservice1_0bs/multimediaImage/" + obj['ImageFileName'];
+	$.each($('#imagecontainer').children(), function(d, dval){
+		dval.remove();
+	});	
+	$('#imagecontainer').append('<img id="img" src="/webservice1_0bs/multimediaImage/' + obj['ImageFileName'] + '"/>');
 }
 
 /* Image shit */
