@@ -58,14 +58,6 @@
   
 
   <dependencies>
-  	<!-- junit: to taunt you :^) -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    
     <!-- log4j: For our logger -->
     <dependency>
       <groupId>log4j</groupId>
@@ -139,7 +131,7 @@
   	 <version>${jetty.version}</version>
     </dependency>
     <!-- JSP & JSTL support -->
-    <dependency>
+    <!-- <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-jsp</artifactId>
       <version>${jetty.jsp.version}</version>
@@ -149,7 +141,7 @@
       <artifactId>jstl</artifactId>
       <version>1.2</version>
       <scope>provided</scope>
-    </dependency>
+    </dependency> -->
     
     <!-- For some good ol' JSON  -->
     <dependency>

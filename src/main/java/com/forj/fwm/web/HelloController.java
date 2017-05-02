@@ -25,7 +25,7 @@ public class HelloController{
 	@RequestMapping("/")
     public ModelAndView home(ModelMap modelMap, HttpServletRequest request)
     {
-        return new ModelAndView("index");
+        return new ModelAndView("views/index.html");
     }
 	
 	@RequestMapping("/startwebservice1_0")
