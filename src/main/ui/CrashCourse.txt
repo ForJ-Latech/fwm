@@ -1,0 +1,132 @@
+Welcome to the ForJ crash course for the fantasy world manager application.  This page is dedicated to guiding a new user into setting up a new world, and to show the user how to operate the basics of the application.  We will be creating a world based off of Norse mythology, keep in mind this application is great for storing the information about the many characters that you create, but not ideally used for creating the story itself.  That will be handled by you and your players.
+
+Table of Contents:
+1: Starting your world
+2: The World Manager
+3: Creating your first NPC.
+  3.1: Attributes
+  3.2: Description
+  3.3: History and Goals
+  3.4: Interaction
+  3.5: Picture and Sound
+  3.6: Relations
+4: Searching
+5: Show Players
+6: Starting Webservice
+
+1: Starting your world.
+	When starting the application, you will be given the option to select a world or create a new world. We will be creating a new world, feel free to call it 'Crash Course'.
+
+
+2: The World Manager
+	The ForJ Fantasy World Manager can be a bit complex if you're unfamiliar with it, but this is what the crash course aims to help.  You will find searching on the left, creation buttons on the bottom left, 	status bar on the bottom, and show players button on the bottom right.  We will go into more detail about these later in the crash course.
+
+
+3: Creating your first NPC.
+	An NPC or 'Non-Playable Character' is an inhabitant of your world.  To create this NPC, we first find the 'Create Buttons' in the lower left hand side of the application.  This will open a tab in the main workspace with many fields to enter information.  an example of information in the appropriate fields.
+	
+----------
+First Name: Ragnar
+Family Name: Lodbrok
+Gender: Male
+Race: Human
+Class/Occupation: Barbarian
+Age: 39
+----------
+
+These are basic information you can gather about your NPC at a glance. From this we can tell important, albiet vague, information about our character.  The more detailed information will be given in the 'Attributes', 'Description', and 'History and Goals' section of the NPC page.  
+
+3.1: Attributes.
+
+	Attributes include an array of information you should remember about your character, this can include what type of voice or accent you should speak in while voicing this character, or odd personality traits that he or she may have. Keep in mind that your players will NOT be able to see this information on the webservice.
+
+	an example of an NPC's Attributes: 
+
+----------
+Voice: Deep-craggy voice, spoken quite brutishly
+
+Conversations: to the point, impatience for 'beating around the bush', hard to distract from current 
+
+topics until fully resolved.
+
+Personality: Brave, Headstrong, Protective
+
+Oddities: Avoids conversations about Hel, the goddess that resides over Hell itself, or about his lost son, Eirik, that never returned from a hunt seven years ago. 
+
+Valknut (VAL-knoot): an insignia on his wristgaurds depicting three interlocking triangles. Valknut is a modern Norwegian compound word that means "knot of those fallen in battle".  It is associated with Odin, Valhalla, and death.
+----------
+
+This section can really help you remember how an NPC should act and be represented, especially if it is a character who has not been used for many play sessions.  
+
+
+3.2: Description.
+
+	Description is how a character is presented outwardly to your players, this content will be shown to your players in the webservice if you show them.  
+
+	an example of an NPC's Description:
+
+----------
+Height: 6ft 6 (198 centimeters)
+
+Hair: Long brown hair, pulled back into a braided knot. Sides of head shaven so that all of his hair is above his temples.
+
+Beard: half an inch brown beard from his ears to his chin, chin hair is 4 inches long, mustache connecting to his beard.
+
+Clothing: Iron chainmail over his leather tunic. Leather trousers. Leather Wristgaurds bearing the insignia of a Valknut. Leather footwear.
+
+Visable Weapons: Longsword, Large Circular Wooden Shield with a metal insignia of a Valknut in the middle. Two handaxes on either side of his belt.
+----------
+
+This gives a wonderful description of this NPC to your players, and removes the need to describe the same character multiple times to your players later on.  You of course may be asked other questions such as 'eye color', and should add information to the description once questions like this are asked and answered.
+
+3.3: History and Goals.
+
+	The last text section is 'History and Goals'. This is where your NPC's past is written in as much detail as you wish. Obviously some NPCs might have a long history that is deeply intertwined with the world and its inhabitants, while others may simply be the baker whose history isn't as interesting or important.  
+
+	an example of an NPC's History and Goals:
+
+----------
+History:
+Born in the year 820, son of Sigurd Lodbrok.
+
+Became viking huntsman at age of 14, year 834.
+
+Became viking raider at age 17, year 837.
+
+Son, Eirik, born to his wife Astrid, year 839.
+
+Became viking chieftain at age 32, son Eirik died in hunting trip, year 852.
+		
+Goals: 
+Find a path to Hel's domain, and reclaim Eirik's soul so that it may rest in a better place.
+----------
+
+History may tell a story of the past, and may give reason to a character's motives and mannerisms.  Your players will not see this information when showing them through the webservice.
+
+
+3.4: Interaction.
+	an NPC may interact with the party at various times throughout the journey, and remembering what the players had done with them may be hard after not being with them for a few months. press the 'New Interaction' button below the character attributes to create a new interaction.  a good example of an interaction may be:
+
+----------
+Party:  Met party at stormheim.  Fought minions of Hel together.   Worked with party through the notion of "An enemy of my enemy is my friend".
+----------
+
+These interactions may also be player based, saying that the Rogue or Paladin had interacted with the NPC alone.
+
+3.5: Picture and Sound.
+	Adding a picture or sound to your NPC can help your players remember your NPC better. adding them is simple, as you can click on the image or add sound button to add a sound or image to your NPC. these will show/play to your players when you press the 'show' button.
+
+3.6: Relations.
+	NPCs have many relations to other aspects of your world, they can be related to other NPCs, Worship Gods, Belong to a Group, or live in a Region. after making the appropriate entities, you may relate them together.  Try to make a god using the create button: 'God' in the bottom left corner of the application.  You may give them any name, but a good example would be Odin.  after creating Odin, you can tab back to your NPC and select the 'Add God to Worship' button to the right of 'History and Goals'. You can then search for 'Odin' and click on him to add Odin as the god that your NPC worships.  Adding a picture to Odin will also show a small picture of Odin in the NPC's page. (otherwise a 'no picture' image will be displayed).  You can do the same with other relations such as Groups and Regions. 
+
+
+4: Searching.
+	When you need to find an NPC, God, Region, or Group you can simply search for his or her name in the search menu on the left side of the application to find them.  Clicking on them will open a tab for you, or select the tab they're on if they're already open in the application.
+
+
+5: showing your players.  
+	Not all of your world is available to your players.  You must show your players your world through the 'show' button in the bottom right of the application.  Showing them will pull up the current tab in the webservice, and allow them to be searchable in the explore menu on the webservice.  
+
+
+6: Webservice.  
+	During play sessions, you may want your players to view content of your world. To start the webservice, you will want to go to 'File' and click 'Start Webservice' in the top-menus.  In the webservice window, you may allow your players to search your world for entities that you've shown by pressing the appropriate button in Webservice controller.  You may also give them an address to connect to, displayed at the top of the webservice controller.

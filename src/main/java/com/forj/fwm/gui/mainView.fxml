@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.MainController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.MainController">
    <children>
       <MenuBar fx:id="MenuBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="27.0" prefWidth="533.0">
          <menus>
@@ -59,7 +59,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#openWebsite" text="Open Forj Website" />
                   <MenuItem mnemonicParsing="false" onAction="#showAbout" text="View About" />
-                  <MenuItem mnemonicParsing="false" text="View Crash Course" />
+                  <MenuItem mnemonicParsing="false" onAction="#showCrashCourse" text="View Crash Course" />
                   <MenuItem mnemonicParsing="false" onAction="#showReadme" text="View Readme" />
                </items>
             </Menu>

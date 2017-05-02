@@ -243,6 +243,13 @@ public class MainController extends TabControlled implements Openable {
 		GenericTextController cr = GenericTextController.startGenericTextController("About");
 		cr.setTextFromFile(App.retGlobalResource("/src/main/ui/About.txt").openStream());
 	}
+	
+	@FXML
+	public void showCrashCourse() throws Exception {
+		log.debug("Crash Course Called");
+		GenericTextController cr = GenericTextController.startGenericTextController("CrashCourse");
+		cr.setTextFromFile(App.retGlobalResource("/src/main/ui/CrashCourse.txt").openStream());
+	}
 
 	@FXML
 	public void showWorldSettings() throws Exception{
