@@ -6,3 +6,5 @@ FWM-Properties/**
 /FWM-properties/
 src/main/resources/**
 /src/main/resources/**
+/build/
+/dist/
