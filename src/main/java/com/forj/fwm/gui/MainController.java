@@ -38,6 +38,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -80,6 +81,9 @@ public class MainController extends TabControlled implements Openable {
     
     @FXML
     private StackPane statusStackPane;
+    
+    @FXML
+    private Label showLabel;
    
     private StatusBarController statusBarController;
     private WorldSettingsController ws;
@@ -349,6 +353,10 @@ public class MainController extends TabControlled implements Openable {
 
 	public void addStatus(String text) {
 		statusBarController.addStatus(text);
+	}
+	
+	public void changeShowLabel(String text) {
+		showLabel.setText("Showing: " + text);
 	}
 	
 	@FXML
