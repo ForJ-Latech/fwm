@@ -24,10 +24,10 @@
 		            	<a class="nav-link" href="/">Home</a>
 		          	</li>
 		          	<li class="nav-item">
-		            	<a class="nav-link" href="/webservice1_0bs/getPrev/${CurrentIndex}">&lt; Previous</a>
+		            	<a class="nav-link" onclick="getPrev()" href="#">&lt; Previous</a>
 		          	</li>
 		          	<li class="nav-item">
-		            	<a class="nav-link" href="/webservice1_0bs/getNext/${CurrentIndex}">Next &gt;</a>
+		            	<a class="nav-link" onclick="getNext()" href="#">Next &gt;</a>
 		          	</li>
 		        </ul>
 	      	</div>
@@ -38,7 +38,7 @@
 	      	<div class="col-sm-4">
 	      	</div>
 	      	<div class="col-sm-4">
-	      		<h2 id="name">${Name}</h2>	
+	      		<h2 id="name"></h2>	
 	      	</div>
 	      	<div class="col-sm-4">
 	      	</div>	
@@ -46,14 +46,14 @@
       	
       	<div class="row text-center">
 	      	<div id="imagecontainer" class="col-sm-12">
-	      		<img id="img" src="/webservice1_0bs/multimediaImage/${ImageFileName}">
+	      		<img id="img" src="">
 	      	</div>
       	</div>
 		<hr>
 		<div class="row text-center" id="descriptioncontainer">
 			<div class="col-sm-4"></div>
 	      	<div class="col-sm-4">
-	      		<p id="desc">${Description}</p>
+	      		<p id="desc"></p>
 	      	</div>
 	      	<div class="col-sm-4"></div>
 		</div>
@@ -65,34 +65,13 @@
 	<script type="text/javascript" src="/s/jquery-3.2.1.min.js"></script>
     <script src="/s/bootstrap.min.js"></script>
     <script type="text/javascript" src="/s/imagesize.js"></script>
-    <script type="text/javascript">
-			function fixImageContainerWidthHeight(){
-				var height = ($(window).height() - $('.navbar').height()) * 6.5 / 10;
-				$('#imagecontainer').attr('height', height);
-				$('#imagecontainer').attr('max-height', height);
-			}
-
-	 		$(document).ready(function() {
-				fixImageContainerWidthHeight();
-				var imgContainer = $('#imagecontainer');
-				calculateWidthHeightImg(imgContainer.width(), imgContainer.attr('height'), $('#img'));
-	 			var soundFile = "${SoundFileName}";
-	 			var audio = $("#player");
-	 			if (soundFile.length > 0) {
-	 				//if there is sound attached to object
-	 				var soundURL = "/webservice1_0/multimediaSound/" + "${SoundFileName}";
-	 				var a = new Audio(soundURL);
-	 				a.currentTime = 0;
-	 				a.play();
-	 			} else {
-	 				$("#sound").hide();
-	 			}
-	 			
-	 			var objId = "${ObjectId}";
-		 		var objClass = "${ObjectClass}";
-		 		
-		 		$.ajaxSetup({ cache: true });
-		 		setInterval(function() {
+    <script type="text/javascript" src="/s/ws10.js" onload="start()"/>
+		
+	 		<!--
+	 		/*
+	 		
+	 		
+		 				 		setInterval(function() {
 			 		$.ajax({
 		 				url: "/webservice1_0bs/objectIdCheck/" + "${CurrentIndex}",
 		 				type: 'GET',
@@ -110,7 +89,8 @@
 		 				}
 		 			});
 			 	}, 2000);
-	 		});
-	 	</script>
+	 		
+	 		*/
+	 		-->
   </body>
 </html>

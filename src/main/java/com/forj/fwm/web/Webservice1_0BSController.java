@@ -47,27 +47,18 @@ public class Webservice1_0BSController {
 	 */
 	@RequestMapping("/webservice1_0bs")
 	public ModelAndView getWebservicePage(ModelMap modelMap, HttpServletRequest request) {
-
-		ShowPlayersDataModel.ShowData sd = App.spdc.getDefault();
-
-		if (sd == null) {
-			Npc nullguy = new Npc();
-			nullguy.setfName("NO");
-			nullguy.setlName("OBJECTS");
-			nullguy.setDescription("The DM has not shown any objects");
-			App.spdc.addOne(nullguy);
-			sd = App.spdc.getDefault();
-			Object obj = sd.getObject();
-			int newIndex = sd.getNewIndex();
-			modelMap = showThis(modelMap, newIndex, obj);
-		} else {
-			Object obj = sd.getObject();
-			int newIndex = sd.getNewIndex();
-			modelMap = showThis(modelMap, newIndex, obj);
-		}
-
-		return new ModelAndView("webservice1_0bs");
+		return new ModelAndView("views/webservice1_0bs.html");
 	}
+	
+	@RequestMapping("/webservice1_0bs/getCurrent")
+	public ResponseEntity<String> getCurrentObject(HttpServletRequest request) {
+		String json = showThis(App.spdc.getDefault());
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+
+		return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+	}
+		
 
 	/**
 	 * It will take the next object from ShowPlayersDataModel and display it on
@@ -77,14 +68,12 @@ public class Webservice1_0BSController {
 	 * @return
 	 */
 	@RequestMapping("/webservice1_0bs/getNext/{index}")
-	public ModelAndView getNextObject(ModelMap modelMap, @PathVariable("index") int index, HttpServletRequest request) {
+	public ResponseEntity<String> getNextObject(@PathVariable("index") int index, HttpServletRequest request) {
+		String json = showThis(App.spdc.getPrevious(index));
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
 
-		ShowPlayersDataModel.ShowData sd = App.spdc.getNext(index);
-		Object obj = sd.getObject();
-		int newIndex = sd.getNewIndex();
-		log.debug("getNext newIndex: " + newIndex);
-		modelMap = showThis(modelMap, newIndex, obj);
-		return new ModelAndView("webservice1_0bs");
+		return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
 	}
 
 	/**
@@ -95,14 +84,14 @@ public class Webservice1_0BSController {
 	 * @return
 	 */
 	@RequestMapping("/webservice1_0bs/getPrev/{index}")
-	public ModelAndView getPrevObject(ModelMap modelMap, @PathVariable("index") int index, HttpServletRequest request) {
+	public ResponseEntity<String> getPrevObject(@PathVariable("index") int index, HttpServletRequest request) {
 
-		ShowPlayersDataModel.ShowData sd = App.spdc.getPrevious(index);
-		Object obj = sd.getObject();
-		int newIndex = sd.getNewIndex();
-		log.debug("getPrev newIndex: " + newIndex);
-		modelMap = showThis(modelMap, newIndex, obj);
-		return new ModelAndView("webservice1_0bs");
+		String json = showThis(App.spdc.getPrevious(index));
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Content-Type", "application/json");
+
+		return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+
 	}
 
 	@RequestMapping(value = "/webservice1_0bs/multimediaImage/null", method = RequestMethod.GET)
@@ -214,8 +203,7 @@ public class Webservice1_0BSController {
 		String json;
 		if (showdata != null) {
 			Object obj = showdata.getObject();
-			int newId = getObjectId(obj);
-
+			int newId = showdata.getNewIndex();
 			String className = obj.getClass().getSimpleName();
 			String[] info = { String.valueOf(newId), className };
 			json = gson.toJson(info);
@@ -232,27 +220,41 @@ public class Webservice1_0BSController {
 	 * This will evaluate the object and determine its type while adding
 	 * attributes to the modelMap
 	 * 
-	 * @param Object
-	 * @return
+	 * @param index, and object. 
+	 * @return a json of the object that you found. 
 	 */
-	private ModelMap showThis(ModelMap modelMap, int index, Object obj) {
+	private String showThis(ShowPlayersDataModel.ShowData sd) {
+		JsonHelper js = new JsonHelper();
+		
+		if(sd == null){
+			js.addAttribute("Name", "No objects shown yet");
+			js.addAttribute("Description", "");
+			js.addAttribute("ImageFileName", null);
+			js.addAttribute("ObjectId", -1);
+			js.addAttribute("ObjectClass", null);
+			js.addAttribute("CurrentIndex", null);
+			return js.getString();
+		}
+		Object obj = sd.getObject();
+		int index = sd.getNewIndex();
+		
 		String className = obj.getClass().getSimpleName();
-		modelMap.addAttribute("CurrentIndex", index);
-		modelMap.addAttribute("ObjectClass", className);
+		js.addAttribute("CurrentIndex", index);
+		js.addAttribute("ObjectClass", className);
 
 		switch (gameObject.valueOf(className)) {
-
+		
 		case Npc:
 			Npc n = (Npc) obj;
 			String nImage = n.getImageFileName();
 
-			modelMap.addAttribute("Name", n.getFullName());
-			modelMap.addAttribute("Description", n.getDescription());
-			modelMap.addAttribute("ImageFileName", nImage);
-			modelMap.addAttribute("ObjectId", n.getID());
+			js.addAttribute("Name", n.getFullName());
+			js.addAttribute("Description", n.getDescription());
+			js.addAttribute("ImageFileName", nImage);
+			js.addAttribute("ObjectId", n.getID());
 
 			if (n.getSoundFileName() != null) {
-				modelMap.addAttribute("SoundFileName", n.getSoundFileName());
+				js.addAttribute("SoundFileName", n.getSoundFileName());
 				log.debug("the sound file name is " + n.getSoundFileName());
 			}
 			break;
@@ -260,12 +262,12 @@ public class Webservice1_0BSController {
 		case Event:
 			Event e = (Event) obj;
 
-			modelMap.addAttribute("Name", e.getName());
-			modelMap.addAttribute("Description", e.getDescription());
-			modelMap.addAttribute("ObjectId", e.getID());
-			modelMap.addAttribute("ImageFileName", e.getImageFileName());
+			js.addAttribute("Name", e.getName());
+			js.addAttribute("Description", e.getDescription());
+			js.addAttribute("ObjectId", e.getID());
+			js.addAttribute("ImageFileName", e.getImageFileName());
 			if (e.getSoundFileName() != null) {
-				modelMap.addAttribute("SoundFileName", e.getSoundFileName());
+				js.addAttribute("SoundFileName", e.getSoundFileName());
 				log.debug("the sound file name is " + e.getSoundFileName());
 			}
 			break;
@@ -274,13 +276,13 @@ public class Webservice1_0BSController {
 			God g = (God) obj;
 			String gImage = g.getImageFileName();
 
-			modelMap.addAttribute("Name", g.getName());
-			modelMap.addAttribute("Description", g.getDescription());
-			modelMap.addAttribute("ImageFileName", gImage);
-			modelMap.addAttribute("ObjectId", g.getID());
+			js.addAttribute("Name", g.getName());
+			js.addAttribute("Description", g.getDescription());
+			js.addAttribute("ImageFileName", gImage);
+			js.addAttribute("ObjectId", g.getID());
 
 			if (g.getSoundFileName() != null) {
-				modelMap.addAttribute("SoundFileName", g.getSoundFileName());
+				js.addAttribute("SoundFileName", g.getSoundFileName());
 				log.debug("the sound file name is " + g.getSoundFileName());
 			}
 			break;
@@ -289,23 +291,18 @@ public class Webservice1_0BSController {
 			Region r = (Region) obj;
 			String rImage = r.getImageFileName();
 
-			modelMap.addAttribute("Name", r.getName());
-			modelMap.addAttribute("Description", r.getDescription());
-			modelMap.addAttribute("ImageFileName", rImage);
-			modelMap.addAttribute("ObjectId", r.getID());
+			js.addAttribute("Name", r.getName());
+			js.addAttribute("Description", r.getDescription());
+			js.addAttribute("ImageFileName", rImage);
+			js.addAttribute("ObjectId", r.getID());
 
 			if (r.getSoundFileName() != null) {
-				modelMap.addAttribute("SoundFileName", r.getSoundFileName());
+				js.addAttribute("SoundFileName", r.getSoundFileName());
 				log.debug("the sound file name is " + r.getSoundFileName());
 			}
 			break;
 		}
-
-		log.debug(modelMap.get("ImageFileName"));
-		log.debug(modelMap.get("SoundFileName"));
-		log.debug("ShowThis method current index: " + modelMap.get("CurrentIndex"));
-
-		return modelMap;
+		return js.getString();
 	}
 
 	private int getObjectId(Object obj) {

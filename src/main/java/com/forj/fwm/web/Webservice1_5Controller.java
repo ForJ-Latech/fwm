@@ -39,20 +39,7 @@ public class Webservice1_5Controller {
 	
 	@RequestMapping("/webservice1_5")
 	public ModelAndView startWS1_5(ModelMap modelMap, HttpServletRequest request) throws Exception {
-		return new ModelAndView("webservice1_5");
-	}
-
-	@RequestMapping("/webservice1_5/{search}")
-	public ModelAndView search(ModelMap modelMap, @PathVariable("search") String Npcname, HttpServletRequest request) {
-		// colName, Object (search)
-		try {
-			List<Npc> q = Backend.getNpcDao().queryForLike("fname", Npcname);
-			modelMap.addAttribute("found", q);
-		} catch (SQLException e) {
-			log.error(e);
-		}
-
-		return new ModelAndView("webservice1_5");
+		return new ModelAndView("views/webservice1_5.html");
 	}
 	
 	@RequestMapping("searchAll/{text}")
