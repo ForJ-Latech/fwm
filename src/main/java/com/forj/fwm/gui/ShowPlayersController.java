@@ -49,6 +49,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	private Stage ourStage;
 	
 	private static Scene theScene;
+	private static boolean started = false;
 	
 	AudioClip sound = null;
 	
@@ -74,6 +75,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 		{
 			setDark(true);
 		}
+       started = true;
     }
 
 	
@@ -98,6 +100,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	}
 	
 	public void closeWindow(){
+		started = false;
 		ourStage.close();
 	}
 	
@@ -245,5 +248,10 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 		setName(newName);
 		setDescription(newDescription);
 		setImage(newImage);
+	}
+
+
+	public static boolean getStarted() {
+		return started;
 	}
 }

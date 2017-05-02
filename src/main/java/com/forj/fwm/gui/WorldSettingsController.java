@@ -92,8 +92,10 @@ public class WorldSettingsController {
 	public void setDarkMode() throws ConfigurationException{
 		WorldConfig.setDarkMode(darkModeOn.isSelected());
 		App.getMainController().setDark(darkModeOn.isSelected());
-		JettyController.setDark(darkModeOn.isSelected());
-		ShowPlayersController.setDark(darkModeOn.isSelected());
+		if(JettyController.getStarted())
+			JettyController.setDark(darkModeOn.isSelected());
+		if(ShowPlayersController.getStarted())
+			ShowPlayersController.setDark(darkModeOn.isSelected());
 		
 	}
 	
