@@ -82,7 +82,8 @@
 
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-text-fill: rgb(0,0,0);
+    -fx-background-color: #039be5;
+    -fx-text-fill: rgb(240,240,244);
 }
 
 

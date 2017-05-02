@@ -96,9 +96,10 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	@FXML
 	public void back() {
 		log.debug("back");
-		log.debug("curIndex before: " + curIndex);
+		log.debug("curIndex before: " + curIndex);	
 		setObject(App.spdc.getPrevious(curIndex));
 		log.debug("curIndex after: " + curIndex);
+		
 	}
 	
 	@FXML
@@ -167,6 +168,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	
 	public void setName(String newName) {
 		name.setText(newName);
+		App.getMainController().changeShowLabel(name.getText());
 	}
 	
 	public void setDescription(String newDesription) {
