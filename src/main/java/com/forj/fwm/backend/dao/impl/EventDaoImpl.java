@@ -87,7 +87,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		if (event.getInteractions() != null && !event.getInteractions().isEmpty()) {
 			List<OMEventInteraction> relations = new ArrayList<OMEventInteraction>();
 			for (Interaction interaction : event.getInteractions()) {
-				Backend.getInteractionDao().createOrUpdate(interaction);
+				Backend.getInteractionDao().createIfNotExists(interaction);
 				relations.add(new OMEventInteraction(event, interaction));
 			}
 			for (OMEventInteraction relation : relations) {
@@ -98,7 +98,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		if (event.getStatblocks() != null && !event.getStatblocks().isEmpty()) {
 			List<MMEventStatblock> relations = new ArrayList<MMEventStatblock>();
 			for (Statblock statblock : event.getStatblocks()) {
-				Backend.getStatblockDao().createOrUpdate(statblock);
+				Backend.getStatblockDao().createIfNotExists(statblock);
 				relations.add(new MMEventStatblock(event, statblock));
 			}
 			for (MMEventStatblock relation : relations) {
@@ -109,7 +109,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		if (event.getNpcs() != null && !event.getNpcs().isEmpty()) {
 			List<MMEventNpc> relations = new ArrayList<MMEventNpc>();
 			for (Npc npc : event.getNpcs()) {
-				Backend.getNpcDao().createOrUpdate(npc);
+				Backend.getNpcDao().createIfNotExists(npc);
 				relations.add(new MMEventNpc(event, npc));
 			}
 			for (MMEventNpc relation : relations) {
@@ -120,7 +120,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		if (event.getGods() != null && !event.getGods().isEmpty()) {
 			List<MMEventGod> relations = new ArrayList<MMEventGod>();
 			for (God god : event.getGods()) {
-				Backend.getGodDao().createOrUpdate(god);
+				Backend.getGodDao().createIfNotExists(god);
 				relations.add(new MMEventGod(event, god));
 			}
 			for (MMEventGod relation : relations) {
@@ -131,7 +131,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		if (event.getTemplates() != null && !event.getTemplates().isEmpty()) {
 			List<MMTemplateEvent> relations = new ArrayList<MMTemplateEvent>();
 			for (Template template : event.getTemplates()) {
-				Backend.getTemplateDao().createOrUpdate(template);
+				Backend.getTemplateDao().createIfNotExists(template);
 				relations.add(new MMTemplateEvent(template, event));
 			}
 			for (MMTemplateEvent relation : relations) {
