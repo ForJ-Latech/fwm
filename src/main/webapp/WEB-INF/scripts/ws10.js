@@ -5,9 +5,7 @@ var currentIndex = 0;
 var objClass = 0;
 var objIndex;
 
-alert('we got called');
-var asdf = "/webservice1_0bs/getPrev/";
-
+/* Page initialization */
 $(document).ready(function() {
 	actualFixImage();
 	$.ajaxSetup({ cache: true });
@@ -43,21 +41,6 @@ function showDefault(){
 	});
 }
 
-function checkDefault(obj){
-	if(objIndex != obj['ObjectId'] && objClass != obj['ObjectClass']){
-		showDefault();
-	}
-	objIndex = obj['ObjectId'];
-	objClass = obj['ObjectClass'];
-}
-	
-function showElement(obj){
-	currentIndex = obj['CurrentIndex'];
-	$('#desc').html(obj['Description']);
-	$('#name').html(obj['Name']);
-	document.getElementById('img').src = "/webservice1_0bs/multimediaImage/" + obj['ImageFileName'];
-}
-
 function getPrev(){
 	$.ajax({
 		url: "/webservice1_0bs/getPrev/" + currentIndex,
@@ -82,8 +65,23 @@ function getNext(){
 	});
 }
 
+/* Helper methods */
+function checkDefault(obj){
+	if(objIndex != obj['ObjectId'] && objClass != obj['ObjectClass']){
+		showDefault();
+	}
+	objIndex = obj['ObjectId'];
+	objClass = obj['ObjectClass'];
+}
+	
+function showElement(obj){
+	currentIndex = obj['CurrentIndex'];
+	$('#desc').html(obj['Description']);
+	$('#name').html(obj['Name']);
+	document.getElementById('img').src = "/webservice1_0bs/multimediaImage/" + obj['ImageFileName'];
+}
 
-
+/* Image shit */
 function fixImageContainerWidthHeight(){
 	var height = ($(window).height() - $('.navbar').height()) * 6.5 / 10;
 	$('#imagecontainer').attr('height', height);
