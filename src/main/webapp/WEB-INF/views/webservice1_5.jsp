@@ -43,7 +43,7 @@
     				</div>    				
     				<div class="text-center bold" id="searchResults">Search&nbsp;Results
     				</div>  				
-					<div class="text-center" id="listcontainer" >
+					<div class="row text-center" id="listcontainer" >
 					</div>  			
     			</div>
     			<!-- The middle display for object -->
@@ -63,7 +63,7 @@
 									</strong>
 								</div>
 							</div>
-							<div class="row center">
+							<div class="row center text-center">
 								<div class="col-md-12 text-center" id="imagecontainer">
 								</div>
 							</div>
