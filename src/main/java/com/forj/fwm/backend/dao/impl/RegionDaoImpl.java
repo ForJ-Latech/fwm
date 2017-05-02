@@ -86,9 +86,13 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		
 		return region;
 	}
+	
+	public void saveFullRegion(Region region) throws SQLException {
+		this.createOrUpdateWLE(region);
+		this.saveRelationalRegion(region);
+	}
 
 	public void saveRelationalRegion(Region region) throws SQLException{
-
 		if (region.getNpcs() != null && !region.getNpcs().isEmpty()) {
 			List<MMRegionNpc> relations = new ArrayList<MMRegionNpc>();
 			for (Npc npc : region.getNpcs()) {
@@ -159,11 +163,6 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		}
 		
 		updateFullRegion(region);
-	}
-	
-	public void saveFullRegion(Region region) throws SQLException {
-		this.createOrUpdate(region);
-		this.saveRelationalRegion(region);
 	}
 	
 	private void updateFullRegion (Region region) throws SQLException{
@@ -265,14 +264,8 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		return belowRegions;
 	}
 	
-	@Override
-	public int update(Region r) throws SQLException {
-		r.setLastEdited(new Date());
-		return super.update(r);
-	}
-	
-	@Override
-	public CreateOrUpdateStatus createOrUpdate(Region r) throws SQLException {
+	// WLE -> With Last Edited
+	public CreateOrUpdateStatus createOrUpdateWLE(Region r) throws SQLException {
 		r.setLastEdited(new Date());
 		return super.createOrUpdate(r);
 	}

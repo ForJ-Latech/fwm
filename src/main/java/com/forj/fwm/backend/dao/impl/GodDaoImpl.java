@@ -77,6 +77,11 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		return god;
 	}
 	
+	public void saveFullGod(God god) throws SQLException {
+		this.createOrUpdateWLE(god);
+		saveRelationalGod(god);
+	}
+	
 	public void saveRelationalGod(God god) throws SQLException{
 		if (god.getInteractions() != null && !god.getInteractions().isEmpty()) {
 			List<OMGodInteraction> relations = new ArrayList<OMGodInteraction>();
@@ -130,11 +135,6 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		}
 		
 		updateFullGod(god);
-	}
-	
-	public void saveFullGod(God god) throws SQLException {
-		this.createOrUpdate(god);
-		saveRelationalGod(god);
 	}
 	
 	private void updateFullGod (God god) throws SQLException{
@@ -233,14 +233,8 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		return fam;
 	}
 	
-	@Override
-	public int update(God g) throws SQLException {
-		g.setLastEdited(new Date());
-		return super.update(g);
-	}
-	
-	@Override
-	public CreateOrUpdateStatus createOrUpdate(God g) throws SQLException {
+	// WLE -> With Last Edited
+	public CreateOrUpdateStatus createOrUpdateWLE(God g) throws SQLException {
 		g.setLastEdited(new Date());
 		return super.createOrUpdate(g);
 	}

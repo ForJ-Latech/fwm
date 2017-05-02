@@ -79,7 +79,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 	}
 
 	public void saveFullEvent(Event event) throws SQLException {
-		this.createOrUpdate(event);
+		this.createOrUpdateWLE(event);
 		this.saveRelationalEvent(event);
 	}
 	
@@ -220,16 +220,9 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		}
 	}
 	
-	@Override
-	public int update(Event e) throws SQLException {
-		e.setLastEdited(new Date());
-		return super.update(e);
-	}
-	
-	@Override
-	public CreateOrUpdateStatus createOrUpdate(Event e) throws SQLException {
+	// WLE -> With Last Edited
+	public CreateOrUpdateStatus createOrUpdateWLE(Event e) throws SQLException {
 		e.setLastEdited(new Date());
 		return super.createOrUpdate(e);
 	}
-
 }

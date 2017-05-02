@@ -13,4 +13,5 @@ public interface GodDao extends Dao<God,String> {
 	public void saveFullGod(God god) throws SQLException;
 	public void saveRelationalGod(God god) throws SQLException;
 	public List<God> getPantheon(God god);
+	public CreateOrUpdateStatus createOrUpdateWLE(God g) throws SQLException;
 }
