@@ -38,6 +38,15 @@ public class TabControlled {
 		}
 	};
 	
+	public void closeTab(Tab tab){
+		int index = findTabIndex(tab);
+		if (index != -1)
+		{
+			tabControllers.remove(index);
+			tabPane.getTabs().remove(tab);
+		}
+	}
+	
 	public int findTabIndex(Tab source){
 		for(int i = 0; i < tabControllers.size(); i++){
 			if(source.equals(tabControllers.get(i).getTab())){

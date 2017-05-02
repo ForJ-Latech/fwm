@@ -78,7 +78,44 @@ public class HotkeyController {
 	private static String changeHotkeyFunction;
 	private Stage ourStage;
 	private static boolean started;
+	
+	public static class ImmutableHotkey {
+		private String hotkeyName;
+		private HBox hbox;
+		private Label label = new Label();
+		private TextField textField = new TextField();
+		
+		public ImmutableHotkey(String name, String keyCode) {
+			hotkeyName = name;
+			textField.setText(keyCode);
+			setAlignment();
+		}
+		
+		private void setAlignment() {
+			label.setPrefWidth(200);
+			hbox = new HBox(label, textField);
+			hbox.setAlignment(Pos.CENTER_LEFT);
+			hbox.setPrefHeight(31);
+			label.setText(getPrettyName());
+			label.setAlignment(Pos.CENTER_LEFT);
+			Insets labelInset = new Insets(0, 0, 0, 10);
+			hbox.setMargin(label, labelInset);
+			textField.setEditable(false);
+			hbox.setHgrow(textField, Priority.ALWAYS);
+		}
 
+		public String getPrettyName() {
+			return hotkeyName.replace("_", " ");
+		}
+
+		public String getName() {
+			return hotkeyName;
+		}
+		public HBox getHotkeyHBox() {
+			return hbox;
+		}
+	}
+	
 	public static class Hotkey {
 		private String hotkeyName;
 		private HBox hbox;
@@ -193,12 +230,42 @@ public class HotkeyController {
 	public static final String STATBLOCK_HOTKEY = "Open_Statblock";
 	public static final String FOCUS_HOTKEY = "Focus_On_Entity_Name";
 	public static final String SOUND_HOTKEY = "Change_Sound";
-	public static final String ACCORDION_ONE = "First_Accordion";
+	public static final String CLOSE_TAB = "Close_Tab";
 	public static final String[] HOTKEYS = { FORWARD_SHOW_HOTKEY, BACKWARD_SHOW_HOTKEY, NPC_HOTKEY, GOD_HOTKEY,
 			REGION_HOTKEY, GROUP_HOTKEY, INTERACTION_HOTKEY, STATBLOCK_HOTKEY, TEMPLATE_HOTKEY, SHOW_HOTKEY, IMAGE_HOTKEY, SOUND_HOTKEY, SEARCH_HOTKEY,
-			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, FOCUS_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL, ACCORDION_ONE};
+			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, FOCUS_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL, CLOSE_TAB};
+
 
 	private static HashMap<String, Hotkey> hotkeys = new HashMap<String, Hotkey>();
+
+	public static final String ACCORDION_HOTKEY_ONE = "Accordion_Tabs_One";
+	public static final String ACCORDION_HOTKEY_TWO = "Accordion_Tabs_Two";
+	public static final String ACCORDION_HOTKEY_THREE = "Accordion_Tabs_Three";
+	public static final String ACCORDION_HOTKEY_FOUR = "Accordion_Tabs_Four";
+	public static final String ACCORDION_HOTKEY_ONE_ADD = "Accordion_Tabs_One_Add";
+	public static final String ACCORDION_HOTKEY_TWO_ADD = "Accordion_Tabs_Two_Add";
+	public static final String ACCORDION_HOTKEY_THREE_ADD = "Accordion_Tabs_Three_Add";
+	public static final String ACCORDION_HOTKEY_FOUR_ADD = "Accordion_Tabs_Four_Add";
+
+	public static final String ACCORDION_HOTKEY_ONE_COMBO = "Alt+1";
+	public static final String ACCORDION_HOTKEY_TWO_COMBO = "Alt+2";
+	public static final String ACCORDION_HOTKEY_THREE_COMBO = "Alt+3";
+	public static final String ACCORDION_HOTKEY_FOUR_COMBO = "Alt+4";
+	public static final String ACCORDION_HOTKEY_ONE_ADD_COMBO = "Shift+Alt+1";
+	public static final String ACCORDION_HOTKEY_TWO_ADD_COMBO = "Shift+Alt+2";
+	public static final String ACCORDION_HOTKEY_THREE_ADD_COMBO = "Shift+Alt+3";
+	public static final String ACCORDION_HOTKEY_FOUR_ADD_COMBO = "Shift+Alt+4";
+	
+	public static final ImmutableHotkey[] IMMUTABLE_HOTKEYS = { 
+			new ImmutableHotkey(ACCORDION_HOTKEY_ONE, ACCORDION_HOTKEY_ONE_COMBO),
+			new ImmutableHotkey(ACCORDION_HOTKEY_TWO, ACCORDION_HOTKEY_TWO_COMBO),
+			new ImmutableHotkey(ACCORDION_HOTKEY_THREE, ACCORDION_HOTKEY_THREE_COMBO),
+			new ImmutableHotkey(ACCORDION_HOTKEY_FOUR, ACCORDION_HOTKEY_FOUR_COMBO),
+			new ImmutableHotkey(ACCORDION_HOTKEY_ONE_ADD, ACCORDION_HOTKEY_ONE_ADD_COMBO),
+			new ImmutableHotkey(ACCORDION_HOTKEY_TWO_ADD, ACCORDION_HOTKEY_TWO_ADD_COMBO),
+			new ImmutableHotkey(ACCORDION_HOTKEY_THREE_ADD, ACCORDION_HOTKEY_THREE_ADD_COMBO),
+			new ImmutableHotkey(ACCORDION_HOTKEY_FOUR_ADD, ACCORDION_HOTKEY_FOUR_ADD_COMBO),
+			};
 
 	public static void init() throws ConfigurationException {
 		configManager = new Configurations();
@@ -236,7 +303,7 @@ public class HotkeyController {
 	}
 
 	public void start(Stage primaryStage, ScrollPane rootLayout) throws Exception {
-		primaryStage.setTitle("Edit Hotkeys");
+		primaryStage.setTitle("Change Hotkeys");
 		Scene myScene = new Scene(rootLayout);
 		ourStage = primaryStage;
 		myScene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
@@ -248,8 +315,16 @@ public class HotkeyController {
 				}
 			}
 		});
+		Label divider = new Label();
+		HBox labelHbox = new HBox(divider);
+		divider.setText("----These hotkeys are not changeable----");
+		labelHbox.setAlignment(Pos.CENTER);
 		for (String key : HOTKEYS) {
 			hotkeyVBox.getChildren().add(hotkeys.get(key).getHotkeyHBox());
+		}
+		hotkeyVBox.getChildren().add(labelHbox);
+		for (ImmutableHotkey hotkey : IMMUTABLE_HOTKEYS) {
+			hotkeyVBox.getChildren().add(hotkey.getHotkeyHBox());
 		}
 		primaryStage.setScene(myScene);
 	}
@@ -322,6 +397,14 @@ public class HotkeyController {
 						log.debug(e);
 					}
 				}
+				if (HotkeyController.getHotkey(CLOSE_TAB).match(keyEvent)) {
+					try {
+						Saveable tab = App.getStatBlockController().findTab(App.getStatBlockController().getTabPane().getSelectionModel().getSelectedItem());
+						App.getStatBlockController().closeTab(tab.getTab());
+					} catch (Exception e) {
+						log.error(e);
+					}
+				}
 			}
 		});
 	}
@@ -358,6 +441,15 @@ public class HotkeyController {
 						}
 					} catch (Exception e) {
 						log.debug(e);
+					}
+				}
+				if (HotkeyController.getHotkey(CLOSE_TAB).match(keyEvent)) {
+					try {
+						Saveable tab = App.getMainController()
+								.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+						App.getMainController().closeTab(tab.getTab());
+					} catch (Exception e) {
+						log.error(e);
 					}
 				}
 			}
@@ -503,6 +595,8 @@ public class HotkeyController {
 						log.error(e);
 					}
 				}
+				
+
 				if (keyEvent.isAltDown() && number != -1){
 					try {
 						log.debug(number);
@@ -667,10 +761,6 @@ public class HotkeyController {
 								        	}
 								        }
 								    });
-								}
-								if (accordion != null)
-								{
-									
 								}
 					} catch (Exception e) {
 						log.error(e);
