@@ -38,6 +38,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -80,6 +81,9 @@ public class MainController extends TabControlled implements Openable {
     
     @FXML
     private StackPane statusStackPane;
+    
+    @FXML
+    private Label showLabel;
    
     private StatusBarController statusBarController;
     private WorldSettingsController ws;
@@ -112,7 +116,7 @@ public class MainController extends TabControlled implements Openable {
 		primaryStage.getIcons()
 				.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/application/64.png").openStream()));
 		Scene myScene = new Scene(rootLayout);
-		myScene.getStylesheets().add(App.retGlobalResource("/src/main/java/com/forj/fwm/gui/mainStylesheet.css").toString());
+		myScene.getStylesheets().add(App.retGlobalResource("/src/main/ui/mainStylesheet.css").toString());
 		primaryStage.setScene(myScene);
 		primaryStage.setMinWidth(640);
 		primaryStage.setMinHeight(520);
@@ -243,6 +247,13 @@ public class MainController extends TabControlled implements Openable {
 		GenericTextController cr = GenericTextController.startGenericTextController("About");
 		cr.setTextFromFile(App.retGlobalResource("/src/main/ui/About.txt").openStream());
 	}
+	
+	@FXML
+	public void showCrashCourse() throws Exception {
+		log.debug("Crash Course Called");
+		GenericTextController cr = GenericTextController.startGenericTextController("CrashCourse");
+		cr.setTextFromFile(App.retGlobalResource("/src/main/ui/CrashCourse.txt").openStream());
+	}
 
 	@FXML
 	public void showWorldSettings() throws Exception{
@@ -342,6 +353,10 @@ public class MainController extends TabControlled implements Openable {
 
 	public void addStatus(String text) {
 		statusBarController.addStatus(text);
+	}
+	
+	public void changeShowLabel(String text) {
+		showLabel.setText("Showing: " + text);
 	}
 	
 	@FXML

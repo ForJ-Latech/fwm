@@ -54,7 +54,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
     public void start(Stage primaryStage, ScrollPane rootLayout) throws Exception {
        primaryStage.setTitle("Show Players Controller");
        Scene myScene = new Scene(rootLayout);
-       myScene.getStylesheets().add(App.retGlobalResource("/src/main/java/com/forj/fwm/gui/showPlayersStylesheet.css").toString());
+       myScene.getStylesheets().add(App.retGlobalResource("/src/main/ui/showPlayersStylesheet.css").toString());
 
        primaryStage.getIcons()
 		.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/player/64.png").openStream()));
@@ -96,9 +96,10 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	@FXML
 	public void back() {
 		log.debug("back");
-		log.debug("curIndex before: " + curIndex);
+		log.debug("curIndex before: " + curIndex);	
 		setObject(App.spdc.getPrevious(curIndex));
 		log.debug("curIndex after: " + curIndex);
+		
 	}
 	
 	@FXML
@@ -167,6 +168,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	
 	public void setName(String newName) {
 		name.setText(newName);
+		App.getMainController().changeShowLabel(name.getText());
 	}
 	
 	public void setDescription(String newDesription) {

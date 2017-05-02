@@ -79,14 +79,14 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 	
 	public void saveFullGod(God god) throws SQLException {
 		this.createOrUpdateWLE(god);
-		saveRelationalGod(god);
+		this.saveRelationalGod(god);
 	}
 	
 	public void saveRelationalGod(God god) throws SQLException{
 		if (god.getInteractions() != null && !god.getInteractions().isEmpty()) {
 			List<OMGodInteraction> relations = new ArrayList<OMGodInteraction>();
 			for (Interaction interaction : god.getInteractions()) {
-				Backend.getInteractionDao().createOrUpdate(interaction);
+				Backend.getInteractionDao().createIfNotExists(interaction);
 				relations.add(new OMGodInteraction(god, interaction));
 			}
 			for (OMGodInteraction relation : relations) {
@@ -97,7 +97,7 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		if (god.getRegions() != null && !god.getRegions().isEmpty()) {
 			List<MMRegionGod> relations = new ArrayList<MMRegionGod>();
 			for (Region region : god.getRegions()) {
-				Backend.getRegionDao().createOrUpdate(region);
+				Backend.getRegionDao().createIfNotExists(region);
 				relations.add(new MMRegionGod(region, god));
 			}
 			for (MMRegionGod relation : relations) {
@@ -108,7 +108,7 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		if (god.getEvents() != null && !god.getEvents().isEmpty()) {
 			List<MMEventGod> relations = new ArrayList<MMEventGod>();
 			for (Event event : god.getEvents()) {
-				Backend.getEventDao().createOrUpdate(event);
+				Backend.getEventDao().createIfNotExists(event);
 				relations.add(new MMEventGod(event, god));
 			}
 			for (MMEventGod relation : relations) {
@@ -119,7 +119,7 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		if (god.getTemplates() != null && !god.getTemplates().isEmpty()) {
 			List<MMTemplateGod> relations = new ArrayList<MMTemplateGod>();
 			for (Template template : god.getTemplates()) {
-				Backend.getTemplateDao().createOrUpdate(template);
+				Backend.getTemplateDao().createIfNotExists(template);
 				relations.add(new MMTemplateGod(template, god));
 			}
 			for (MMTemplateGod relation : relations) {
