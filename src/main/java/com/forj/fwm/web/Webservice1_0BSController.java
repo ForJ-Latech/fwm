@@ -69,7 +69,7 @@ public class Webservice1_0BSController {
 	 */
 	@RequestMapping("/webservice1_0bs/getNext/{index}")
 	public ResponseEntity<String> getNextObject(@PathVariable("index") int index, HttpServletRequest request) {
-		String json = showThis(App.spdc.getPrevious(index));
+		String json = showThis(App.spdc.getNext(index));
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content-Type", "application/json");
 
@@ -194,6 +194,7 @@ public class Webservice1_0BSController {
 	 * @param modelMap
 	 * @return some shit
 	 */
+	@Deprecated
 	@RequestMapping(value = "/webservice1_0bs/objectIdCheck/{currentIndex}", method = RequestMethod.GET, produces = "application/json", headers = "Accept=application/json")
 	public @ResponseBody ResponseEntity<String> checkObjectId(@PathVariable("currentIndex") int currentIndex,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -261,7 +262,6 @@ public class Webservice1_0BSController {
 
 		case Event:
 			Event e = (Event) obj;
-
 			js.addAttribute("Name", e.getName());
 			js.addAttribute("Description", e.getDescription());
 			js.addAttribute("ObjectId", e.getID());
@@ -271,7 +271,6 @@ public class Webservice1_0BSController {
 				log.debug("the sound file name is " + e.getSoundFileName());
 			}
 			break;
-
 		case God:
 			God g = (God) obj;
 			String gImage = g.getImageFileName();
