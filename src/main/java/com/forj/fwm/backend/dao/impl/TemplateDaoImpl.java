@@ -66,8 +66,9 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 	}
 
 	public void saveFullTemplate(Template template) throws SQLException {
-		this.createOrUpdate(template);
+		this.createOrUpdateWLE(template);
 		this.refresh(template);
+		
 		if (template.getEvents() != null && !template.getEvents().isEmpty()) {
 			List<MMTemplateEvent> relations = new ArrayList<MMTemplateEvent>();
 			for (Event event : template.getEvents()) {
@@ -153,14 +154,8 @@ public class TemplateDaoImpl extends BaseDaoImpl<Template,String> implements Tem
 		
 	}
 
-	@Override
-	public int update(Template t) throws SQLException {
-		t.setLastEdited(new Date());
-		return super.update(t);
-	}
-	
-	@Override
-	public CreateOrUpdateStatus createOrUpdate(Template t) throws SQLException {
+	// WLE -> With Last Edited
+	public CreateOrUpdateStatus createOrUpdateWLE(Template t) throws SQLException {
 		t.setLastEdited(new Date());
 		return super.createOrUpdate(t);
 	}

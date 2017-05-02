@@ -1,13 +1,11 @@
 package com.forj.fwm.gui.tab;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
-import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
@@ -17,43 +15,27 @@ import com.forj.fwm.entity.OMNpcInteraction;
 import com.forj.fwm.entity.OMRegionInteraction;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
-import com.forj.fwm.entity.Statblock;
-import com.forj.fwm.gui.RelationalList;
-import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.startup.App;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.SelectArg;
-import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class InteractionTabController implements Saveable {
@@ -64,12 +46,10 @@ public class InteractionTabController implements Saveable {
 	private static boolean started = false;
 	private static int maxImageSize = 32;
 	
-	
 	// NOTE: Probably much more important than just using for pantheon. Updates objects in other tabs
 	private void updateTab() {
 		
 	}
-
 	
 	public void start(Tab rootLayout) throws Exception {
 		log.debug("start interaction tab controller called");
@@ -88,10 +68,6 @@ public class InteractionTabController implements Saveable {
 		started = true;
 	}
 
-	public static boolean getStarted() {
-		return started;
-	}
-
 	public static InteractionTabController startInteractionTab() throws Exception {
 		log.debug("static startGodTab called.");
 		FXMLLoader loader = new FXMLLoader();
@@ -103,12 +79,6 @@ public class InteractionTabController implements Saveable {
 		return cr;
 	}
 	
-	public Tab getTab(){
-		return tabHead;
-	}
-	
-	
-	
 	private List<Interaction> getInteractionList() throws SQLException {
 		QueryBuilder<Interaction, String> builder = Backend.getInteractionDao().queryBuilder();
 		builder.limit((long) 100); // how many to return
@@ -116,13 +86,10 @@ public class InteractionTabController implements Saveable {
 		List<Interaction> list = Backend.getInteractionDao().query(builder.prepare()); 
 		return list;		
 	}
-
 	
 	public void updateList() throws SQLException {
-			
 		ObservableList<Interaction> items = FXCollections.observableArrayList(getInteractionList());
 		listView.setItems(items);
-		
 		
 		listView.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {
@@ -227,8 +194,6 @@ public class InteractionTabController implements Saveable {
 		});
 	}
 	
-
-	
 	private Searchable grabObject(Interaction interaction) throws SQLException {
 		Searchable intobj = null;
 		
@@ -260,46 +225,40 @@ public class InteractionTabController implements Saveable {
 		return intobj;
 		
 	}
-
+	
+	public static boolean getStarted() {
+		return started;
+	}
+	
+	public Tab getTab(){
+		return tabHead;
+	}
 
 	public void fullSave() {
-		// TODO Auto-generated method stub
 		
 	}
-
 
 	public void simpleSave() {
-		// TODO Auto-generated method stub
 		
 	}
-
 
 	public void relationalSave() {
-		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	public AddableImage getAddableImage() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	public Searchable getThing() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	public void nameFocus() {
-		// TODO Auto-generated method stub
 		
 	}
 
-
 	public ListController getListController() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	public AddableSound getAddableSound(){

@@ -143,7 +143,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
         primaryStage.setTitle("WebService Controller");
         primaryStage.getIcons().add(new javafx.scene.image.Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/server/64.png").openStream()));
         Scene myScene = new Scene(rootLayout);
-        myScene.getStylesheets().add(App.retGlobalResource("/src/main/java/com/forj/fwm/gui/jettyWindowStylesheet.css").toString());
+        myScene.getStylesheets().add(App.retGlobalResource("/src/main/ui/jettyWindowStylesheet.css").toString());
         primaryStage.setScene(myScene);
         primaryStage.show();
         started = true;
