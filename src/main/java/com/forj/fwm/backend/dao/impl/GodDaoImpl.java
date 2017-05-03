@@ -86,7 +86,7 @@ public class GodDaoImpl extends BaseDaoImpl<God,String> implements GodDao {
 		if (god.getInteractions() != null && !god.getInteractions().isEmpty()) {
 			List<OMGodInteraction> relations = new ArrayList<OMGodInteraction>();
 			for (Interaction interaction : god.getInteractions()) {
-				Backend.getInteractionDao().createIfNotExists(interaction);
+				Backend.getInteractionDao().createOrUpdate(interaction);
 				relations.add(new OMGodInteraction(god, interaction));
 			}
 			for (OMGodInteraction relation : relations) {
