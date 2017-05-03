@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.WorldSettingsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="205.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.WorldSettingsController">
    <children>
-      <HBox prefHeight="53.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="53.0" prefWidth="600.0">
          <children>
             <VBox prefHeight="49.0" prefWidth="233.0">
                <children>
@@ -21,8 +22,14 @@
                </children>
             </VBox>
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
       </HBox>
-      <HBox prefHeight="53.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="53.0" prefWidth="600.0">
          <children>
             <VBox prefHeight="49.0" prefWidth="233.0">
                <children>
@@ -36,8 +43,11 @@
                </children>
             </VBox>
          </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
       </HBox>
-      <HBox prefHeight="53.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="53.0" prefWidth="600.0">
          <children>
             <VBox prefHeight="49.0" prefWidth="233.0">
                <children>
@@ -51,6 +61,9 @@
                </children>
             </VBox>
          </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
       </HBox>
    </children>
 </VBox>
