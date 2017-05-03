@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <Tab fx:id="tabHead" text="StatBlockNameTab" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.StatBlockTabController">
    <content>
@@ -18,7 +19,11 @@
                   <Separator prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <TextArea fx:id="statBlockText" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="statBlockText" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font>
+            </TextArea>
          </children>
       </VBox>
    </content>

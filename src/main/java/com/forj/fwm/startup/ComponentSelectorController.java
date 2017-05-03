@@ -68,8 +68,9 @@ public class ComponentSelectorController{
 		AppConfig.saveDefaultWorldLocation("./" + relativePath);
 		App.worldFileUtil = new WorldFileUtil(selectedFile);
 		if(App.worldFileUtil.success()){
-			// pass
-			primaryStage.show();
+			// skipping start both because it's sort of useless. 
+			startGUI();
+			primaryStage.close();
 		}
 		else
 		{

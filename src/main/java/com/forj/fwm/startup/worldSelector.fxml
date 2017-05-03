@@ -19,7 +19,7 @@
             <VBox fx:id="worlds" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="251.0" spacing="5.0" />
          </content>
       </ScrollPane>
-      <TextField fx:id="newWorldName" promptText="World Name" text="World Name">
+      <TextField fx:id="newWorldName" onAction="#addNewWorld" promptText="World Name" text="World Name">
          <font>
             <Font size="22.0" />
          </font>
