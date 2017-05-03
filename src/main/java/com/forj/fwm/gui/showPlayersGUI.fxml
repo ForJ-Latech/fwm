@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.ShowPlayersController">
+<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.ShowPlayersController">
    <content>
       <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="271.0" prefWidth="453.0">
          <children>
@@ -34,7 +34,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="name" alignment="CENTER" prefHeight="50.0" prefWidth="541.0" text="Name" HBox.hgrow="ALWAYS">
+                        <Label fx:id="name" alignment="CENTER" prefHeight="50.0" prefWidth="541.0" text="Name" textOverrun="CLIP" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="System Bold" size="28.0" />
                            </font>
