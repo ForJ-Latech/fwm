@@ -75,7 +75,7 @@ public class NpcDaoImpl extends BaseDaoImpl<Npc,String> implements NpcDao {
 		if (npc.getInteractions() != null && !npc.getInteractions().isEmpty()) {
 			List<OMNpcInteraction> relations = new ArrayList<OMNpcInteraction>();
 			for (Interaction interaction : npc.getInteractions()) {
-				Backend.getInteractionDao().createIfNotExists(interaction);
+				Backend.getInteractionDao().createOrUpdate(interaction);
 				relations.add(new OMNpcInteraction(npc, interaction));
 			}
 			for (OMNpcInteraction relation : relations) {

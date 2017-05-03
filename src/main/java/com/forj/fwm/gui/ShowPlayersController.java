@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.ShowPlayersDataModel;
 import com.forj.fwm.conf.HotkeyController;
+import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
@@ -47,6 +48,9 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 
 	private Stage ourStage;
 	
+	private static Scene theScene;
+	private static boolean started = false;
+	
 	AudioClip sound = null;
 	
 	// Method called on wrong thread for servers to be started
@@ -66,6 +70,12 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
        
        ourStage = primaryStage;
        HotkeyController.giveGlobalHotkeys(myScene);
+       setScene(myScene);
+       if(WorldConfig.getDarkMode())
+		{
+			setDark(true);
+		}
+       started = true;
     }
 
 	
@@ -90,6 +100,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	}
 	
 	public void closeWindow(){
+		started = false;
 		ourStage.close();
 	}
 	
@@ -187,6 +198,27 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 		}
 	}
 	
+	public static void setScene(Scene myScene)
+	{
+		theScene = myScene;
+	}
+	
+	public static Scene getScene()
+	{
+		return theScene;
+	}
+
+	public static void setDark(boolean dark) {
+		if(dark)
+		{
+			getScene().getStylesheets().add(App.retGlobalResource("/src/main/ui/darkShowStylesheet.css").toString());
+		}
+		else
+		{
+			getScene().getStylesheets().remove(1);
+		}		
+	}
+	
 	public void setObject(ShowPlayersDataModel.ShowData obj) {
 		currObject = obj.getObject();
 		curIndex = obj.getNewIndex();
@@ -216,5 +248,10 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 		setName(newName);
 		setDescription(newDescription);
 		setImage(newImage);
+	}
+
+
+	public static boolean getStarted() {
+		return started;
 	}
 }

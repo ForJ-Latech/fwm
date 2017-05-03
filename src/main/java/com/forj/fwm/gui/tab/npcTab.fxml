@@ -21,38 +21,38 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="600.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+                        <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="fName" promptText="First Name">
+                              <TextField fx:id="fName" maxWidth="1.7976931348623157E308" promptText="First Name" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <TextField fx:id="lName" promptText="Family Name">
+                              <TextField fx:id="lName" maxWidth="1.7976931348623157E308" promptText="Family Name" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <TextField fx:id="gender" promptText="Gender">
+                              <TextField fx:id="gender" maxWidth="1.7976931348623157E308" promptText="Gender" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </TextField>
                            </children>
                         </HBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+                        <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <TextField fx:id="race" promptText="Race">
+                              <TextField fx:id="race" maxWidth="1.7976931348623157E308" promptText="Race" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <TextField fx:id="classType" promptText="Class / Occupation">
+                              <TextField fx:id="classType" maxWidth="1.7976931348623157E308" promptText="Class / Occupation" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </TextField>
-                              <TextField fx:id="age" promptText="Age">
+                              <TextField fx:id="age" maxWidth="1.7976931348623157E308" promptText="Age" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>

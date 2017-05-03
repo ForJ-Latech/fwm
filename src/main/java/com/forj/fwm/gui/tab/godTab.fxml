@@ -22,33 +22,38 @@
                      <children>
                         <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+                              <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <TextField fx:id="name" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Name">
+                                    <TextField fx:id="name" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="120.0" promptText="Name" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="pantheon" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Pantheon">
+                                    <TextField fx:id="pantheon" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="120.0" promptText="Pantheon" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="gender" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Gender">
+                                    <TextField fx:id="gender" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="120.0" promptText="Gender" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
                                  </children>
                               </HBox>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+                              <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="43.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <TextField fx:id="race" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Race">
+                                    <TextField fx:id="race" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="120.0" promptText="Race" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="godClass" maxHeight="-Infinity" maxWidth="150.0" prefHeight="25.0" prefWidth="120.0" promptText="Class">
+                                    <TextField fx:id="godClass" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="120.0" promptText="Class" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <TextField maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="120.0" promptText="Gender" visible="false" HBox.hgrow="ALWAYS">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>

@@ -77,7 +77,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
     private TrayIcon trayIcon;
 	
     private static Stage ourStage;
-    
+    private static Scene theScene;
 	private static boolean started = false;
 	
 	private static WebAppContext ctx;
@@ -156,8 +156,12 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
         radio10.setSelected(WorldConfig.getRad10());
         radio15.setSelected(WorldConfig.getRad15());
         
-       
+       setScene(myScene);
        visPasswordVar.toBack();
+		if(WorldConfig.getDarkMode())
+		{
+			setDark(true);
+		}
     }
 	
 	public static boolean getStarted()
@@ -485,4 +489,25 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
             }
         });
     }
+  
+	public static void setScene(Scene myScene)
+	{
+		theScene = myScene;
+	}
+	
+	public static Scene getScene()
+	{
+		return theScene;
+	}
+
+	public static void setDark(boolean dark) {
+		if(dark)
+		{
+			getScene().getStylesheets().add(App.retGlobalResource("/src/main/ui/darkJettyStylesheet.css").toString());
+		}
+		else
+		{
+			getScene().getStylesheets().remove(1);
+		}		
+	}
 }

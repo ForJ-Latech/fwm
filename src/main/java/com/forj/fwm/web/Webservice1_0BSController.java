@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
 import com.forj.fwm.backend.ShowPlayersDataModel;
+import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.*;
 import com.forj.fwm.startup.App;
 import com.google.gson.Gson;
@@ -37,6 +38,14 @@ public class Webservice1_0BSController {
 	private enum gameObject {
 		Npc, Event, God, Region;
 	}
+	
+	private static ModelAndView validateWS1_0(String dest) {
+		if (WorldConfig.getRad10() && dest != ""){
+			return new ModelAndView(dest);
+		} else {
+			return new ModelAndView("views/error.html");
+		}
+	}
 
 	/**
 	 * This is the page for webservice 1.0. It will take the most recent item
@@ -47,7 +56,8 @@ public class Webservice1_0BSController {
 	 */
 	@RequestMapping("/webservice1_0bs")
 	public ModelAndView getWebservicePage(ModelMap modelMap, HttpServletRequest request) {
-		return new ModelAndView("views/webservice1_0bs.html");
+//		return new ModelAndView("views/webservice1_0bs.html");
+		return validateWS1_0("views/webservice1_0bs.html");
 	}
 	
 	@RequestMapping("/webservice1_0bs/getCurrent")
@@ -59,7 +69,7 @@ public class Webservice1_0BSController {
 		return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
 	}
 		
-
+	
 	/**
 	 * It will take the next object from ShowPlayersDataModel and display it on
 	 * Webservice1_0.jsp
@@ -69,11 +79,26 @@ public class Webservice1_0BSController {
 	 */
 	@RequestMapping("/webservice1_0bs/getNext/{index}")
 	public ResponseEntity<String> getNextObject(@PathVariable("index") int index, HttpServletRequest request) {
-		String json = showThis(App.spdc.getNext(index));
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Type", "application/json");
-
-		return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+		
+		if (WorldConfig.getRad10()) {
+			String json = showThis(App.spdc.getNext(index));
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Content-Type", "application/json");
+			return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+		} else {
+			//creates a dummy when functionality is disabled. Could make it a global json but need to push quick
+			JsonHelper js = new JsonHelper();
+			js.addAttribute("Name", "No Web Service Functionality");
+			js.addAttribute("Description", "The DM has disabled this web service functionality.");
+			js.addAttribute("ImageFileName", null);
+			js.addAttribute("ObjectId", -1);
+			js.addAttribute("ObjectClass", null);
+			js.addAttribute("CurrentIndex", null);
+			String json = js.getString();
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Content-Type", "application/json");
+			return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+		}
 	}
 
 	/**
@@ -86,11 +111,26 @@ public class Webservice1_0BSController {
 	@RequestMapping("/webservice1_0bs/getPrev/{index}")
 	public ResponseEntity<String> getPrevObject(@PathVariable("index") int index, HttpServletRequest request) {
 
-		String json = showThis(App.spdc.getPrevious(index));
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Type", "application/json");
+		if (WorldConfig.getRad10()) {
+			String json = showThis(App.spdc.getPrevious(index));
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Content-Type", "application/json");
+			return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+		} else {
+			//creates a dummy when functionality is disabled. Could make it a global json but need to push quick
+			JsonHelper js = new JsonHelper();
+			js.addAttribute("Name", "No Web Service Functionality");
+			js.addAttribute("Description", "The DM has disabled this web service functionality.");
+			js.addAttribute("ImageFileName", null);
+			js.addAttribute("ObjectId", -1);
+			js.addAttribute("ObjectClass", null);
+			js.addAttribute("CurrentIndex", null);
+			String json = js.getString();
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Content-Type", "application/json");
+			return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
 
-		return new ResponseEntity<String>(json, headers, HttpStatus.CREATED);
+		}
 
 	}
 
@@ -302,27 +342,6 @@ public class Webservice1_0BSController {
 			break;
 		}
 		return js.getString();
-	}
-
-	private int getObjectId(Object obj) {
-		String className = obj.getClass().getSimpleName();
-		switch (gameObject.valueOf(className)) {
-		case Event:
-			Event e = (Event) obj;
-			return e.getID();
-		case God:
-			God g = (God) obj;
-			return g.getID();
-		case Npc:
-			Npc n = (Npc) obj;
-			return n.getID();
-		case Region:
-			Region r = (Region) obj;
-			return r.getID();
-		default:
-			return (-1);
-		}
-
 	}
 
 }
