@@ -56,26 +56,27 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	// Method called on wrong thread for servers to be started
 	// started on GUI thread.
     public void start(Stage primaryStage, ScrollPane rootLayout) throws Exception {
-       primaryStage.setTitle("Player View - " + App.worldFileUtil.getWorldName());
-       Scene myScene = new Scene(rootLayout);
-       myScene.getStylesheets().add(App.retGlobalResource("/src/main/ui/showPlayersStylesheet.css").toString());
-
-       primaryStage.getIcons()
+    	primaryStage.setTitle("Player View - " + App.worldFileUtil.getWorldName());
+	   	Scene myScene = new Scene(rootLayout);
+	   	myScene.getStylesheets().add(App.retGlobalResource("/src/main/ui/showPlayersStylesheet.css").toString());
+	
+	   	primaryStage.getIcons()
 		.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/player/64.png").openStream()));
-
-       primaryStage.setScene(myScene);
-       image.fitWidthProperty().bind(imageViewHBox.widthProperty().subtract(20));
-
-       image.fitHeightProperty().bind(imageViewHBox.heightProperty().subtract(20));
-       
-       ourStage = primaryStage;
-       HotkeyController.giveGlobalHotkeys(myScene);
-       setScene(myScene);
-       if(WorldConfig.getDarkMode())
+	   	primaryStage.setScene(myScene);
+	   	primaryStage.setMinWidth(640);
+	   	primaryStage.setMinHeight(520);
+	   
+	   	image.fitWidthProperty().bind(imageViewHBox.widthProperty().subtract(10));
+	   	image.fitHeightProperty().bind(imageViewHBox.heightProperty().subtract(10));
+	   
+	   	ourStage = primaryStage;
+	   	HotkeyController.giveGlobalHotkeys(myScene);
+	   	setScene(myScene);
+	   	if(WorldConfig.getDarkMode())
 		{
-			setDark(true);
+	   		setDark(true);
 		}
-       started = true;
+	   	started = true;
     }
 
 	
