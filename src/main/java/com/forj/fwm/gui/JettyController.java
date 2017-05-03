@@ -93,7 +93,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
     private Button copyButton, openButton, applyButton, toggleServerButton;
 	
 	@FXML 
-	private RadioButton showPasswordButton, radio10, radio15;
+	private RadioButton showPasswordButton, radio10, radio15, radioShowAll;
 	
 	@FXML
     private PasswordField passwordVar;
@@ -155,9 +155,9 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
         showPassword();
         radio10.setSelected(WorldConfig.getRad10());
         radio15.setSelected(WorldConfig.getRad15());
-        
-       setScene(myScene);
-       visPasswordVar.toBack();
+        radioShowAll.setSelected(WorldConfig.getShowAll());
+        setScene(myScene);
+        visPasswordVar.toBack();
 		if(WorldConfig.getDarkMode())
 		{
 			setDark(true);
@@ -340,7 +340,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 	
 	@FXML
 	public void toggleRadios() throws ConfigurationException{
-		WorldConfig.saveRadios(radio10.isSelected(), radio15.isSelected());	
+		WorldConfig.saveRadios(radio10.isSelected(), radio15.isSelected(), radioShowAll.isSelected());	
 		//radio1.0 show content
 		//radio1.5 allow players to view/search gods/npcs/regions/events and search
 		//radio2.0 allow co-dm to edit

@@ -34,17 +34,18 @@ import com.j256.ormlite.stmt.SelectArg;
 public class Webservice1_5Controller {
 	private static Logger log = Logger.getLogger(Webservice1_5Controller.class);
 
-	@RequestMapping("/webservice1_5")
-	public ModelAndView startWS1_5(ModelMap modelMap, HttpServletRequest request) throws Exception {
-		return validateWS1_5("views/webservice1_5.html");
+	@RequestMapping("/webservice1_5/main/{shit}")
+	public ModelAndView startWS1_5(ModelMap modelMap, HttpServletRequest request, @PathVariable("shit") String shit){
+		return validateWS1_5("/views/webservice1_5.html");
 
 	}
 	
+	// this method is actually un-usable because it's stupid... 
 	private static ModelAndView validateWS1_5(String dest) {
 		if (WorldConfig.getRad15() && dest != ""){
 			return new ModelAndView(dest);
 		} else {
-			return new ModelAndView("views/error.html");
+			return new ModelAndView("/views/error.html");
 		}
 	}
 	
@@ -231,12 +232,13 @@ public class Webservice1_5Controller {
 			return false;
 		} else if (!WorldConfig.getRad15()) {
 			return false;
+		} else if(WorldConfig.getShowAll()){
+			return true;
 		}
 		return s.isShown();
 	}
 	
 	public static void addListToHelper(String key, List<Searchable> things, JsonHelper help){
-		
 		StringBuilder events = new StringBuilder("[");
 		if(things != null){
 			int cntr = 0;

@@ -40,10 +40,11 @@ public class Webservice1_0BSController {
 	}
 	
 	private static ModelAndView validateWS1_0(String dest) {
+		log.debug(WorldConfig.getRad10());
 		if (WorldConfig.getRad10() && dest != ""){
 			return new ModelAndView(dest);
 		} else {
-			return new ModelAndView("views/error.html");
+			return new ModelAndView("/views/error.html");
 		}
 	}
 
@@ -54,10 +55,11 @@ public class Webservice1_0BSController {
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping("/webservice1_0bs")
-	public ModelAndView getWebservicePage(ModelMap modelMap, HttpServletRequest request) {
+	@RequestMapping("/webservice1_0bs/main/{shit}")
+	public ModelAndView getWebservicePage(ModelMap modelMap, HttpServletRequest request, @PathVariable("shit") String shit) {
 //		return new ModelAndView("views/webservice1_0bs.html");
-		return validateWS1_0("views/webservice1_0bs.html");
+		log.debug("getting webservice1_0bs");
+		return validateWS1_0("/views/webservice1_0bs.html");
 	}
 	
 	@RequestMapping("/webservice1_0bs/getCurrent")

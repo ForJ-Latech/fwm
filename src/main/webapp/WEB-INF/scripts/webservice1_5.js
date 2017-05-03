@@ -17,7 +17,7 @@ function searchvalue(text){
 	keynum++;
 	var sdf = keynum;
 	$.ajax({
-		        url: "searchAll/" + text,
+		        url: "/searchAll/" + text,
 		        method: 'GET',
 		        success: function(data){
 					changeList(data, sdf);
@@ -103,7 +103,7 @@ function applyBasicAttributes(data){
 // it will call open + class name, we need to make more of these. 
 function openNpc(id){
 	$.ajax({
-		        url: "getNpc/" + id,
+		        url: "/getNpc/" + id,
 		        method: 'GET',
 		        success: function(data){
 					applyBasicAttributes(data);
@@ -131,7 +131,7 @@ function openNpc(id){
 
 function openEvent(id){
 	$.ajax({
-		        url: "getEvent/" + id,
+		        url: "/getEvent/" + id,
 		        method: 'GET',
 		        success: function(data){
 					applyBasicAttributes(data);
@@ -158,7 +158,7 @@ function openEvent(id){
 
 function openRegion(id){
 	$.ajax({
-		        url: "getRegion/" + id,
+		        url: "/getRegion/" + id,
 		        method: 'GET',
 		        success: function(data){
 					applyBasicAttributes(data);
@@ -187,7 +187,7 @@ function openRegion(id){
 
 function openGod(id){
 	$.ajax({
-		        url: "getGod/" + id,
+		        url: "/getGod/" + id,
 		        method: 'GET',
 		        success: function(data){
 					applyBasicAttributes(data);

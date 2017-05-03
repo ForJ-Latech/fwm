@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.JettyController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.JettyController">
    <children>
       <HBox alignment="CENTER" prefHeight="59.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
@@ -108,6 +108,11 @@
                            </padding>
                         </RadioButton>
                         <RadioButton fx:id="radio15" mnemonicParsing="false" onAction="#toggleRadios" text="Allow players to view/search Gods, NPCs, Regions, and Events">
+                           <padding>
+                              <Insets bottom="2.0" left="10.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioShowAll" mnemonicParsing="false" onAction="#toggleRadios" prefHeight="20.0" prefWidth="352.0" text="Show all created entities in Explore">
                            <padding>
                               <Insets bottom="2.0" left="10.0" />
                            </padding>
