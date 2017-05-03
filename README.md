@@ -16,11 +16,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Hello everybody,
 
-I, James Ehlmann, with the entire ForJ team, am proud to announce that the Fantasy World Manager is officially in alpha!
+I, James Ehlmann, with the entire ForJ team, am proud to announce that the Fantasy World Manager is officially in Beta / Release!
 
-For the time being it can be downloaded here: http://138.47.200.245/jehlmann/fwm/blob/master/FWM-alpha.zip
+For the time being it can be downloaded here: http://138.47.200.245/jehlmann/fwm/blob/master/FWM-beta.zip
 
-Remember, this is an alpha, so things are not entirely finished. With that in mind, if you have any ideas or changes that you would like, talk to me. I would love to hear your thoughts.
+Remember, this is a beta, so things are not entirely finished, but the majority of the core functionality I originally wanted is there. We have also finished official development on this application, any future development is volunteer work. With that in mind, if you have any ideas or changes that you would like, talk to me. I would love to hear your thoughts.
 
 Happy Dungeon Mastering,
 
