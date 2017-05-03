@@ -66,7 +66,8 @@ public class MainController extends TabControlled implements Openable {
 	private static Logger log = Logger.getLogger(MainController.class);
 	
 	private ShowPlayersController spController;
-
+	
+	private JettyController jt;
 	@FXML
 	private MenuBar MenuBar;
 
@@ -112,7 +113,7 @@ public class MainController extends TabControlled implements Openable {
 
 	
 	public void start(Stage primaryStage, Pane rootLayout) throws Exception {
-		primaryStage.setTitle("Fantasy World Manager");
+		primaryStage.setTitle("Fantasy World Manager - " + App.worldFileUtil.getWorldName());
 		primaryStage.getIcons()
 				.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/application/64.png").openStream()));
 		Scene myScene = new Scene(rootLayout);
@@ -308,10 +309,14 @@ public class MainController extends TabControlled implements Openable {
 		{
 			try {
 				log.debug("starting web service. lol");
-				JettyController.startJettyWindow();
+				jt = JettyController.startJettyWindow();
+				jt.getStage().requestFocus();
 			} catch (Exception e) {
 				log.debug(e);
 			}
+		}
+		else{
+			jt.getStage().requestFocus();
 		}
 	}
 	

@@ -83,6 +83,9 @@ public class RegionTabController implements Saveable {
 	public RelationalList getRegionRelation(){
 		return regionRelation;
 	}
+	public RelationalList getTemplateRelation(){
+		return templateRelation;
+	}
 
 	private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

@@ -72,6 +72,12 @@ public class EventTabController implements Saveable {
 		}		
 	};
 	
+	public RelationalList getTemplateRelation(){
+		return templateRelation;
+	}
+	public RelationalList getStatblockRelation(){
+		return statblockRelation;
+	}
 	public RelationalList getNpcRelation(){
 		return npcRelation;
 	}

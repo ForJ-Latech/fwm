@@ -52,7 +52,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	// Method called on wrong thread for servers to be started
 	// started on GUI thread.
     public void start(Stage primaryStage, ScrollPane rootLayout) throws Exception {
-       primaryStage.setTitle("Show Players Controller");
+       primaryStage.setTitle("Player View - " + App.worldFileUtil.getWorldName());
        Scene myScene = new Scene(rootLayout);
        myScene.getStylesheets().add(App.retGlobalResource("/src/main/ui/showPlayersStylesheet.css").toString());
 

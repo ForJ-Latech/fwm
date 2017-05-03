@@ -13,10 +13,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.MainController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="623.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.MainController">
    <children>
-      <MenuBar fx:id="MenuBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="27.0" prefWidth="533.0">
+      <MenuBar fx:id="MenuBar" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="32.0" prefWidth="1006.0">
          <menus>
             <Menu fx:id="FileMenu" mnemonicParsing="false" text="File">
                <items>
@@ -74,7 +75,10 @@
                         <VBox fx:id="searchPane" minHeight="-Infinity" prefHeight="150.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
                         <VBox prefHeight="96.0" prefWidth="176.0" VBox.vgrow="NEVER">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Create" textAlignment="CENTER" VBox.vgrow="NEVER" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Create" textAlignment="CENTER" VBox.vgrow="NEVER">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Label>
                               <GridPane VBox.vgrow="ALWAYS">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

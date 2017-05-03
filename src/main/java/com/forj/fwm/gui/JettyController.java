@@ -107,6 +107,10 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 		}
 	};
 	
+	public Stage getStage(){
+		return ourStage;
+	}
+	
 	public static void close(){
 		log.debug("Jetty Controller is closing");
         try {
@@ -140,7 +144,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
     	createTrayIcon(primaryStage);
         firstTime = true;
         Platform.setImplicitExit(false);
-        primaryStage.setTitle("WebService Controller");
+        primaryStage.setTitle("Fantasy World Manager Web Service - " + App.worldFileUtil.getWorldName());
         primaryStage.getIcons().add(new javafx.scene.image.Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/server/64.png").openStream()));
         Scene myScene = new Scene(rootLayout);
         myScene.getStylesheets().add(App.retGlobalResource("/src/main/ui/jettyWindowStylesheet.css").toString());
@@ -168,7 +172,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
 		VBox rootLayout = (VBox)loader.load();
 		JettyController cr = (JettyController)loader.getController();
 		cr.start(new Stage(), rootLayout);
-		started = true;		
+		started = true;
 		return cr;
 	}
 	
