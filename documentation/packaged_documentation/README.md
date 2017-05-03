@@ -19,7 +19,6 @@ This app defaults to saving on every key stroke, so that you never need to hit c
 * It can show what you want to your players if you have another screen 
 * Players can explore the world you have created by connecting to the webservice
 
-
 ## Running the application
 __This application requires java to run.__ 
 
@@ -32,6 +31,15 @@ worlds/\*\* is where the your world folders, and world properties will be stored
 lib/\*\* is nerd stuff, and is required in the same directory as fwm-alpha.jar. Just don't change it unless you know what you are doing. 
 
 Change any hotkeys that are not to your liking in global settings -> edit hotkeys. 
+
+## Application Improvements
+* We originally wanted this application to be packaged into only one jar file, however there was some technical complexity that got in the way. We have since resolved this and getting the application into one jar file should only take around 5 hours, this might get done in the future. 
+
+* We should make the Jetty Controller port be changeable by default. 
+
+* The help section in the application is lacking
+
+* This code will be hosted on github in the future probably at https://github.com/james-ehlmann
 
 ##Reporting a bug
 Email any problems to james(dot)ehlmann{at}gmail[dot]com
