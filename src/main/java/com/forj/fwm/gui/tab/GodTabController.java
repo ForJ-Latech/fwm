@@ -70,7 +70,9 @@ public class GodTabController implements Saveable {
 		}
 	};
 	
-	
+	public RelationalList getTemplateRelation(){
+		return templateRelation;
+	}
 	public RelationalList getNpcRelation(){
 		return npcRelation;
 	}

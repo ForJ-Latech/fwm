@@ -628,6 +628,16 @@ public class HotkeyController {
 									        		((GodTabController) tab).getRegionRelation().handleAddButton();
 									        	}
 								        	}
+								        	else if (pane == 4)
+								        	{
+									        	((GodTabController) tab).getTemplateRelation().getListView().requestFocus();
+									        	((GodTabController) tab).getTemplateRelation().getListView().getFocusModel().focus(0);
+									        	((GodTabController) tab).getTemplateRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((GodTabController) tab).getTemplateRelation().handleAddButton();
+									        	}
+								        	}
 								        }
 								    });
 								}
@@ -677,6 +687,16 @@ public class HotkeyController {
 									        		((RegionTabController) tab).getEventRelation().handleAddButton();
 									        	}
 								        	}
+								        	else if (pane == 4)
+								        	{
+								        		((RegionTabController) tab).getTemplateRelation().getListView().requestFocus();
+									        	((RegionTabController) tab).getTemplateRelation().getListView().getFocusModel().focus(0);
+									        	((RegionTabController) tab).getTemplateRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((RegionTabController) tab).getTemplateRelation().handleAddButton();
+									        	}
+								        	}
 								        }
 								    });
 								}
@@ -704,6 +724,26 @@ public class HotkeyController {
 									        	if (keyEvent.isShiftDown())
 									        	{
 									        		((EventTabController) tab).getGodRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 2)
+								        	{
+								        		((EventTabController) tab).getTemplateRelation().getListView().requestFocus();
+									        	((EventTabController) tab).getTemplateRelation().getListView().getFocusModel().focus(0);
+									        	((EventTabController) tab).getTemplateRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((EventTabController) tab).getTemplateRelation().handleAddButton();
+									        	}
+								        	}
+								        	else if (pane == 3)
+								        	{
+								        		((EventTabController) tab).getStatblockRelation().getListView().requestFocus();
+									        	((EventTabController) tab).getStatblockRelation().getListView().getFocusModel().focus(0);
+									        	((EventTabController) tab).getStatblockRelation().getListView().getSelectionModel().select(0);
+									        	if (keyEvent.isShiftDown())
+									        	{
+									        		((EventTabController) tab).getStatblockRelation().handleAddButton();
 									        	}
 								        	}
 								        }

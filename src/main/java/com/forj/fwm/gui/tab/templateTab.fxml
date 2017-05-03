@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<Tab fx:id="tabHead" text="Untitled Tab" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.TemplateTabController">
+<Tab fx:id="tabHead" text="Untitled Tab" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.tab.TemplateTabController">
    <content>
       <ScrollPane fitToWidth="true" prefHeight="441.0" prefWidth="600.0">
          <content>
@@ -24,12 +25,21 @@
                            <children>
                               <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newFromTemplate" text="New From Template" />
                            </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
                         </HBox>
-                        <TextField fx:id="name" promptText="Template Name" HBox.hgrow="NEVER" />
+                        <TextField fx:id="name" promptText="Template Name" HBox.hgrow="NEVER">
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding></TextField>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Button mnemonicParsing="false" onAction="#openStatblock" text="Statblock" HBox.hgrow="ALWAYS" />
                            </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
                         </HBox>
                      </children>
                   </HBox>
@@ -62,24 +72,39 @@
                               <Label text="Age" GridPane.rowIndex="5" />
                               <TextArea fx:id="age" prefHeight="57.0" prefRowCount="2" prefWidth="484.0" promptText="[50, 14, 420, 22, 18, 69, 33, 119]" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
                         </GridPane>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" fillHeight="false" spacing="10.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="93.0" text="Attributes" HBox.hgrow="NEVER" />
+                        <Label prefHeight="16.0" prefWidth="100.0" text="Attributes" HBox.hgrow="NEVER">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
                         <TextArea fx:id="attributes" prefRowCount="8" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" fillHeight="false" spacing="10.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label prefHeight="39.0" prefWidth="93.0" text="Description" wrapText="true" HBox.hgrow="NEVER" />
+                        <Label prefHeight="39.0" prefWidth="100.0" text="Description" wrapText="true" HBox.hgrow="NEVER">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
                         <TextArea fx:id="description" prefRowCount="8" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" fillHeight="false" spacing="10.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Label prefHeight="39.0" prefWidth="93.0" text="History and Goals" wrapText="true" HBox.hgrow="NEVER" />
+                        <Label prefHeight="80.0" prefWidth="100.0" text="History and Goals" wrapText="true" HBox.hgrow="NEVER">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
                         <TextArea fx:id="history" prefRowCount="8" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>

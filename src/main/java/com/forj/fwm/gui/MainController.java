@@ -66,7 +66,8 @@ public class MainController extends TabControlled implements Openable {
 	private static Logger log = Logger.getLogger(MainController.class);
 	
 	private ShowPlayersController spController;
-
+	
+	private JettyController jt;
 	@FXML
 	private MenuBar MenuBar;
 
@@ -87,6 +88,7 @@ public class MainController extends TabControlled implements Openable {
    
     private StatusBarController statusBarController;
     private WorldSettingsController ws;
+    private Scene theScene;
     
 	private static boolean started = false;
 	private Stage ourStage;
@@ -112,7 +114,7 @@ public class MainController extends TabControlled implements Openable {
 
 	
 	public void start(Stage primaryStage, Pane rootLayout) throws Exception {
-		primaryStage.setTitle("Fantasy World Manager");
+		primaryStage.setTitle("Fantasy World Manager - " + App.worldFileUtil.getWorldName());
 		primaryStage.getIcons()
 				.add(new Image(App.retGlobalResource("/src/main/webapp/WEB-INF/images/icons/application/64.png").openStream()));
 		Scene myScene = new Scene(rootLayout);
@@ -127,6 +129,7 @@ public class MainController extends TabControlled implements Openable {
 			   }
 		   });
 		
+		setScene(myScene);
 		primaryStage.show();
 		statusBarController = new StatusBarController(statusStackPane, statusVBoxmc);
 		statusVBoxmc.getChildren().add(statusBarController.getSmallStatus());
@@ -145,6 +148,10 @@ public class MainController extends TabControlled implements Openable {
 			
 			}
 		});
+		if(WorldConfig.getDarkMode())
+		{
+			setDark(true);
+		}
 	}
 
 	public static MainController startMainUi() throws Exception {
@@ -308,10 +315,14 @@ public class MainController extends TabControlled implements Openable {
 		{
 			try {
 				log.debug("starting web service. lol");
-				JettyController.startJettyWindow();
+				jt = JettyController.startJettyWindow();
+				jt.getStage().requestFocus();
 			} catch (Exception e) {
 				log.debug(e);
 			}
+		}
+		else{
+			jt.getStage().requestFocus();
 		}
 	}
 	
@@ -357,6 +368,28 @@ public class MainController extends TabControlled implements Openable {
 	
 	public void changeShowLabel(String text) {
 		showLabel.setText("Showing: " + text);
+	}
+	
+	public void setScene(Scene myScene)
+	{
+		theScene = myScene;
+	}
+	
+	public Scene getScene()
+	{
+		return theScene;
+	}
+	
+	public void setDark(boolean dark)
+	{
+		if(dark)
+		{
+			getScene().getStylesheets().add(App.retGlobalResource("/src/main/ui/darkStylesheet.css").toString());
+		}
+		else
+		{
+			getScene().getStylesheets().remove(1);
+		}
 	}
 	
 	@FXML

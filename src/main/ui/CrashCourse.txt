@@ -125,7 +125,7 @@ These interactions may also be player based, saying that the Rogue or Paladin ha
 
 
 5: showing your players.  
-	Not all of your world is available to your players.  You must show your players your world through the 'show' button in the bottom right of the application.  Showing them will pull up the current tab in the webservice, and allow them to be searchable in the explore menu on the webservice.  
+	Not all of your world is available to your players.  You must show your players your world through the 'show' button in the bottom right of the application.  Showing them will pull up the current tab in a new window and the webservice.  The player view window can be used to view your currently shown entities and view them individually through the arrow keys.  This window is designed to be used on a second monitor for the players to see.  Showing an entity through the webservice allows them to be searchable in the explore menu on the webservice.  
 
 
 6: Webservice.  

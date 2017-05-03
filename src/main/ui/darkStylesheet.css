@@ -1,0 +1,98 @@
+.root{
+	-fx-background: rgb(140,140,148);
+}
+
+.text-field{
+	-fx-background-color: rgb(220,220,224);
+}
+
+.text-area .content{
+	-fx-background-color: rgb(220,220,224);
+}
+
+.button {
+	-fx-background-color:
+		linear-gradient(#4fc3f7, #039be5),
+		radial-gradient(center 50% -40%, radius 200%, #03a9f4 45%, #039be5 50%);
+	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
+.button:hover {
+	-fx-background-color: -fx-shadow-highlight-color, -fx-body-color, 
+		linear-gradient(#60ccff, #11b1fb),
+		radial-gradient(center 50% -40%, radius 200%, #11b1fb 45%, #12aaf1 50%);
+  	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
+.button:pressed {
+	-fx-background-color: -fx-shadow-highlight-color, -fx-body-color, 
+		linear-gradient(#3fb1e7, #009ae1),
+		radial-gradient(center 50% -40%, radius 200%, #009ae1 45%, #008dcf 50%);
+  	-fx-background-radius: 6, 5;
+	-fx-background-insets: 0, 1;
+	-fx-effect: dropshadow( three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+	-fx-text-fill: #395306;
+}
+
+#statusLabel {
+	-fx-padding: 10;
+	-fx-margin: 5;
+	-fx-alignment: center ;
+	-fx-background-color: rgb(230,230,230);
+    -fx-border-color: rgb(100,100,100);
+}
+
+#statusLabel:hover{
+	-fx-background-color: rgb(200,200,200);
+}
+
+.titled-pane > .title{
+    -fx-background-color: rgb(180,180,180);
+    -fx-border-color: rgb(120,120,120);
+}
+
+.titled-pane > .title:hover{
+	-fx-background-color: rgb(170,170,170);
+}
+
+.titled-pane > .title > .arrow-button .arrow{
+    -fx-focus-color: transparent;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: rgb(120,120,120);
+}
+
+.list-cell:empty {
+	-fx-background-color: rgb(0,0,0);
+}
+
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #039be5;
+    -fx-text-fill: rgb(240,240,244);
+}
+
+
+.list-cell:even { 
+    -fx-background-color: rgb(180,180,180);
+}
+
+.list-cell:odd {
+	-fx-background-color: rgb(250,250,250);
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #039be5;
+    -fx-text-fill: rgb(240,240,244);
+}
+
+.search-list {
+	-fx-background-color: rgb(240,240,244)
+}

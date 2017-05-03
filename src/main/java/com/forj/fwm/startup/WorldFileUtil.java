@@ -32,6 +32,7 @@ public class WorldFileUtil {
 	private String propertiesLocation;
 	private String dbLocation;
 	private String multimediaLocation;
+	private String worldName;
 	
 	private static final String propertiesFileName = "/world.properties";
 	private static final String dbFileName = "/world";
@@ -39,13 +40,16 @@ public class WorldFileUtil {
 	
 	private boolean worldFileInitialized = false;
 	
+	public String getWorldName(){
+		return worldName;
+	}
+	
 	/**
 	 * @param the desired world folder
 	 * @return check instance by using success() if true, then use this copy else fail.
 	 */
 	public WorldFileUtil(File worldFolder) throws Exception {
 		worldFileInitialized = false;
-		// TODO Auto-generated method stub
 		if(worldFolder == null){
 			return;
 		}
@@ -55,7 +59,7 @@ public class WorldFileUtil {
 		else if(!worldFolder.exists()){
 			worldFolder.mkdirs();
 		}
-		
+		worldName = worldFolder.getName();
 		log.debug("world file util has good directory: " + worldFolder.isDirectory());
 		File worldPropertiesFile = new File(worldFolder.getAbsolutePath() + propertiesFileName);
 		boolean worldPropertiesFileInitializationWorked = true;
@@ -71,7 +75,6 @@ public class WorldFileUtil {
 			}
 		}
 		try{
-			// TODO do this right. 
 			WorldConfig.init(worldPropertiesFile.getAbsolutePath());
 		}catch(ConfigurationException e){
 			log.error(e);
