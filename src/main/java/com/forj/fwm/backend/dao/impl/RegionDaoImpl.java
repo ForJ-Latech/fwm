@@ -118,7 +118,7 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		if (region.getInteractions() != null && !region.getInteractions().isEmpty()) {
 			List<OMRegionInteraction> relations = new ArrayList<OMRegionInteraction>();
 			for (Interaction interaction : region.getInteractions()) {
-				Backend.getInteractionDao().createIfNotExists(interaction);
+				Backend.getInteractionDao().createOrUpdate(interaction);
 				relations.add(new OMRegionInteraction(region, interaction));
 			}
 			for (OMRegionInteraction relation : relations) {

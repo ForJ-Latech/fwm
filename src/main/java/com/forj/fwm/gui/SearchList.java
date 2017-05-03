@@ -121,6 +121,7 @@ public class SearchList {
 	                } else if (((String) searchParams.getValue()).equals("Statblocks")) {
 	                	setEntitiesToSearch(EntitiesToSearch.STATBLOCK);
 	                }
+	                searchDB();
 	            }
 	        });
 			
@@ -146,6 +147,8 @@ public class SearchList {
 			l = null;
 			
 			searchParams.getSelectionModel().select(0);
+			
+			clearList();
 			
 		}
 	}

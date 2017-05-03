@@ -87,7 +87,7 @@ public class EventDaoImpl extends BaseDaoImpl<Event,String> implements EventDao 
 		if (event.getInteractions() != null && !event.getInteractions().isEmpty()) {
 			List<OMEventInteraction> relations = new ArrayList<OMEventInteraction>();
 			for (Interaction interaction : event.getInteractions()) {
-				Backend.getInteractionDao().createIfNotExists(interaction);
+				Backend.getInteractionDao().createOrUpdate(interaction);
 				relations.add(new OMEventInteraction(event, interaction));
 			}
 			for (OMEventInteraction relation : relations) {
