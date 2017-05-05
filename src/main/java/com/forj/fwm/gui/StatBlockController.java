@@ -30,7 +30,7 @@ public class StatBlockController extends TabControlled {
 	
 	public void start(Stage primaryStage, TabPane rootLayout){
 		tabPane = rootLayout;
-		primaryStage.setTitle("Statblock Controller");
+		primaryStage.setTitle("Statblock");
 		Scene myScene = new Scene(rootLayout);
 		App.getHotkeyController().giveGlobalHotkeys(myScene);
 		App.getHotkeyController().giveStatblockHotkeys(myScene);
@@ -44,6 +44,7 @@ public class StatBlockController extends TabControlled {
 		   }); 
 		ourStage = primaryStage;
 		started = true;
+		log.debug("started statblock controller.");
 	}
 	
 	public static StatBlockController startStatBlockController() throws MalformedURLException, IOException{

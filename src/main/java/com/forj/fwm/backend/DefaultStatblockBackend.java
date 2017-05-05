@@ -34,7 +34,7 @@ public class DefaultStatblockBackend {
 	private static final int GroupStatId = 4;
 	
 	public static void createStatBlocks() throws SQLException{
-
+		log.debug("Attempting to change statblocks.");
 		NpcStat = Backend.getStatblockDao().queryForId(String.valueOf(NPCStatId));
 		if(NpcStat == null){
 			log.debug("had to create a new NpcStat");
@@ -63,6 +63,7 @@ public class DefaultStatblockBackend {
 			GroupStat.setID(GroupStatId);
 			Backend.getStatblockDao().createIfNotExists(GroupStat);
 		}
+		log.debug("statblocks should have changed.");
 	}
 	
 	private static DefaultStatSaveable npcDefaultSaveable = new DefaultStatSaveable("NPC Default Statblock");

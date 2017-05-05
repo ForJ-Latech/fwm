@@ -80,6 +80,8 @@ public class App extends Application {
 			if(statBlockController == null || statBlockController.getStarted() == false){
 				statBlockController = null;
 				statBlockController = StatBlockController.startStatBlockController();
+			}else{
+				statBlockController.getStage().show();
 			}
 		} catch(Exception e){
 			// log.error(e.getStackTrace());

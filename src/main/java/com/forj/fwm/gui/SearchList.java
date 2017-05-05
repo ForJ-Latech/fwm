@@ -106,7 +106,7 @@ public class SearchList {
 
 			searchParams.setOnAction(new EventHandler<ActionEvent>() {
 	            public void handle(ActionEvent event) {
-	                if (((String) searchParams.getValue()).equals("All Entites")) {
+	                if (((String) searchParams.getValue()).equals("Real Entities")) {
 	                	setEntitiesToSearch(EntitiesToSearch.ALL);
 	                } else if (((String) searchParams.getValue()).equals("NPCs")) {
 	                	setEntitiesToSearch(EntitiesToSearch.NPC);
@@ -125,7 +125,7 @@ public class SearchList {
 	            }
 	        });
 			
-			searchParams.getItems().add("All Entites");
+			searchParams.getItems().add("Real Entities");
 			searchParams.getItems().add("NPCs");
 			searchParams.getItems().add("Gods");
 			searchParams.getItems().add("Regions");

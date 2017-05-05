@@ -83,6 +83,39 @@ function showElement(obj){
 	$('#img').bind('load', function(){
 		actualFixImage();
 	});
+	
+	if (obj['SoundFileName'] != undefined && obj['SoundFileName'] != null){ 	
+		$('audiocontainer').show();
+		var soundURL = "/webservice1_0bs/multimediaSound/" + obj['SoundFileName']; 	 				
+		document.getElementById('audiosrc').src = soundURL;
+		document.getElementById('audio').src = document.getElementById('audiosrc').src;
+		
+		document.getElementById('audio').play();
+		// var a = new Audio(soundURL); 	 				
+		// a.currentTime = 0; 	 				
+		// a.play();
+		 	 			
+	}
+	else
+	{
+		$('audiocontainer').hide();		
+		try{
+			document.getElementById('audio').stop();
+		}catch(e){
+			
+		}
+		try{
+			document.getElementById('audiosrc').src = '';
+		}catch(e){
+			
+		}
+		try{
+			document.getElementById('audio').src = '';
+		}catch(e){
+			
+		}	
+			
+	}
 }
 
 /* Image shit */
