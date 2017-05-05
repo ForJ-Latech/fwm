@@ -7,7 +7,7 @@ var objIndex;
 
 /* Page initialization */
 $(document).ready(function() {
-	actualFixImage();
+	// actualFixImage();
 	$.ajaxSetup({ cache: true });
 	showDefault();
 	setInterval(function() {
@@ -36,7 +36,7 @@ function showDefault(){
 			objClass = data['ObjectClass'];
 			currentIndex = data['CurrentIndex'];
 			showElement(data);
-			actualFixImage();
+			// actualFixImage();
 		}
 	});
 }
@@ -48,7 +48,7 @@ function getPrev(){
 		success: function(data){
 			currentIndex = data['CurrentIndex'];
 			showElement(data);
-			actualFixImage();
+			// actualFixImage();
 		}
 	});
 }
@@ -60,18 +60,16 @@ function getNext(){
 		success: function(data){
 			currentIndex = data['CurrentIndex'];
 			showElement(data);
-			actualFixImage();
+			// actualFixImage();
 		}
 	});
 }
 
 /* Helper methods */
 function checkDefault(obj){
-	if(objIndex != obj['ObjectId'] && objClass != obj['ObjectClass']){
+	if(objIndex != obj['ObjectId'] || objClass != obj['ObjectClass']){
 		showDefault();
 	}
-	objIndex = obj['ObjectId'];
-	objClass = obj['ObjectClass'];
 }
 	
 function showElement(obj){
@@ -81,18 +79,22 @@ function showElement(obj){
 	$.each($('#imagecontainer').children(), function(d, dval){
 		dval.remove();
 	});	
-	$('#imagecontainer').append('<img id="img" src="/webservice1_0bs/multimediaImage/' + obj['ImageFileName'] + '"/>');
+	$('#imagecontainer').append('<img id="img" style="display:none;" src="/webservice1_0bs/multimediaImage/' + obj['ImageFileName'] + '"/>');
+	$('#img').bind('load', function(){
+		actualFixImage();
+	});
 }
 
 /* Image shit */
-function fixImageContainerWidthHeight(){
+
+
+function actualFixImage(){
 	var height = ($(window).height() - $('.navbar').height()) * 6.5 / 10;
 	$('#imagecontainer').attr('height', height);
 	$('#imagecontainer').attr('max-height', height);
-}
-
-function actualFixImage(){
-	fixImageContainerWidthHeight();
 	var imgContainer = $('#imagecontainer');
-	calculateWidthHeightImg(imgContainer.width(), imgContainer.attr('height'), $('#img'));
+	setTimeout(function(){
+		calculateWidthHeightImg(imgContainer.width(), height, $('#img'));
+		$('#img').css('display', '');
+	}, 100);
 }
