@@ -35,4 +35,4 @@ James Ehlmann
 * Matthew Swart
 * Jack Strickland
 * Diwakar Simkhada
-* Jospeh Hardy
+* Joseph Hardy
