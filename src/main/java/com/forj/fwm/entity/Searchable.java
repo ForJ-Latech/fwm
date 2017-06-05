@@ -8,6 +8,7 @@ public interface Searchable {
 	public String getImageFileName();
 	public Date getLastEdited();
 	public String toOneFiveJsonString();
+	public String getDescription();
 	public boolean isShown();
 	public void setShown(boolean b);
 }

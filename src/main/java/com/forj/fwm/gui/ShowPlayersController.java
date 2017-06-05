@@ -14,9 +14,11 @@ import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
+import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -42,7 +44,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	@FXML
 	private HBox imageViewHBox;
 	
-	private Object currObject;
+	private Searchable curShowing;
 	
 	private Integer curIndex = 0;
 
@@ -70,6 +72,11 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	   	image.fitHeightProperty().bind(imageViewHBox.heightProperty().subtract(10));
 	   
 	   	ourStage = primaryStage;
+	   	ourStage.setOnCloseRequest(new EventHandler(){
+			public void handle(javafx.event.Event event) {
+				closeWindow();
+			}
+	   	});
 	   	HotkeyController.giveGlobalHotkeys(myScene);
 	   	setScene(myScene);
 	   	if(WorldConfig.getDarkMode())
@@ -102,6 +109,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	
 	public void closeWindow(){
 		started = false;
+		stopSound();
 		ourStage.close();
 	}
 	
@@ -109,7 +117,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	public void back() {
 		log.debug("back");
 		log.debug("curIndex before: " + curIndex);	
-		setObject(App.spdc.getPrevious(curIndex));
+		changeShown(App.spdc.getPrevious(curIndex), false);
 		log.debug("curIndex after: " + curIndex);
 		
 	}
@@ -118,60 +126,60 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	public void forward() {
 		log.debug("forward");
 		log.debug("curIndex before: " + curIndex);
-		setObject(App.spdc.getNext(curIndex));
+		changeShown(App.spdc.getNext(curIndex), false);
 		log.debug("curIndex after: " + curIndex);
 	}
 	
-	public void playSound(Saveable s)
-	{
+	public void stopSound(){
 		if(sound != null)
 		{
 			sound.stop();
 		}
-		if(s.getThing().getClass().equals(Region.class) && s.getThing().getID() != -1)
-		{
-			try {
-				if(Backend.getRegionDao().getRegion(s.getThing().getID()).getSoundFileName() != null)
-				{
-					sound = new AudioClip(App.worldFileUtil.findMultimedia(Backend.getRegionDao().getRegion(s.getThing().getID()).getSoundFileName()).toURI().toURL().toString());
+	}
+	
+	public void playSound(Searchable s)
+	{
+		stopSound();
+		if(s.getID() == -1){
+			return;
+		}
+		try{
+			if(s.equals(Region.class) && s.getID() != -1)
+			{
+				Region r = (Region)s;
+				if(r.getSoundFileName() != null){
+					sound = new AudioClip(App.worldFileUtil.findMultimedia(r.getSoundFileName()).toURI().toURL().toString());
 					sound.play();
 				}
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}   				
-		}
-		
-		else if(s.getThing().getClass().equals(Npc.class) && s.getThing().getID() != -1)
-		{
-			try {
-				if(Backend.getNpcDao().getNpc(s.getThing().getID()).getSoundFileName() != null)
-				{
-					sound = new AudioClip(App.worldFileUtil.findMultimedia(Backend.getNpcDao().getNpc(s.getThing().getID()).getSoundFileName()).toURI().toURL().toString());
+			}
+			else if(s.getClass().equals(Npc.class) )
+			{
+				Npc r = (Npc)s;
+				if(r.getSoundFileName() != null){
+					sound = new AudioClip(App.worldFileUtil.findMultimedia(r.getSoundFileName()).toURI().toURL().toString());
 					sound.play();
 				}
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}   				
-		}
-		
-		else if(s.getThing().getClass().equals(God.class) && s.getThing().getID() != -1)
-		{
-			try {
-				if(Backend.getGodDao().getGod(s.getThing().getID()).getSoundFileName() != null)
-				{
-					sound = new AudioClip(App.worldFileUtil.findMultimedia(Backend.getGodDao().getGod(s.getThing().getID()).getSoundFileName()).toURI().toURL().toString());
+				 				
+			}
+			else if(s.getClass().equals(God.class))
+			{
+				God r = (God)s;
+				if(r.getSoundFileName() != null){
+					sound = new AudioClip(App.worldFileUtil.findMultimedia(r.getSoundFileName()).toURI().toURL().toString());
 					sound.play();
-				}
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}   				
-		}
+				}	   				
+			}
+			else if(s.getClass().equals(Event.class))
+			{
+				Event r = (Event)s;
+				if(r.getSoundFileName() != null){
+					sound = new AudioClip(App.worldFileUtil.findMultimedia(r.getSoundFileName()).toURI().toURL().toString());
+					sound.play();
+				}				
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} 
 	}
 	
 	public static Boolean getOpen(){
@@ -188,7 +196,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	}
 	
 	private void setImage(String newImageFileName) {
-		if (newImageFileName == "" || newImageFileName == null){
+		if (newImageFileName == null || "".equals(newImageFileName)){
 			image.setImage(new Image(App.retGlobalResource("/src/main/ui/no_image.png").toString()));
 		} 
 		else
@@ -220,35 +228,16 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 		}		
 	}
 	
-	public void setObject(ShowPlayersDataModel.ShowData obj) {
-		currObject = obj.getObject();
+	public void changeShown(ShowPlayersDataModel.ShowData obj, boolean playSound) {
+		stopSound();
+		curShowing = (Searchable)obj.getObject();
 		curIndex = obj.getNewIndex();
-		String newName = "";
-		String newDescription = "";
-		String newImage = "";
-		// Add more stuff to show here
-		
-		if (currObject instanceof God){
-			newName = ((God) currObject).getName();
-			newDescription = ((God) currObject).getDescription();
-			newImage = ((God) currObject).getImageFileName();
-		} else if (currObject instanceof Region){
-			newName = ((Region) currObject).getName();
-			newDescription = ((Region) currObject).getDescription();
-			newImage = ((Region) currObject).getImageFileName();
-		} else if (currObject instanceof Npc){
-			newName = ((Npc) currObject).getShownName();	
-			newDescription = ((Npc) currObject).getDescription();
-			newImage = ((Npc) currObject).getImageFileName();
-		} else if (currObject instanceof Event){
-			newName = ((Event) currObject).getName();
-			newDescription = ((Event) currObject).getDescription();
-			newImage = ((Event)currObject).getImageFileName();
+		setName(curShowing.getShownName());
+		setDescription(curShowing.getDescription());
+		setImage(curShowing.getImageFileName());
+		if(playSound){
+			playSound(curShowing);
 		}
-		
-		setName(newName);
-		setDescription(newDescription);
-		setImage(newImage);
 	}
 
 

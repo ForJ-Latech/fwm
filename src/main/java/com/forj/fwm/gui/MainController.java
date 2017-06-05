@@ -229,8 +229,7 @@ public class MainController extends TabControlled implements Openable {
     			Backend.SaveSimpleSearchable(s.getThing());
     			if (WorldConfig.getShowPlayersPopup())
     	    	{
-	    			spController.playSound(s);
-	    	    	spController.setObject(App.spdc.getDefault());
+	    	    	spController.changeShown(App.spdc.getDefault(), true);
     	    	}
     		}
     	}

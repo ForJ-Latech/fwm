@@ -215,6 +215,7 @@ public class RegionTabController implements Saveable {
 			log.debug("region id: " + region.getID());
 			App.getMainController().addStatus("Successfully saved full Region " + region.getName() + " ID: " + region.getID());
 		}catch(SQLException e){
+			e.printStackTrace();
 			log.error(e);
 		}
 	}

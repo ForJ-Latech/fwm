@@ -97,7 +97,11 @@ public class DefaultStatblockBackend {
 			public int getID() {
 				return 0;
 			}
-
+			
+			public String getDescription(){
+				return null;
+			}
+			
 			public String getShownName() {
 				return name;
 			}
