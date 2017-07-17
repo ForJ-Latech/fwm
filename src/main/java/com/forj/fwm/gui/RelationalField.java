@@ -91,7 +91,6 @@ public class RelationalField implements Openable{
 		// set reference to the object owned by the tab
 		tabObject = caller.getThing();
 		populateList(ourItems);
-			
 		updateList();
 		setTitle(title);
 

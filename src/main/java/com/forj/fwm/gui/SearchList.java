@@ -83,13 +83,13 @@ public class SearchList {
 		if (ourOpen instanceof RelationalField){
 			if (((RelationalField) ourOpen).getTabObject() instanceof Region && searchEntity == EntitiesToSearch.REGION) {
 				regionregion = true;
-				this.tree = createTree((Region) ((RelationalField) ourOpen).getTabObject());
+				this.tree = Backend.getRegionDao().createAboveBelowTree((Region) ((RelationalField) ourOpen).getTabObject());
 			}
 		}
 		if (ourOpen instanceof RelationalList){
 			if (((RelationalList) ourOpen).getTabObject() instanceof Region && searchEntity == EntitiesToSearch.REGION) {
 				regionregion = true;
-				this.tree = createTree((Region) ((RelationalList) ourOpen).getTabObject());
+				this.tree = Backend.getRegionDao().createAboveBelowTree((Region) ((RelationalList) ourOpen).getTabObject());
 			}
 		}
 		
@@ -273,34 +273,6 @@ public class SearchList {
 		return unique;
 	}
 	
-	private List<Integer> createTree(Region region) {
-
-		List<Integer> allregID = new ArrayList<Integer>();
-		allregID.add(region.getID());
-		
-		
-		try {
-			List<Region> aboveFull =  Backend.getRegionDao().getAboveFullRegions(region);
-			aboveFull.add(region);
-			for (Region reg : aboveFull){
-				
-				if (!allregID.contains(reg.getID())){
-					allregID.add(reg.getID());
-				}
-				
-				for (Region reg2 : Backend.getRegionDao().getBelowFullRegions(reg)){
-					if (!allregID.contains(reg2.getID())){
-						allregID.add(reg2.getID());
-					}
-				}				
-			}
-			
-		} catch (SQLException e) {
-			log.error(e);
-		}
-		
-		return allregID;
-	}
 
 
 	private boolean checkInTree(Region r) {
@@ -326,9 +298,9 @@ public class SearchList {
 			}
 			if (regionregion){
 				if (ourOpen instanceof RelationalList){
-					createTree((Region) ((RelationalList) ourOpen).getTabObject());
+					Backend.getRegionDao().createAboveBelowTree((Region) ((RelationalList) ourOpen).getTabObject());
 				} else {
-					createTree((Region) ((RelationalField) ourOpen).getTabObject());
+					Backend.getRegionDao().createAboveBelowTree((Region) ((RelationalField) ourOpen).getTabObject());
 				}
 			}
 			

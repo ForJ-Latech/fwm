@@ -9,6 +9,7 @@ public class OMRegionRegion {
 	@DatabaseField(foreign = true, canBeNull = false)
 	private Region superRegion;
 	
+	
 	@DatabaseField(foreign = true, canBeNull = false, unique = true)
 	private Region subRegion;
 	

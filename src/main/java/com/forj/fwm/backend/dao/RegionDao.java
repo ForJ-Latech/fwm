@@ -15,4 +15,5 @@ public interface RegionDao extends Dao<Region,String> {
 	public List<Region> getAboveFullRegions(Region region) throws SQLException;
 	public List<Region> getBelowFullRegions(Region region) throws SQLException;
 	public CreateOrUpdateStatus createOrUpdateWLE(Region t) throws SQLException;
+	public List<Integer> createAboveBelowTree(Region t);
 }

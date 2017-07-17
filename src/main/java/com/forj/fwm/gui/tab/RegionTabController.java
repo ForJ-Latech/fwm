@@ -54,8 +54,6 @@ public class RegionTabController implements Saveable {
 	private ListController interactionController;
 	private AddableImage image;
     private AddableSound sound;
-    public List<Region> subRegions;
-    public Region superRegion;
     private TextInputControl[] thingsThatCanChange;
 	private RelationalList npcRelation, godRelation, eventRelation, regionRelation, templateRelation;
 	private SearchList.EntitiesToSearch tabType = SearchList.EntitiesToSearch.REGION;
@@ -189,8 +187,11 @@ public class RegionTabController implements Saveable {
 		region.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
 		
 		if (!superRelation.getList().isEmpty()){
-			Region newRegion = new ArrayList<Region>((List<Region>)(List<?>)superRelation.getList()).get(0);
+			Region newRegion = (new ArrayList<Region>((List<Region>)(List<?>)superRelation.getList())).get(0);
 			region.setSuperRegion(newRegion);
+			log.debug("spitting out our IDS.");
+			log.debug(region.getID());
+			log.debug(newRegion.getID());
 		}
 	}
 	
@@ -198,7 +199,6 @@ public class RegionTabController implements Saveable {
 	public void fullSave(){
 		getAllTexts();
 		getAllRelations();
-		log.debug("\n\n\n" + superRegion + "\n\n\n");
 		if(tabHead.getText()!=null && !tabHead.getText().equals(""))
 		{
 			// pass
@@ -379,9 +379,15 @@ public class RegionTabController implements Saveable {
 		description.setText(region.getDescription());
 		attributes.setText(region.getAttributes());
 		name.setText(region.getName());
-		
-		superRegion = region.getSuperRegion();
-		subRegions = region.getSubRegions();
+		// works better when it has this, for some reason. 
+		if(region.getSuperRegion() != null)
+		{
+			try {
+				region.setSuperRegion(Backend.getRegionDao().queryForSameId(region.getSuperRegion()));
+			} catch (SQLException e) {
+				log.error(e);
+			}
+		}
 	}
 	
 	private void getAllTexts()
@@ -392,10 +398,6 @@ public class RegionTabController implements Saveable {
 		region.setDescription(description.getText());
 		region.setAttributes(attributes.getText());
 		region.setName(name.getText());
-		
-		region.setSubRegions(subRegions);
-		region.setSuperRegion(superRegion);
-		
 		
 	}
 	

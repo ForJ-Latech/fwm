@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.dao.RegionDao;
 import com.forj.fwm.entity.Event;
@@ -18,12 +20,15 @@ import com.forj.fwm.entity.OMRegionInteraction;
 import com.forj.fwm.entity.OMRegionRegion;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Template;
+import com.forj.fwm.gui.tab.RegionTabController;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.support.ConnectionSource;
 
 public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements RegionDao {
+	private static Logger log = Logger.getLogger(RegionDaoImpl.class);
+	
 	public RegionDaoImpl(ConnectionSource connectionSource) throws SQLException {
 		super(connectionSource, Region.class);
 	}
@@ -126,14 +131,29 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 			}
 		}
 		
+		// if this link was presently inside of something, we ought to remove it 
+		// it makes altering the tree through insertion MUCH easier this way. 
+		// that requires checking if the other things had different super regions and changing it.
 		if (region.getSubRegions() != null && !region.getSubRegions().isEmpty()) {
 			List<OMRegionRegion> relations = new ArrayList<OMRegionRegion>();
+			
 			for (Region subRegion : region.getSubRegions()) {
+				
 				Backend.getRegionDao().createIfNotExists(subRegion);
-				relations.add(new OMRegionRegion(region, subRegion));
-			}
-			for (OMRegionRegion relation : relations) {
-				Backend.getOmRegionRegionDao().save(relation);
+				List<OMRegionRegion> tempOMs = Backend.getOmRegionRegionDao().queryForEq("subRegion_id", String.valueOf(subRegion.getID()));
+				OMRegionRegion subRegionOM = tempOMs.isEmpty() ? null: tempOMs.get(0);
+				if(subRegionOM == null || subRegionOM.getSuperRegion().getID() == region.getID())
+				{
+					// pass because nothing linked here previously || 
+					// pass because this link already existed
+				}
+				else
+				{
+					// this link got altered, and we need to 'change' it.
+					// ORMLite sucks, just delete and save new. 
+					Backend.getOmRegionRegionDao().delete(subRegionOM);
+					Backend.getOmRegionRegionDao().save(new OMRegionRegion(region, subRegion));
+				}
 			}
 		}
 		
@@ -156,10 +176,11 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		}
 		
 		List<OMRegionRegion> rr = Backend.getOmRegionRegionDao().queryForEq("subRegion_id", region.getID());
+		if (!rr.isEmpty()) {
+			Backend.getOmRegionRegionDao().delete(rr.get(0));
+		}
 		if (region.getSuperRegion() != null) {
 			Backend.getOmRegionRegionDao().save(new OMRegionRegion(region.getSuperRegion(), region));
-		} else if (!rr.isEmpty()) {
-			Backend.getOmRegionRegionDao().delete(rr.get(0));
 		}
 		
 		updateFullRegion(region);
@@ -262,6 +283,36 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		}
 		 
 		return belowRegions;
+	}
+	
+
+	public List<Integer> createAboveBelowTree(Region region) {
+
+		List<Integer> allregID = new ArrayList<Integer>();
+		allregID.add(region.getID());
+		
+		
+		try {
+			List<Region> aboveFull =  getAboveFullRegions(region);
+			aboveFull.add(region);
+			for (Region reg : aboveFull){
+				
+				if (!allregID.contains(reg.getID())){
+					allregID.add(reg.getID());
+				}
+				
+				for (Region reg2 : getBelowFullRegions(reg)){
+					if (!allregID.contains(reg2.getID())){
+						allregID.add(reg2.getID());
+					}
+				}				
+			}
+			
+		} catch (SQLException e) {
+			log.error(e);
+		}
+		
+		return allregID;
 	}
 	
 	// WLE -> With Last Edited
