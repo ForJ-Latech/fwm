@@ -271,6 +271,10 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 		Region r = region;
 		while (r.getSuperRegion() != null) {
 			r = getFullRegion(r.getSuperRegion().getID());
+			if(r == null){
+				// occasionally breaking shit... =(
+				break;
+			}
 			aboveRegions.add(r);
 		}
 		return aboveRegions;
