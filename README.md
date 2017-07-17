@@ -27,12 +27,25 @@ Happy Dungeon Mastering,
 James Ehlmann
 
 
-## Original ForJ team members:
-* James Ehlmann
-* Stephan Hibbard
-* James Ortis
-* Ryan Walters
-* Matthew Swart
-* Jack Strickland
-* Diwakar Simkhada
-* Jospeh Hardy
+# Purpose
+
+This software helps fantasy world builders manage their fantasy worlds, while keeping it entirely on their own hard drives, and in their own hands. It is designed as a dungeon master aid, and it focuses on things typically found in fantasy rpg worlds. The four main entities it tracks are Npcs, Gods, Regions, and Events. You can use this tool to track relationships between the different parts of your world in a rather zippy manner, and if you don't have enough information on the default screen just throw it into the statblock. If that still isn't enough for you, don't let labels confine you (Npcs are very similar to Items,) so use it in a way that makes sense to you! It is your fantasy world after all. 
+
+Because this application is a dungeon master tool it comes with easy ways to show players your fantasy world, every major object can be shown to the players through a second monitor facing the players, or connecting a different device to this computer through a IP adress after starting the web service. Additionally, You can move your worlds around on a hard drive with the software, so if you need to DM at another person's PC all of your information is still right where you left it, along with the application. This should not slow down your gameplay, and keeping track of information with this tool means that you shouldn't forget it by the time next session rolls around, not because your memory is so good, but because you wrote it down and it is on your screen again. 
+
+We hope that you enjoy using our software!
+
+# Requirements
+
+## Required
+* Java 1.8
+* Windows, Mac or Linux Desktop Environment
+
+## Recomended
+* A second monitor facing the players
+* A LAN
+* An internet connection for pictures of NPCs
+* An imagination (or local equivalent)
+
+
+_Sneaky original team list: James Ehlmann, Stephan Hibbard, James Ortis, Ryan Walters, Matthew Swart, Jack Strickland, Diwakar Simkhada, and Joseph Hardy_
