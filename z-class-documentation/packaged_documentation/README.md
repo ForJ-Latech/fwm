@@ -1,6 +1,6 @@
-# Welcome to the ALPHA build of the Fantasy World Manager!
+# Welcome to the Beta build of the Fantasy World Manager!
 
-We hope that you enjoy using our software to help realize your fantasy world!
+We hope that you enjoy using our software to realize your fantasy world!
 
 ## Important notes if you use an ssd
 
@@ -22,13 +22,13 @@ This app defaults to saving on every key stroke, so that you never need to hit c
 ## Running the application
 __This application requires java to run.__ 
 
-To run, execute: 'java -jar fwm-alpha.jar', or double click on the .jar file if your environment supports that.
+To run, execute: 'java -jar FWM-beta.jar', or double click on the .jar file if your environment supports that.
 
-FWM-properties is where your application properties files will be stored.
+FWM-properties is where your application properties files are stored.
 
-worlds/\*\* is where the your world folders, and world properties will be stored.
+worlds/\*\* is where your world is stored (file ends in .db), and world properties will be stored (file ends in .properties).
 
-lib/\*\* is nerd stuff, and is required in the same directory as fwm-alpha.jar. Just don't change it unless you know what you are doing. 
+lib/\*\* is nerd stuff, and is required in the same directory as fwm-*.jar. Just don't change it unless you know what you are doing. 
 
 Change any hotkeys that are not to your liking in global settings -> edit hotkeys. 
 
@@ -39,7 +39,8 @@ Change any hotkeys that are not to your liking in global settings -> edit hotkey
 
 * The help section in the application is lacking
 
-* This code will be hosted on github in the future probably at https://github.com/james-ehlmann
+* This code will be hosted on github in the future probably at https://github.com/ForJ-Latech/fwm
 
 ##Reporting a bug
-Email any problems to james(dot)ehlmann{at}gmail[dot]com
+Please report / open issues here: https://github.com/ForJ-Latech/fwm/issues
+If you just want to talk to a developer: james[dot]ehlmann{at}gmail(dot)com
