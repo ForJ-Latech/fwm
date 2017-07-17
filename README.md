@@ -48,12 +48,4 @@ We hope that you enjoy using our software!
 * An imagination (or local equivalent)
 
 
-## Original ForJ team members:
-* James Ehlmann
-* Stephan Hibbard
-* James Ortis
-* Ryan Walters
-* Matthew Swart
-* Jack Strickland
-* Diwakar Simkhada
-* Joseph Hardy
+_Sneaky original team list: James Ehlmann, Stephan Hibbard, James Ortis, Ryan Walters, Matthew Swart, Jack Strickland, Diwakar Simkhada, Joseph Hardy_
