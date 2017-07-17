@@ -142,17 +142,19 @@ public class RegionDaoImpl  extends BaseDaoImpl<Region,String> implements Region
 				Backend.getRegionDao().createIfNotExists(subRegion);
 				List<OMRegionRegion> tempOMs = Backend.getOmRegionRegionDao().queryForEq("subRegion_id", String.valueOf(subRegion.getID()));
 				OMRegionRegion subRegionOM = tempOMs.isEmpty() ? null: tempOMs.get(0);
-				if(subRegionOM == null || subRegionOM.getSuperRegion().getID() == region.getID())
-				{
-					// pass because nothing linked here previously || 
+				log.debug("tempOMs size: " + tempOMs.size());
+				if(subRegionOM == null){
+					Backend.getOmRegionRegionDao().save(new OMRegionRegion(region, subRegion));
+				}
+				else if(subRegionOM.getSuperRegion().getID() == region.getID()){
 					// pass because this link already existed
 				}
-				else
-				{
+				else{
 					// this link got altered, and we need to 'change' it.
 					// ORMLite sucks, just delete and save new. 
 					Backend.getOmRegionRegionDao().delete(subRegionOM);
 					Backend.getOmRegionRegionDao().save(new OMRegionRegion(region, subRegion));
+					log.debug("saving OM subregions: " + region.getID() + ":" + subRegion.getID());
 				}
 			}
 		}

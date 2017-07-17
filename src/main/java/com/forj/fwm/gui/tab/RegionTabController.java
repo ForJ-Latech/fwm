@@ -185,13 +185,15 @@ public class RegionTabController implements Saveable {
 		region.setSubRegions(new ArrayList<Region>((List<Region>)(List<?>)regionRelation.getList()));
 		region.setEvents(new ArrayList<com.forj.fwm.entity.Event>((List<com.forj.fwm.entity.Event>)(List<?>)eventRelation.getList()));
 		region.setTemplates(new ArrayList<Template>((List<Template>)(List<?>)templateRelation.getList()));
-		
 		if (!superRelation.getList().isEmpty()){
 			Region newRegion = (new ArrayList<Region>((List<Region>)(List<?>)superRelation.getList())).get(0);
 			region.setSuperRegion(newRegion);
-			log.debug("spitting out our IDS.");
-			log.debug(region.getID());
+			log.debug("spitting out super region IDS.");
 			log.debug(newRegion.getID());
+		}
+		log.debug("spitting out sub region IDS.");
+		for(Region r: region.getSubRegions()){
+			log.debug(r.getID());
 		}
 	}
 	

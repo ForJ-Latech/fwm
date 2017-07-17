@@ -86,7 +86,7 @@ public class SearchList {
 				this.tree = Backend.getRegionDao().createAboveBelowTree((Region) ((RelationalField) ourOpen).getTabObject());
 			}
 		}
-		if (ourOpen instanceof RelationalList){
+		else if (ourOpen instanceof RelationalList){
 			if (((RelationalList) ourOpen).getTabObject() instanceof Region && searchEntity == EntitiesToSearch.REGION) {
 				regionregion = true;
 				this.tree = Backend.getRegionDao().createAboveBelowTree((Region) ((RelationalList) ourOpen).getTabObject());
