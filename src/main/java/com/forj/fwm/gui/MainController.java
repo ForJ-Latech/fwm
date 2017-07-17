@@ -301,7 +301,7 @@ public class MainController extends TabControlled implements Openable {
 	public void openWebsite() throws Exception{
 		log.debug("Open ForJ Website called");
 		try {
-			Desktop.getDesktop().browse(new URL("http://138.47.200.245/jehlmann/fwm").toURI());
+			Desktop.getDesktop().browse(new URL("https://github.com/ForJ-Latech/fwm").toURI());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

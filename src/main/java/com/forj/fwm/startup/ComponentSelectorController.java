@@ -31,6 +31,13 @@ public class ComponentSelectorController{
 	private Pane myPane;
 	private static WorldSelector worldSelector;
 	public static WorldSelector getWorldSelector(){
+		if(worldSelector == null){
+			try{
+				worldSelector = WorldSelector.startWorldSelector(new Stage(), App.getComponentSelectorController());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 		return worldSelector;
 	}
 	public void start(Stage primaryStage, Pane myPane) throws Exception {
