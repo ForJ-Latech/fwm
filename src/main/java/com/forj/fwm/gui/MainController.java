@@ -18,6 +18,7 @@ import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.entity.Template;
+import com.forj.fwm.gui.component.MainEntityTab;
 import com.forj.fwm.gui.component.Openable;
 import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.gui.component.TabControlled;
@@ -331,6 +332,16 @@ public class MainController extends TabControlled implements Openable {
 			log.error(e);
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML public void refreshAll(){
+		for(Saveable s: tabControllers){
+			if(s instanceof MainEntityTab){
+				s.manualUpdateTab();
+			}
+		}
+		log.debug("refresh successful.");
+		addStatus("Refresh Successful");
 	}
 	
 	public void open(Searchable o) throws Exception {

@@ -214,9 +214,10 @@ public class HotkeyController {
 	public static final String FOCUS_HOTKEY = "Focus_On_Entity_Name";
 	public static final String SOUND_HOTKEY = "Change_Sound";
 	public static final String CLOSE_TAB = "Close_Tab";
+	public static final String REFRESH_ALL = "Refresh_All";
 	public static final String[] HOTKEYS = { FORWARD_SHOW_HOTKEY, BACKWARD_SHOW_HOTKEY, NPC_HOTKEY, GOD_HOTKEY,
 			REGION_HOTKEY, GROUP_HOTKEY, INTERACTION_HOTKEY, STATBLOCK_HOTKEY, TEMPLATE_HOTKEY, SHOW_HOTKEY, IMAGE_HOTKEY, SOUND_HOTKEY, SEARCH_HOTKEY,
-			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, FOCUS_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL, CLOSE_TAB};
+			TAB_FORWARD_HOTKEY, TAB_BACKWARD_HOTKEY, FOCUS_HOTKEY, MANUAL_SAVE_CURRENT, MANUAL_SAVE_ALL, CLOSE_TAB, REFRESH_ALL};
 
 
 	private static HashMap<String, Hotkey> hotkeys = new HashMap<String, Hotkey>();
@@ -425,6 +426,9 @@ public class HotkeyController {
 					} catch (Exception e) {
 						log.error(e);
 					}
+				}
+				if(HotkeyController.getHotkey(REFRESH_ALL).match(keyEvent)){
+					App.getMainController().refreshAll();
 				}
 			}
 		});

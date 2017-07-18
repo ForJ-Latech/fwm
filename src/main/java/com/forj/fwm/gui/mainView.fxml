@@ -22,9 +22,10 @@
             <Menu fx:id="FileMenu" mnemonicParsing="false" text="File">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#selectWorld" text="Select World" />
+                  <MenuItem mnemonicParsing="false" onAction="#startWebservice" text="Start Webservice" />
                   <MenuItem mnemonicParsing="false" onAction="#saveCurrentlySelected" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#saveAll" text="Save All" />
-                  <MenuItem mnemonicParsing="false" onAction="#startWebservice" text="Start Webservice" />
+                  <MenuItem mnemonicParsing="false" onAction="#refreshAll" text="Refresh" />
                   <MenuItem mnemonicParsing="false" onAction="#exitApplication" text="Close Application" />
                </items>
             </Menu>
