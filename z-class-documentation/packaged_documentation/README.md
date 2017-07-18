@@ -43,4 +43,4 @@ Change any hotkeys that are not to your liking in global settings -> edit hotkey
 
 ##Reporting a bug
 Please report / open issues here: https://github.com/ForJ-Latech/fwm/issues
-If you just want to talk to a developer: james[dot]ehlmann{at}gmail(dot)com
+If you just want to talk to a developer: https://discord.gg/FzEjsff
