@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.entity.Interaction;
-import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.component.Saveable;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;

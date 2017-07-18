@@ -18,6 +18,7 @@ import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 import com.j256.ormlite.stmt.QueryBuilder;
 
@@ -46,24 +47,9 @@ public class InteractionTabController implements Saveable {
 	private static boolean started = false;
 	private static int maxImageSize = 32;
 	
-	// NOTE: Probably much more important than just using for pantheon. Updates objects in other tabs
-	private void updateTab() {
-		
-	}
-	
 	public void start(Tab rootLayout) throws Exception {
 		log.debug("start interaction tab controller called");
-		
 		tabHead.setText("Recent Interactions");
-		
-		
-		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-		        if(newTab == getTab()) {
-		        	updateTab();
-		        }
-		    }
-		});
 		updateList();
 		started = true;
 	}
@@ -246,22 +232,15 @@ public class InteractionTabController implements Saveable {
 
 	}
 
-	public AddableImage getAddableImage() {
-		return null;
-	}
-
 	public Searchable getThing() {
 		return null;
 	}
 
-	public void nameFocus() {
-		
+	public void autoUpdateTab() {
+		// TODO Auto-generated method stub
 	}
 
-	public ListController getListController() {
-		return null;
-	}
-	public AddableSound getAddableSound(){
-		return null;
+	public void manualUpdateTab() {
+		// TODO Auto-generated method stub
 	}
 }

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
@@ -12,6 +13,8 @@ import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.MainEntityTab;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.beans.value.ChangeListener;
@@ -27,7 +30,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class StatBlockTabController implements Saveable {
+public class StatBlockTabController implements MainEntityTab {
 	private static Logger log = Logger.getLogger(StatBlockTabController.class);
 	private TextInputControl[] thingsThatCanChange; 
 	private Statblock stat;
@@ -49,7 +52,7 @@ public class StatBlockTabController implements Saveable {
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
-			if(!WorldConfig.getManualSaveOnly()){
+			if(!AppConfig.getManualSaveOnly()){
 				fullSave();
 			}
 		}
@@ -165,5 +168,16 @@ public class StatBlockTabController implements Saveable {
 	
 	public AddableSound getAddableSound(){
 		return null;
+	}
+
+	public void autoUpdateTab() {
+		// TODO Auto-generated method stub
+		// figure out if this could be useful.
+		
+	}
+
+	public void manualUpdateTab() {
+		// TODO Auto-generated method stub
+		// figure out if this could be useful. 
 	}
 }

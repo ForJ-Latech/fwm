@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.ShowPlayersDataModel;
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.HotkeyController;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Event;
@@ -15,7 +16,7 @@ import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
-import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.event.EventHandler;
@@ -79,7 +80,7 @@ public class ShowPlayersController { // NEEDS to be a space after class name or 
 	   	});
 	   	HotkeyController.giveGlobalHotkeys(myScene);
 	   	setScene(myScene);
-	   	if(WorldConfig.getDarkMode())
+	   	if(AppConfig.getDarkMode())
 		{
 	   		setDark(true);
 		}

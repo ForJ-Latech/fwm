@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Event;
 import com.forj.fwm.entity.God;
@@ -16,8 +17,8 @@ import com.forj.fwm.entity.Region;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.SearchList.EntitiesToSearch;
 import com.forj.fwm.gui.component.Openable;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.gui.tab.EventTabController;
-import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.collections.FXCollections;
@@ -280,7 +281,7 @@ public class RelationalField implements Openable{
 		}
 		
 		
-		if(!WorldConfig.getManualSaveOnly()){
+		if(!AppConfig.getManualSaveOnly()){
 			if (tabObject instanceof Region){
 				caller.relationalSave();
 			} else {
@@ -329,7 +330,7 @@ public class RelationalField implements Openable{
 		searchResults.add(o);
 		populateList(searchResults);
 		updateList();
-		if(!WorldConfig.getManualSaveOnly()){
+		if(!AppConfig.getManualSaveOnly()){
 			caller.fullSave();
 		}
 		popup.hide();

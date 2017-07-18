@@ -16,7 +16,6 @@ import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
-import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.event.ActionEvent;

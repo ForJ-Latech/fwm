@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.DefaultStatblockBackend;
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
@@ -24,6 +25,8 @@ import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.MainEntityTab;
+import com.forj.fwm.gui.component.TabControlled;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
@@ -48,7 +51,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class RegionTabController implements Saveable {
+public class RegionTabController implements MainEntityTab {
 	private static Logger log = Logger.getLogger(RegionTabController.class);
 	private Region region;
 	private ListController interactionController;
@@ -94,7 +97,7 @@ public class RegionTabController implements Saveable {
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
-			if(!WorldConfig.getManualSaveOnly()){
+			if(!AppConfig.getManualSaveOnly()){
 				simpleSave();
 			}
 		}
@@ -130,48 +133,35 @@ public class RegionTabController implements Saveable {
 		
 	}
 	
-	public void updateTab(){
-//		try {
-//			setAllTexts(region);
-//			Backend.getRegionDao().update(region);
-//			Backend.getRegionDao().refresh(region);
-//			godRelation.clearList();
-//			godRelation.populateList();
-//			npcRelation.clearList();
-//			npcRelation.populateList();
-//			eventRelation.clearList();
-//			eventRelation.populateList();
-//			regionRelation.clearList();
-//			regionRelation.populateList();
-//			
-//			/*
-//			
-//			if (region.getSuperRegion() != null) System.out.println("super = " + region.getSuperRegion().getName() + " with ID " +  region.getSuperRegion().getID());
-//			System.out.println("this = " + region.getName() + " with ID " +  region.getID());
-//			
-//			if (region.getSubRegions() != null)
-//			for(Region c: region.getSubRegions()){
-//				System.out.println("sub = " + c.getName() + " with ID " +  c.getID());
-//			}
-//			
-//			for (OMRegionRegion omreg : Backend.getOmRegionRegionDao().queryForLike("superRegion_id", region.getID())) {
-//				System.out.println("!!!!!!!!!!" +omreg.getSubRegion().getName() + "  -  " + omreg.getSuperRegion().getName());
-//			}
-//			
-//			for (OMRegionRegion omreg : Backend.getOmRegionRegionDao().queryForLike("superRegion_id", region.getSuperRegion().getID())) {
-//				System.out.println("!!!!!!!!!!" +omreg.getSubRegion().getName() + "  -  " + omreg.getSuperRegion().getName());
-//			}
-//			
-//			for (OMRegionRegion omreg : Backend.getOmRegionRegionDao().queryForLike("superRegion_id", region.getSubRegions().get(0).getID())) {
-//				System.out.println("!!!!!!!!!!" +omreg.getSubRegion().getName() + "  -  " + omreg.getSuperRegion().getName());
-//			}
-//			
-//			*/
-//			
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+	// when F5 get's hit or smth. 
+	public void manualUpdateTab(){
+		log.debug("update tab on god tab ID: " + region.getID() + " was called.");
+		try {
+			region = Backend.getRegionDao().getFullRegion(region.getID());
+			setAllTexts(region);
+			try{
+				startRelationalList();
+			}catch(Exception e){
+				log.error(e);
+				e.printStackTrace();
+			}
+			Backend.getRegionDao().update(region);
+			Backend.getRegionDao().refresh(region);
+		} catch (SQLException e) {
+			log.error(e);
+			e.printStackTrace();
+		}
+	}
+				
+	public void autoUpdateTab(){
+		// this shouldn't occur if they have manual saving only on, because that will dump their data. 
+		if(!AppConfig.getManualSaveOnly()){
+			manualUpdateTab();
+		}
+		else{
+			App.getMainController().addStatus(TabControlled.DID_NOT_AUTO_UPDATE);
+			// pass, we just changed but there could be unsaved information. 
+		}
 	}
 	
 	public void getAllRelations(){
@@ -294,7 +284,7 @@ public class RegionTabController implements Saveable {
 		}
 		image.setOnImageChanged(new EventHandler<Event>(){
 			public void handle(Event event) {
-				if(!WorldConfig.getManualSaveOnly()){
+				if(!AppConfig.getManualSaveOnly()){
 					fullSave();
 				}
 			}
@@ -343,13 +333,13 @@ public class RegionTabController implements Saveable {
 		
 		startRelationalList();
 		
-		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-		        if(newTab == getTab()) {
-		        	updateTab();
-		        }
-		    }
-		});
+//		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+//		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+//		        if(newTab == getTab()) {
+//		        	updateTab();
+//		        }
+//		    }
+//		});
 		
 		
 		Platform.runLater(new Runnable() {
@@ -438,7 +428,7 @@ public class RegionTabController implements Saveable {
 	@FXML
 	public void changeSound() throws Exception{
 		sound.changeSound();
-		if(!WorldConfig.getManualSaveOnly()){
+		if(!AppConfig.getManualSaveOnly()){
 			fullSave();
 		}
 		sound.play();

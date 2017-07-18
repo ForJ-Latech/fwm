@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.DefaultStatblockBackend;
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
@@ -22,6 +23,8 @@ import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.MainEntityTab;
+import com.forj.fwm.gui.component.TabControlled;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
@@ -45,7 +48,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class GodTabController implements Saveable {
+public class GodTabController implements MainEntityTab {
 	private static Logger log = Logger.getLogger(GodTabController.class);
 	private God god;
     private ListController interactionController;
@@ -89,7 +92,7 @@ public class GodTabController implements Saveable {
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
-			if(!WorldConfig.getManualSaveOnly()){	
+			if(!AppConfig.getManualSaveOnly()){	
 				simpleSave();
 			}
 		}
@@ -127,7 +130,7 @@ public class GodTabController implements Saveable {
 	private void updatePantheon(){
 		if(tabHead.getText()!=null)
 		{
-			if(!WorldConfig.getManualSaveOnly()){
+			if(!AppConfig.getManualSaveOnly()){
 				fullSave();
 			}
 		}
@@ -138,23 +141,38 @@ public class GodTabController implements Saveable {
 
 	}
 	
-	// NOTE: Probably much more important than just using for pantheon. Updates objects in other tabs
-	private void updateTab(){
-		/*try {
+	// when F5 get's hit or smth. 
+	public void manualUpdateTab(){
+		log.debug("update tab on god tab ID: " + god.getID() + " was called.");
+		try {
 			god = Backend.getGodDao().getFullGod(god.getID());
 			setAllTexts(god);
 			try{
 				startRelationalList();
 			}catch(Exception e){
 				log.error(e);
+				e.printStackTrace();
 			}
 			Backend.getGodDao().update(god);
 			Backend.getGodDao().refresh(god);
 			
 		} catch (SQLException e) {
+			log.error(e);
 			e.printStackTrace();
-		}*/
-
+		}
+	}
+	
+	// NOTE: Probably much more important than just using for pantheon. Updates objects in other tabs
+	public void autoUpdateTab(){
+		// this shouldn't occur if they have manual saving only on, because that will dump their data. 
+		if(!AppConfig.getManualSaveOnly()){
+			manualUpdateTab();
+		}
+		else{
+			App.getMainController().addStatus(TabControlled.DID_NOT_AUTO_UPDATE);
+			// pass, we just changed but there could be unsaved information. 
+		}
+		
 	}
 	
 	public void getAllRelations(){
@@ -266,7 +284,7 @@ public class GodTabController implements Saveable {
 		}
 		image.setOnImageChanged(new EventHandler<Event>(){
 			public void handle(Event event) {
-				if(!WorldConfig.getManualSaveOnly()){
+				if(!AppConfig.getManualSaveOnly()){
 					fullSave();
 				}
 			}
@@ -316,13 +334,13 @@ public class GodTabController implements Saveable {
 		thingsThatCanChange[6].setOnKeyReleased(pantheonEvent);
 		updatePantheon();
 		
-		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-		        if(newTab == getTab()) {
-		        	updateTab();
-		        }
-		    }
-		});
+//		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+//		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+//		        if(newTab.equals(getTab())) {
+//		        	autoUpdateTab();
+//		        }
+//		    }
+//		});
 		
 		Platform.runLater(new Runnable() {
 			public void run() {
@@ -420,7 +438,7 @@ public class GodTabController implements Saveable {
 	@FXML
 	public void changeSound() throws Exception{
 		sound.changeSound();
-		if(!WorldConfig.getManualSaveOnly()){
+		if(!AppConfig.getManualSaveOnly()){
 			fullSave();
 		}
 		sound.play();

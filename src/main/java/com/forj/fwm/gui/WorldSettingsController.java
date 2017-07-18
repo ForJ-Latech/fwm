@@ -3,6 +3,7 @@ package com.forj.fwm.gui;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.log4j.Logger;
 
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.startup.App;
 
@@ -22,13 +23,14 @@ public class WorldSettingsController {
 	protected static Logger log = Logger.getLogger(ShowPlayersController.class);
 	protected static Boolean isOpen = false;
 	
-	@FXML private RadioButton popUpOn, popUpOff, manualSaveOn, manualSaveOff, darkModeOn, darkModeOff;
+	@FXML private RadioButton popUpOn, popUpOff, manualSaveOn, manualSaveOff, darkModeOn, darkModeOff, autoUpdateTabsOn, autoUpdateTabsOff;
 	
 	@FXML private Label manualSaveLabel, darkModeLabel;
 	private Stage ourStage;
 	final ToggleGroup popUp = new ToggleGroup();
 	final ToggleGroup manualSaveGroup = new ToggleGroup();
 	final ToggleGroup darkModeGroup = new ToggleGroup();
+	final ToggleGroup autoUpdateGroup = new ToggleGroup();
 	
 	// Method called on wrong thread for servers to be started
 	// started on GUI thread.
@@ -50,7 +52,7 @@ public class WorldSettingsController {
        
        manualSaveOn.setToggleGroup(manualSaveGroup);
        manualSaveOff.setToggleGroup(manualSaveGroup);
-       if(WorldConfig.getManualSaveOnly()){
+       if(AppConfig.getManualSaveOnly()){
     	   manualSaveOn.setSelected(true);
        }else{
     	   manualSaveOff.setSelected(true);
@@ -58,10 +60,18 @@ public class WorldSettingsController {
        
        darkModeOn.setToggleGroup(darkModeGroup);
        darkModeOff.setToggleGroup(darkModeGroup);
-       if(WorldConfig.getDarkMode()){
+       if(AppConfig.getDarkMode()){
     	   darkModeOn.setSelected(true);
        }else{
     	   darkModeOff.setSelected(true);
+       }
+       
+       autoUpdateTabsOn.setToggleGroup(autoUpdateGroup);
+       autoUpdateTabsOff.setToggleGroup(autoUpdateGroup);
+       if(AppConfig.getAutoUpdateTabs()){
+    	   autoUpdateTabsOn.setSelected(true);
+       }else{
+    	   autoUpdateTabsOff.setSelected(true);
        }
        
        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -76,7 +86,7 @@ public class WorldSettingsController {
 		loader.setLocation(WorldSettingsController.class.getResource("worldSettings.fxml"));
 		VBox rootLayout = (VBox)loader.load();
 		WorldSettingsController cr = (WorldSettingsController)loader.getController();
-		cr.start(new Stage(), rootLayout, "World Settings");
+		cr.start(new Stage(), rootLayout, "Settings");
 		isOpen = true;
 		return cr;
 	}
@@ -86,11 +96,15 @@ public class WorldSettingsController {
 	}
 	
 	public void setManualSave() throws ConfigurationException{
-		WorldConfig.setManualSaveOnly(manualSaveOn.isSelected());
+		AppConfig.setManualSaveOnly(manualSaveOn.isSelected());
+	}
+	
+	public void setAutoUpdateTabs() throws ConfigurationException{
+		AppConfig.setAutoUpdateTabs(autoUpdateTabsOn.isSelected());
 	}
 	
 	public void setDarkMode() throws ConfigurationException{
-		WorldConfig.setDarkMode(darkModeOn.isSelected());
+		AppConfig.setDarkMode(darkModeOn.isSelected());
 		App.getMainController().setDark(darkModeOn.isSelected());
 		if(JettyController.getStarted())
 			JettyController.setDark(darkModeOn.isSelected());

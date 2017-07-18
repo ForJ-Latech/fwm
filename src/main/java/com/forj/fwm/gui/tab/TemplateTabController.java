@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.DefaultStatblockBackend;
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Npc;
@@ -17,6 +18,7 @@ import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
 import com.forj.fwm.gui.component.Openable;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
@@ -51,6 +53,14 @@ public class TemplateTabController implements Saveable{
     @FXML private Accordion accordion;
     @FXML private StackPane godPane;
     
+    public void autoUpdateTab() {
+		// dnn until front end improvements are made. 
+	}
+
+	public void manualUpdateTab() {
+		//dnn until front end improvements are made. 
+	}
+    
     private ChangeListener<String> nameListener = new ChangeListener<String>(){
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 			tabHead.setText(newValue);
@@ -60,30 +70,11 @@ public class TemplateTabController implements Saveable{
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
-			if(!WorldConfig.getManualSaveOnly()){	
+			if(!AppConfig.getManualSaveOnly()){	
 				simpleSave();
 			}
 		}
 	};
-	
-	private void updateTab(){
-//		try {
-//			setAllTexts(npc);
-//			Backend.getNpcDao().update(npc);
-//			Backend.getNpcDao().refresh(npc);
-//			godRelation.clearList();
-//			godRelation.populateList();
-//			npcRelation.clearList();
-//			npcRelation.populateList();
-//			eventRelation.clearList();
-//			eventRelation.populateList();
-//			regionRelation.clearList();
-//			regionRelation.populateList();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-
-	}
 	
 	public void simpleSave() {
 		getAllTexts();
@@ -182,13 +173,13 @@ public class TemplateTabController implements Saveable{
 			c.setOnKeyReleased(saveEvent);
 		}
 		
-		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-		        if(newTab == getTab()) {
-		        	updateTab();
-		        }
-		    }
-		});
+//		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+//		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+//		        if(newTab == getTab()) {
+//		        	updateTab();
+//		        }
+//		    }
+//		});
 		
 		Platform.runLater(new Runnable() {
 			public void run() {

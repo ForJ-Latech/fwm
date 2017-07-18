@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.gui.tab.InteractionTabController;
 import com.forj.fwm.gui.tab.PreviouslyEditedTabController;
-import com.forj.fwm.gui.tab.Saveable;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,6 +27,32 @@ public class TabControlled {
 	public ArrayList<Saveable> tabControllers = new ArrayList<Saveable>();
 	
 	@FXML protected TabPane tabPane;
+	
+	public static final String DID_NOT_AUTO_UPDATE = "Auto updating disabled, manual saving on.";
+	
+	public void startAutoUpdateTabs(){
+		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+		        if(AppConfig.getAutoUpdateTabs()){
+			    	if(!newTab.equals(oldTab)){
+			        	boolean tabAlreadyIndexed = false;
+			        	for(Saveable s: tabControllers){
+			        		if(s.getTab().equals(newTab)){
+			        			tabAlreadyIndexed = true;
+			        			break;
+			        		}
+			        	}
+			        	if(tabAlreadyIndexed){
+			        		findTab(newTab).autoUpdateTab();
+			        	}
+			        	else{
+			        		//don't update it's a new tab. 
+			        	}
+			        }
+			    }
+		    }
+		});
+	}
 	
 	private EventHandler<Event> onTabClosed = new EventHandler<Event>(){
 		public void handle(Event event) {
@@ -134,7 +162,24 @@ public class TabControlled {
 	}
 	
 	public Saveable findTab(Tab source){
-		return tabControllers.get(findTabIndex(source));
+		log.debug("attempting to findTab. ");
+		try{
+			return tabControllers.get(findTabIndex(source));
+		}catch(Exception e){
+			log.error(e);
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public MainEntityTab findMainEntityTab(Tab source)
+	{
+		Saveable temp = tabControllers.get(findTabIndex(source));
+		if(temp instanceof MainEntityTab){
+			return (MainEntityTab)temp;
+		}else{
+			return null;
+		}
 	}
 	
 	public TabPane getTabPane() {

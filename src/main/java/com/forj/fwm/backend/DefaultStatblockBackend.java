@@ -11,10 +11,17 @@ import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
-import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.component.Saveable;
 
 import javafx.scene.control.Tab;
 
+/**
+ * This class was a hack to add default statblocks to the thing. 
+ * At the moment I don't remember _why_ I did it this way, only that it __needed__ to be done this way.
+ * Please don't break. =)
+ * @author jehlmann
+ *
+ */
 public class DefaultStatblockBackend {
 
 	private static Logger log = Logger.getLogger(DefaultStatblockBackend.class);
@@ -160,6 +167,14 @@ public class DefaultStatblockBackend {
 
 		public Tab getTab() {
 			return null;
+		}
+
+		public void autoUpdateTab() {
+			// dnn
+		}
+
+		public void manualUpdateTab() {
+			// dnn
 		}
 	}
 }

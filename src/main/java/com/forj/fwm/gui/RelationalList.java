@@ -7,13 +7,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.SearchList.EntitiesToSearch;
 import com.forj.fwm.gui.component.Openable;
-import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.beans.value.ChangeListener;
@@ -272,7 +273,7 @@ public class RelationalList implements Openable{
 		listView.getItems().remove(item);
 		searchResults.remove(item);
 		log.debug("Removing an item, and attempting to save changes to tab.");
-		if(!WorldConfig.getManualSaveOnly()){
+		if(!AppConfig.getManualSaveOnly()){
 			caller.relationalSave();
 		}
 		updateList();
@@ -359,7 +360,7 @@ public class RelationalList implements Openable{
 		populateList(searchResults);
 		updateList();
 		handleAddButton();
-		if(!WorldConfig.getManualSaveOnly()){
+		if(!AppConfig.getManualSaveOnly()){
 			caller.relationalSave();
 		}
 		//TODO fuck whoever left this in? ... 

@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 
 import com.forj.fwm.entity.Statblock;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.gui.component.TabControlled;
-import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.gui.tab.StatBlockTabController;
 import com.forj.fwm.startup.App;
 
@@ -43,6 +43,7 @@ public class StatBlockController extends TabControlled {
 			   }
 		   }); 
 		ourStage = primaryStage;
+		startAutoUpdateTabs();
 		started = true;
 		log.debug("started statblock controller.");
 	}

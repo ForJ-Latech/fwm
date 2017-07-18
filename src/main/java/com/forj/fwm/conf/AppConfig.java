@@ -38,12 +38,28 @@ public class AppConfig {
 		config = builder.getConfiguration();		
 	}
 	
+	private static String defaultFileName = "src/main/resources/app.properties";
+	public static void firstInit() throws Exception{
+		configManager = new Configurations();
+		
+		builder = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
+				.configure(configManager.getParameters().fileBased().setFileName("src/main/resources/app.properties"));
+		
+		config = builder.getConfiguration();
+	}
+	
 	public static final String WEB_CONTEXT = "webcontext";
 	public static final String PROD = "prod";
 	public static final String PORT = "port";
 	public static final String WORLD_LOCATION = "worldlocation";
 	public static final String WORLDS_LOCATION = "worldsLocation";
 	public static final String START_TEST="start-test";
+	
+	public static final String MANUAL_SAVE_ONLY = "manualSavingOnly";
+	public static final String DARKMODE = "darkMode";
+	public static final String AUTO_UPDATE_TABS = "autoUpdateTabs";
+	
+	
 	
 	public static void saveDefaultWorldLocation(String worldloc) throws ConfigurationException{
 		log.debug("saveDefaultWorldLocation: " + worldloc);
@@ -52,6 +68,31 @@ public class AppConfig {
 		config.setProperty(WORLD_LOCATION, worldloc);
 		builder.save();
 	}
+	
+	public static void setManualSaveOnly(boolean popup) throws ConfigurationException {
+		log.debug("save manualSaveOnly");
+		config=builder.getConfiguration();
+		config.setProperty(MANUAL_SAVE_ONLY, popup);
+		builder.save();
+		log.debug("manualSaveOnly: " + config.getBoolean(MANUAL_SAVE_ONLY));
+	}
+	
+	public static void setDarkMode(boolean popup) throws ConfigurationException {
+		log.debug("dark mode toggle");
+		config=builder.getConfiguration();
+		config.setProperty(DARKMODE, popup);
+		builder.save();
+		log.debug("darkMode: " + config.getBoolean(DARKMODE));
+	}
+	
+	public static void setAutoUpdateTabs(boolean autoUpdateTabs) throws ConfigurationException{
+		log.debug("auto update tabs toggle");
+		config=builder.getConfiguration();
+		config.setProperty(AUTO_UPDATE_TABS, autoUpdateTabs);
+		builder.save();
+		log.debug("autoUpdateTabs: " + config.getBoolean(AUTO_UPDATE_TABS));
+	}
+	
 	
 	public static String getWorldLocation(){
 		return config.getString(WORLD_LOCATION);
@@ -69,14 +110,17 @@ public class AppConfig {
 		return config.getString(WORLDS_LOCATION);
 	}
 	
-	private static String defaultFileName = "src/main/resources/app.properties";
-	public static void firstInit() throws Exception{
-		configManager = new Configurations();
-		
-		builder = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
-				.configure(configManager.getParameters().fileBased().setFileName("src/main/resources/app.properties"));
-		
-		config = builder.getConfiguration();
+	public static boolean getManualSaveOnly(){
+		return config.getBoolean(MANUAL_SAVE_ONLY);
 	}
+	
+	public static boolean getDarkMode(){
+		return config.getBoolean(DARKMODE);
+	}
+	
+	public static boolean getAutoUpdateTabs(){
+		return config.getBoolean(AUTO_UPDATE_TABS);
+	}
+	
 	
 }

@@ -49,8 +49,6 @@ public class WorldConfig {
 	public static final String RADIO15 = "radio15";
 	public static final String RADIOSHOWNONLY = "showAllInExplore";
 	public static final String SHOWPLAYERSPOPUP = "showPlayersPopup";
-	public static final String MANUAL_SAVE_ONLY = "manualSavingOnly";
-	public static final String DARKMODE = "darkMode";
 	
 	
 	public static String getPassword(){
@@ -86,23 +84,6 @@ public class WorldConfig {
 		log.debug("ShowPlayersPopup: " + config.getBoolean(SHOWPLAYERSPOPUP));
 	}
 	
-	public static void setManualSaveOnly(boolean popup) throws ConfigurationException {
-		log.debug("save manualSaveOnly");
-		config=builder.getConfiguration();
-		config.setProperty(MANUAL_SAVE_ONLY, popup);
-		builder.save();
-		log.debug("manualSaveOnly: " + config.getBoolean(SHOWPLAYERSPOPUP));
-	}
-	
-	public static void setDarkMode(boolean popup) throws ConfigurationException {
-		log.debug("dark mode toggle");
-		config=builder.getConfiguration();
-		config.setProperty(DARKMODE, popup);
-		builder.save();
-		log.debug("darkMode: " + config.getBoolean(DARKMODE));
-		
-	}
-	
 	public static boolean getRad10() {
 		return config.getBoolean(RADIO10);
 	}
@@ -115,13 +96,5 @@ public class WorldConfig {
 	
 	public static boolean getShowPlayersPopup(){
 		return config.getBoolean(SHOWPLAYERSPOPUP);
-	}
-	
-	public static boolean getManualSaveOnly(){
-		return config.getBoolean(MANUAL_SAVE_ONLY);
-	}
-	
-	public static boolean getDarkMode(){
-		return config.getBoolean(DARKMODE);
 	}
 }

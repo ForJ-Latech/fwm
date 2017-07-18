@@ -19,6 +19,7 @@ import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.beans.value.ChangeListener;
@@ -46,22 +47,18 @@ public class PreviouslyEditedTabController implements Saveable{
 	private static boolean started = false;
 	private static int maxImageSize = 32;
 	
-	private void updateTab() {
-		
-	}
-	
 	public void start(Tab rootLayout) throws Exception {
 		log.debug("start previously edited tab controller called");
 		
 		tabHead.setText("Previously Edited");
 		
-		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-		        if(newTab == getTab()) {
-		        	updateTab();
-		        }
-		    }
-		});
+//		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+//		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+//		        if(newTab == getTab()) {
+//		        	updateTab();
+//		        }
+//		    }
+//		});
 		updateList();
 		started = true;
 	}
@@ -271,39 +268,32 @@ public class PreviouslyEditedTabController implements Saveable{
 	}
 
 	public void fullSave() {
-		// TODO Auto-generated method stub
+		// previously edited list does not need full save
 		
 	}
 
 	public void simpleSave() {
-		// TODO Auto-generated method stub
+		// dnn
 		
 	}
 
 	public void relationalSave() {
-		// TODO Auto-generated method stub
+		// dnn
 		
 	}
-
-	public AddableImage getAddableImage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	public Searchable getThing() {
-		// TODO Auto-generated method stub
+		// dnn
 		return null;
 	}
 
-	public ListController getListController() {
+	public void autoUpdateTab() {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void nameFocus(){
 		
 	}
-	public AddableSound getAddableSound(){
-		return null;
+
+	public void manualUpdateTab() {
+		// TODO Auto-generated method stub
+		
 	}
 }

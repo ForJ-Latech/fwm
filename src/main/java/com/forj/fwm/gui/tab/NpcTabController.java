@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.DefaultStatblockBackend;
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.God;
 import com.forj.fwm.entity.Interaction;
@@ -22,6 +23,8 @@ import com.forj.fwm.gui.SearchList;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.MainEntityTab;
+import com.forj.fwm.gui.component.TabControlled;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
@@ -47,7 +50,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class NpcTabController implements Saveable {
+public class NpcTabController implements MainEntityTab {
 	private static Logger log = Logger.getLogger(NpcTabController.class);
 	private Npc npc;
 	private ListController interactionController;
@@ -89,7 +92,7 @@ public class NpcTabController implements Saveable {
 	private EventHandler<Event> saveEvent = new EventHandler<Event>(){
 		public void handle(Event event){
 			log.debug("Save event firing!");
-			if(!WorldConfig.getManualSaveOnly()){	
+			if(!AppConfig.getManualSaveOnly()){	
 				simpleSave();
 			}
 		}
@@ -131,7 +134,7 @@ public class NpcTabController implements Saveable {
 	private void updateFamily(boolean save){
 		if(tabHead.getText()!=null && save)
 		{
-			if(!WorldConfig.getManualSaveOnly()){
+			if(!AppConfig.getManualSaveOnly()){
 				simpleSave();
 			}
 		}
@@ -142,23 +145,37 @@ public class NpcTabController implements Saveable {
 	}
 	
 	
-	private void updateTab(){
-//		try {
-//			setAllTexts(npc);
-//			Backend.getNpcDao().update(npc);
-//			Backend.getNpcDao().refresh(npc);
-//			godRelation.clearList();
-//			godRelation.populateList();
-//			npcRelation.clearList();
-//			npcRelation.populateList();
-//			eventRelation.clearList();
-//			eventRelation.populateList();
-//			regionRelation.clearList();
-//			regionRelation.populateList();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
 
+	// when F5 get's hit or smth. 
+	public void manualUpdateTab(){
+		log.debug("update tab on god tab ID: " + npc.getID() + " was called.");
+		try {
+			npc = Backend.getNpcDao().getFullNpc(npc.getID());
+			setAllTexts(npc);
+			try{
+				startRelationalList();
+			}catch(Exception e){
+				log.error(e);
+				e.printStackTrace();
+			}
+			Backend.getNpcDao().update(npc);
+			Backend.getNpcDao().refresh(npc);
+		} catch (SQLException e) {
+			log.error(e);
+			e.printStackTrace();
+		}
+	}
+		
+	
+	public void autoUpdateTab(){
+		// this shouldn't occur if they have manual saving only on, because that will dump their data. 
+		if(!AppConfig.getManualSaveOnly()){
+			manualUpdateTab();
+		}
+		else{
+			App.getMainController().addStatus(TabControlled.DID_NOT_AUTO_UPDATE);
+			// pass, we just changed but there could be unsaved information. 
+		}
 	}
 	
 	public void getAllRelations(){
@@ -277,7 +294,7 @@ public class NpcTabController implements Saveable {
 		}
 		image.setOnImageChanged(new EventHandler<Event>(){
 			public void handle(Event event) {
-				if(!WorldConfig.getManualSaveOnly()){
+				if(!AppConfig.getManualSaveOnly()){
 					fullSave();
 				}
 			}
@@ -328,13 +345,13 @@ public class NpcTabController implements Saveable {
 		thingsThatCanChange[2].setOnKeyReleased(lnameEvent);
 		updateFamily(false);
 		
-		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
-		        if(newTab == getTab()) {
-		        	updateTab();
-		        }
-		    }
-		});
+//		App.getMainController().getTabPane().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+//		    public void changed(ObservableValue<? extends Tab> observable, Tab oldTab, Tab newTab) {
+//		        if(newTab == getTab()) {
+//		        	updateTab();
+//		        }
+//		    }
+//		});
 		
 		Platform.runLater(new Runnable() {
 			public void run() {
@@ -443,7 +460,7 @@ public class NpcTabController implements Saveable {
 	@FXML
 	public void changeSound() throws Exception{
 		sound.changeSound();
-		if(!WorldConfig.getManualSaveOnly()){
+		if(!AppConfig.getManualSaveOnly()){
 			fullSave();
 		}
 		sound.play();

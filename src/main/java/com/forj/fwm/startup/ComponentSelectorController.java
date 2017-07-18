@@ -96,21 +96,21 @@ public class ComponentSelectorController{
 	public void startBoth() throws Exception {
 		Backend.start();
 		App.setMainController(MainController.startMainUi());
-		JettyController.startJettyWindow();
+		App.getJettyController();
 		primaryStage.close();
 	}
 
 	@FXML
 	public void startWebService() throws Exception {
 		Backend.start();
-		JettyController.startJettyWindow();
+		App.getJettyController();
 		primaryStage.close();
 	}
 
 	@FXML
 	public void startJettyOnly() throws Exception {
 		Backend.start();
-		JettyController.startJettyWindow();
+		App.getJettyController();
 		primaryStage.close();
 	}
 

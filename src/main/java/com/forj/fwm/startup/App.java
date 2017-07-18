@@ -16,6 +16,7 @@ import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.HotkeyController;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Searchable;
+import com.forj.fwm.gui.JettyController;
 import com.forj.fwm.gui.MainController;
 import com.forj.fwm.gui.ShowPlayersController;
 import com.forj.fwm.gui.StatBlockController;
@@ -61,6 +62,8 @@ public class App extends Application {
 	}
 	
 	private static ShowPlayersController showPlayersController;
+	
+	private static JettyController jettyController;
 	
 	public static ShowPlayersController getShowPlayersController(){
 		try{
@@ -208,5 +211,20 @@ public class App extends Application {
 		App.worldFileUtil = new WorldFileUtil(new File(AppConfig.config.getString(AppConfig.WORLD_LOCATION)));
 		
 		Backend.start();
+	}
+	public static JettyController getJettyController() {
+		try{
+			if(jettyController == null || jettyController.getStarted() == false){
+				jettyController = null;
+				jettyController = JettyController.startJettyWindow();
+			}else{
+				jettyController.getStage().show();
+			}
+		} catch(Exception e){
+			// log.error(e.getStackTrace());
+			e.printStackTrace();
+			return null;
+		}
+		return jettyController;
 	}
 }

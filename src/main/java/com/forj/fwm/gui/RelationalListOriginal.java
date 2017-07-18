@@ -10,7 +10,7 @@ import com.forj.fwm.entity.Npc;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.SearchList.EntitiesToSearch;
 import com.forj.fwm.gui.component.Openable;
-import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.beans.value.ChangeListener;

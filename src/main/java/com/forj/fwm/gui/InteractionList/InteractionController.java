@@ -2,12 +2,13 @@ package com.forj.fwm.gui.InteractionList;
 
 import org.apache.log4j.Logger;
 
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Interaction;
 import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
-import com.forj.fwm.gui.tab.Saveable;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 
@@ -40,7 +41,7 @@ public class InteractionController implements Saveable {
 		public void handle(Event event){
 			log.debug("Save event firing!");
 			getAllTexts();
-			if(!WorldConfig.getManualSaveOnly()){	
+			if(!AppConfig.getManualSaveOnly()){	
 				fullSave();
 			}
 		}
@@ -137,17 +138,9 @@ public class InteractionController implements Saveable {
 	public Interaction getInteraction(){
 		return interaction;
 	}
-	
-	public AddableImage getAddableImage(){
-		return null;
-	}
 
 	public Tab getTab() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public ListController getListController(){
+		// dnn
 		return null;
 	}
 
@@ -158,11 +151,13 @@ public class InteractionController implements Saveable {
 	public void relationalSave() {
 		fullSave();
 	}
-	public void nameFocus(){
-		
+
+	public void autoUpdateTab() {
+		// dnn
 	}
-	public AddableSound getAddableSound(){
-		return null;
+
+	public void manualUpdateTab() {
+		// dnn
 	}
 }
 

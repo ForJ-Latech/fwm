@@ -6,8 +6,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="205.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.WorldSettingsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.forj.fwm.gui.WorldSettingsController">
    <children>
+      <VBox alignment="CENTER">
+         <children>
+            <Label contentDisplay="CENTER" text="World Settings" />
+         </children>
+      </VBox>
       <HBox alignment="CENTER" prefHeight="53.0" prefWidth="600.0">
          <children>
             <VBox prefHeight="49.0" prefWidth="233.0">
@@ -29,11 +34,17 @@
             <Insets top="10.0" />
          </padding>
       </HBox>
+      <VBox alignment="CENTER">
+         <children>
+            <Label contentDisplay="CENTER" text="Application Settings" />
+         </children>
+      </VBox>
       <HBox alignment="CENTER" prefHeight="53.0" prefWidth="600.0">
          <children>
             <VBox prefHeight="49.0" prefWidth="233.0">
                <children>
                   <Label fx:id="manualSaveLabel" text="Manual Saving Only" />
+                  <Label text="(turn on if on an ssd)" />
                </children>
             </VBox>
             <VBox prefHeight="49.0" prefWidth="56.0">
@@ -58,6 +69,25 @@
                <children>
                   <RadioButton fx:id="darkModeOn" mnemonicParsing="false" onAction="#setDarkMode" text="On" />
                   <RadioButton fx:id="darkModeOff" mnemonicParsing="false" onAction="#setDarkMode" text="Off" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="53.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="49.0" prefWidth="233.0">
+               <children>
+                  <Label text="Auto Update Tabs" />
+                  <Label text="(off improves performance)" />
+               </children>
+            </VBox>
+            <VBox prefHeight="49.0" prefWidth="56.0">
+               <children>
+                  <RadioButton fx:id="autoUpdateTabsOn" mnemonicParsing="false" onAction="#setAutoUpdateTabs" text="On" />
+                  <RadioButton fx:id="autoUpdateTabsOff" mnemonicParsing="false" onAction="#setAutoUpdateTabs" text="Off" />
                </children>
             </VBox>
          </children>

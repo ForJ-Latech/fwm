@@ -4,6 +4,7 @@ import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.startup.App;
 
 import javafx.fxml.FXML;
@@ -40,32 +41,27 @@ public class WelcomeTabController implements Saveable {
 	}
 
 	public void fullSave() {
-		
+		// dnn
 	}
 
 	public Searchable getThing() {
-		return null;
-	}
-    
-	public AddableImage getAddableImage() {
-		return null;
-	}
-	
-	public ListController getListController(){
+		// dnn
 		return null;
 	}
 
 	public void simpleSave() {
-		
+		// dnn
 	}
 
 	public void relationalSave() {
-		
+		// dnn
 	}
-	public void nameFocus(){
-		
+
+	public void autoUpdateTab() {
+		// dnn
 	}
-	public AddableSound getAddableSound(){
-		return null;
+
+	public void manualUpdateTab() {
+		// dnn
 	}
 }

@@ -13,11 +13,12 @@ import org.apache.log4j.Logger;
 import com.forj.fwm.gui.InteractionList.ListController;
 import com.forj.fwm.gui.component.AddableImage;
 import com.forj.fwm.gui.component.AddableSound;
+import com.forj.fwm.gui.component.MainEntityTab;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
-import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.startup.App;
 import com.forj.fwm.startup.WorldFileUtil;
 
@@ -411,19 +412,10 @@ public class HotkeyController {
 					}
 				}
 				if (HotkeyController.getHotkey(MANUAL_SAVE_CURRENT).match(keyEvent)) {
-					try {
-						App.getMainController().findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem()).fullSave();} catch (Exception e) {
-						log.debug(e);
-					}
+					App.getMainController().saveCurrentlySelected();
 				}
 				if (HotkeyController.getHotkey(MANUAL_SAVE_ALL).match(keyEvent)) {
-					try {
-						for(Saveable s: App.getMainController().tabControllers){
-							s.fullSave();							
-						}
-					} catch (Exception e) {
-						log.debug(e);
-					}
+					App.getMainController().saveAll();
 				}
 				if (HotkeyController.getHotkey(CLOSE_TAB).match(keyEvent)) {
 					try {
@@ -508,9 +500,10 @@ public class HotkeyController {
 				}
 				if (HotkeyController.getHotkey(FOCUS_HOTKEY).match(keyEvent)) {
 					try {
-						Saveable tab = App.getMainController()
-						.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
-						tab.nameFocus();
+						MainEntityTab tab = App.getMainController().findMainEntityTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+						if(tab != null){
+							tab.nameFocus();
+						}
 					} catch (Exception e) {
 						log.error(e);
 					}
@@ -556,22 +549,25 @@ public class HotkeyController {
 				}
 				if (HotkeyController.getHotkey(IMAGE_HOTKEY).match(keyEvent)) {
 					try {
-						AddableImage image = App.getMainController()
-								.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem())
-								.getAddableImage();
-						if (image != null){
-							image.addImage();
-						}
+						MainEntityTab tab = App.getMainController().findMainEntityTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+						if(tab != null){
+							AddableImage image = tab.getAddableImage();
+							if (image != null){
+								image.addImage();
+							}
+						}				
 					} catch (Exception e) {
 						log.error(e);
 					}
 				}
 				if (HotkeyController.getHotkey(SOUND_HOTKEY).match(keyEvent)) {
 					try {
-						AddableSound sound = App.getMainController()
-								.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem()).getAddableSound();
-						if (sound != null){
-							sound.changeSound();
+						MainEntityTab tab = App.getMainController().findMainEntityTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+						if(tab != null){
+							AddableSound sound = tab.getAddableSound();
+							if (sound != null){
+								sound.changeSound();
+							}
 						}
 					} catch (Exception e) {
 						log.error(e);
@@ -790,12 +786,13 @@ public class HotkeyController {
 				}
 				if (HotkeyController.getHotkey(INTERACTION_HOTKEY).match(keyEvent)) {
 					try {
-						ListController listController = App.getMainController()
-								.findTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem())
-								.getListController();
-						if (listController != null){
-							App.getMainController().getStage().requestFocus();
-							listController.addNewInteraction();
+						MainEntityTab tab = App.getMainController().findMainEntityTab(App.getMainController().getTabPane().getSelectionModel().getSelectedItem());
+						if(tab != null){
+							ListController listController = tab.getListController();
+							if (listController != null){
+								App.getMainController().getStage().requestFocus();
+								listController.addNewInteraction();
+							}
 						}
 						} catch (Exception e) {
 						log.error(e);

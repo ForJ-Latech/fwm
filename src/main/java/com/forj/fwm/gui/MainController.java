@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.forj.fwm.backend.Backend;
 import com.forj.fwm.backend.DefaultStatblockBackend;
+import com.forj.fwm.conf.AppConfig;
 import com.forj.fwm.conf.HotkeyController;
 import com.forj.fwm.conf.WorldConfig;
 import com.forj.fwm.entity.Event;
@@ -18,6 +19,7 @@ import com.forj.fwm.entity.Searchable;
 import com.forj.fwm.entity.Statblock;
 import com.forj.fwm.entity.Template;
 import com.forj.fwm.gui.component.Openable;
+import com.forj.fwm.gui.component.Saveable;
 import com.forj.fwm.gui.component.TabControlled;
 import com.forj.fwm.gui.tab.EventTabController;
 import com.forj.fwm.gui.tab.GodTabController;
@@ -25,7 +27,6 @@ import com.forj.fwm.gui.tab.InteractionTabController;
 import com.forj.fwm.gui.tab.NpcTabController;
 import com.forj.fwm.gui.tab.PreviouslyEditedTabController;
 import com.forj.fwm.gui.tab.RegionTabController;
-import com.forj.fwm.gui.tab.Saveable;
 import com.forj.fwm.gui.tab.StatBlockTabController;
 import com.forj.fwm.gui.tab.TemplateTabController;
 import com.forj.fwm.gui.tab.WelcomeTabController;
@@ -67,7 +68,6 @@ public class MainController extends TabControlled implements Openable {
 	
 	private ShowPlayersController spController;
 	
-	private JettyController jt;
 	@FXML
 	private MenuBar MenuBar;
 
@@ -142,16 +142,17 @@ public class MainController extends TabControlled implements Openable {
 		tabPane.getTabs().add(cr.getTab());
 		tabPane.getSelectionModel().select(cr.getTab());
 		tabControllers.add(cr);
-		started = true;
+		startAutoUpdateTabs();
 		MenuBar.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent key) {
-			
+			//TODO figure out if this is needed here.
 			}
 		});
-		if(WorldConfig.getDarkMode())
+		if(AppConfig.getDarkMode())
 		{
 			setDark(true);
 		}
+		started = true;
 	}
 
 	public static MainController startMainUi() throws Exception {
@@ -309,19 +310,26 @@ public class MainController extends TabControlled implements Openable {
 	
 	@FXML
 	public void startWebservice(){
-		
-		if(!JettyController.getStarted())
-		{
-			try {
-				log.debug("starting web service. lol");
-				jt = JettyController.startJettyWindow();
-				jt.getStage().requestFocus();
-			} catch (Exception e) {
-				log.debug(e);
-			}
+		App.getJettyController().getStage().requestFocus();
+	}
+	
+	@FXML public void saveCurrentlySelected(){
+		try {
+			findTab(tabPane.getSelectionModel().getSelectedItem()).fullSave();
+		} catch (Exception e) {
+			log.error(e);
+			e.printStackTrace();
 		}
-		else{
-			jt.getStage().requestFocus();
+	}
+	
+	@FXML public void saveAll(){
+		try {
+			for(Saveable s: tabControllers){
+				s.fullSave();							
+			}
+		} catch (Exception e) {
+			log.error(e);
+			e.printStackTrace();
 		}
 	}
 	

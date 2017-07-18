@@ -158,7 +158,7 @@ public class JettyController{ // NEEDS to be a space after class name or scene b
         radioShowAll.setSelected(WorldConfig.getShowAll());
         setScene(myScene);
         visPasswordVar.toBack();
-		if(WorldConfig.getDarkMode())
+		if(AppConfig.getDarkMode())
 		{
 			setDark(true);
 		}
