@@ -69,12 +69,6 @@ img	{
     display: flex;
 }
 
-[class*="col-"] {
-    float: none;
-    display: table-cell;
-    vertical-align: top;
-}
-
 .listItem {
 	max-width: 70%;
 	margin-left: auto;
