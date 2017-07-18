@@ -52,4 +52,4 @@ We hope that you enjoy using our software!
 https://discord.gg/FzEjsff
 
 
-Sneaky original team list: James Ehlmann, Stephan Hibbard, James Ortis, Ryan Walters, Matthew Swart, Jack Strickland, Diwakar Simkhada, and Joseph Hardy_
+_Sneaky original team list: James Ehlmann, Stephan Hibbard, James Ortis, Ryan Walters, Matthew Swart, Jack Strickland, Diwakar Simkhada, and Joseph Hardy_
