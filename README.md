@@ -20,8 +20,6 @@ I, James Ehlmann, with the entire ForJ team, am proud to announce that the Fanta
 
 For the time being it can be downloaded here: https://github.com/ForJ-Latech/fwm/blob/master/FWM-beta.zip
 
-Remember, this is a beta, so things are not entirely finished, but the majority of the core functionality I originally wanted is there. We have also finished official development on this application, any future development is volunteer work. With that in mind, if you have any ideas or changes that you would like, contact me at james[dot]ehlmann{at}gmail(dot)com. I would love to hear your thoughts.
-
 Happy Dungeon Mastering,
 
 James Ehlmann
