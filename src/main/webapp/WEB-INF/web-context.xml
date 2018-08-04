@@ -23,6 +23,6 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 <mvc:resources mapping="/c/**" location="WEB-INF/css/" />
 <mvc:resources mapping="/s/**" location="WEB-INF/scripts/" />
 <mvc:resources mapping="/views/**" location="WEB-INF/views/" />
-
+<mvc:resources mapping="/node_resources/**" location="WEB-INF/node_resources/" />
 
 </beans>
