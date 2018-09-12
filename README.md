@@ -23,6 +23,8 @@ I, James Ehlmann, with the entire ForJ team, am proud to announce that the Fanta
 
 For the time being it can be downloaded here: https://github.com/ForJ-Latech/fwm/blob/master/FWM-beta.zip
 
+You will require java 8+ with javafx installed to run this software. This software was created with java 8 + javafx (and doesn't work quite right in later versions) How could we have guessed that javafx, which had just been added to ship by default with java, would get the plug pulled? Darn enterprise users and their open-jdk. 
+
 Happy Dungeon Mastering,
 
 James Ehlmann
