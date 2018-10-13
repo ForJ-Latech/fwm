@@ -1,19 +1,10 @@
 # Screen shots
 https://imgur.com/gallery/OEmn7aD 
 
-# License
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation version 3 of the License.
+# Notice
+Because of Java's decision to modulize previous core components (javafx no longer shipped with every instance of java), and enforce package/module assertions (e.g. you can no longer declare classes in the same package scope as something deriven from a jar) this has caused this project to be absolutely un-usable on java9+, this unexpected direction is unfortunate and might require a re-write of the project at some point, because porting it to java9+ is non-trivial and there are many things that I wish were done better. 
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+Use java 8 if you want this project to work as intended. 
 
 # Beta!
 
@@ -54,5 +45,17 @@ We hope that you enjoy using our software!
 # Discord
 https://discord.gg/FzEjsff
 
+# License
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 3 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 _Sneaky original team list: James Ehlmann, Stephan Hibbard, James Ortis, Ryan Walters, Matthew Swart, Jack Strickland, Diwakar Simkhada, and Joseph Hardy_
